@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/teamName1TextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="18sp"
+            android:gravity="left|center_horizontal|right"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="3sp"
+            android:layout_weight="1.5"
+            android:layout_gravity="center_vertical"
+            android:text="Afghanistan" />
+
+        <ImageView
+            android:id="@+id/team1LogoImageView"
+            android:layout_width="22sp"
+            android:layout_height="22sp"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="10sp"
+            android:layout_weight="0"
+            android:layout_gravity="center_vertical"
+            android:layout_marginTop="2sp"
+            android:layout_marginBottom="2sp"
+            android:src="@drawable/afghanistan" />
+
+        <TextView
+            android:id="@+id/vsTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="18sp"
+            android:gravity="center_horizontal"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="3sp"
+            android:layout_weight="1.5"
+            android:layout_gravity="center_vertical"
+            android:text="vs." />
+
+        <ImageView
+            android:id="@+id/team2LogoImageView"
+            android:layout_width="22sp"
+            android:layout_height="22sp"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="10sp"
+            android:layout_weight="0"
+            android:layout_gravity="center_vertical"
+            android:layout_marginTop="2sp"
+            android:layout_marginBottom="2sp"
+            android:src="@drawable/andorra" />
+
+        <TextView
+            android:id="@+id/teamName2TextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="18sp"
+            android:gravity="left|center_horizontal"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="3sp"
+            android:layout_weight="1.5"
+            android:layout_gravity="center_vertical"
+            android:text="Andorra" />
+
+        <ImageView
+            android:layout_width="20sp"
+            android:layout_height="20sp"
+            android:id="@+id/arrowImageView"
+            android:src="@drawable/right_arrow"
+            android:layout_weight="0"
+            android:layout_gravity="center_vertical"
+            android:layout_marginTop="3sp"
+            android:layout_marginBottom="3sp"
+            android:layout_marginRight="5sp" />
+    </LinearLayout>
+
+</TableLayout>

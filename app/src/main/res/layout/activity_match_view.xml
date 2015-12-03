@@ -1,0 +1,202 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    tools:context=".MatchViewActivity"
+    android:background="#FFFFFF">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/overallLayoutMatch">
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="0dp"
+            android:text="Match"
+            android:id="@+id/matchTextView"
+            android:layout_gravity="center_horizontal"
+            android:textSize="22sp"
+            android:layout_weight="0.08"
+            android:gravity="center" />
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="fill_parent"
+            android:layout_height="0dp"
+            android:background="#f51616"
+            android:layout_weight="0.5" >
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:background="#ffffff"
+                android:layout_weight="0"
+                android:layout_margin="5dp" >
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:background="#ffffff"
+                    android:layout_weight="0"
+                    android:layout_margin="5dp" >
+
+                    <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_width="fill_parent"
+                        android:layout_height="0dp"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_weight="0.2">
+
+                        <ImageView
+                            android:layout_width="0dp"
+                            android:layout_height="fill_parent"
+                            android:id="@+id/team1ImageView"
+                            android:src="@drawable/argentina"
+                            android:layout_rowWeight="0"
+                            android:layout_columnWeight="1"
+                            android:layout_gravity="center_horizontal"
+                            android:layout_column="1"
+                            android:layout_row="0"
+                            android:layout_marginRight="8dp"
+                            android:layout_weight="1" />
+
+                        <Space
+                            android:layout_width="0dp"
+                            android:layout_height="fill_parent"
+                            android:layout_weight="0.5" />
+
+                        <ImageView
+                            android:layout_width="0dp"
+                            android:layout_height="fill_parent"
+                            android:id="@+id/team2ImageView"
+                            android:src="@drawable/colombia"
+                            android:layout_rowWeight="0"
+                            android:layout_columnWeight="1"
+                            android:layout_gravity="center_horizontal"
+                            android:layout_row="0"
+                            android:layout_column="0"
+                            android:layout_weight="1" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_width="fill_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="0.05">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="fill_parent"
+                            android:text="Argentina"
+                            android:id="@+id/teamName1TextView"
+                            android:layout_weight="1"
+                            android:textSize="22sp"
+                            android:gravity="center|center_horizontal" />
+
+                        <Space
+                            android:layout_width="0dp"
+                            android:layout_height="fill_parent"
+                            android:layout_weight="0.5" />
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="fill_parent"
+                            android:text="Colombia"
+                            android:id="@+id/teamName2TextView"
+                            android:layout_weight="1"
+                            android:textSize="22sp"
+                            android:gravity="center|center_horizontal" />
+                    </LinearLayout>
+
+                    <Space
+                        android:layout_width="fill_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="0.05" />
+
+                    <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_width="fill_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="0.1">
+
+                        <Space
+                            android:layout_width="0dp"
+                            android:layout_height="fill_parent"
+                            android:layout_weight="1" />
+
+                        <EditText
+                            android:layout_width="0dp"
+                            android:layout_height="fill_parent"
+                            android:id="@+id/team1ScoreEditText"
+                            android:layout_gravity="center_horizontal"
+                            android:enabled="true"
+                            android:textIsSelectable="false"
+                            android:textSize="40sp"
+                            android:layout_weight="1"
+                            android:gravity="center_vertical|right"
+                            android:clickable="false"
+                            android:inputType="number"
+                            android:hint="0" />
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="fill_parent"
+                            android:text="-"
+                            android:id="@+id/dashTextView"
+                            android:textSize="50sp"
+                            android:gravity="center"
+                            android:layout_weight="1" />
+
+                        <EditText
+                            android:layout_width="0dp"
+                            android:layout_height="fill_parent"
+                            android:id="@+id/team2ScoreEditTExt"
+                            android:layout_gravity="center_horizontal"
+                            android:enabled="true"
+                            android:gravity="left|center_vertical"
+                            android:textSize="40sp"
+                            android:layout_weight="1"
+                            android:textIsSelectable="false"
+                            android:clickable="false"
+                            android:inputType="number"
+                            android:elegantTextHeight="false"
+                            android:hint="0" />
+
+                        <Space
+                            android:layout_width="0dp"
+                            android:layout_height="fill_parent"
+                            android:layout_weight="1" />
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+
+        <Space
+            android:layout_width="fill_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.1" />
+
+        <Button
+            android:layout_width="fill_parent"
+            android:layout_height="0dp"
+            android:text="Save "
+            android:id="@+id/saveScoreButton"
+            android:background="#f51616"
+            android:textColor="#ffffff"
+            android:textSize="18sp"
+            android:layout_weight="0.1"
+            android:onClick="saveOnClickInMatchView" />
+
+        <Space
+            android:layout_width="fill_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.025" />
+
+    </LinearLayout>
+</RelativeLayout>
