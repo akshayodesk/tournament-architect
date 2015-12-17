@@ -2,11 +2,11 @@
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".CreateTournamentActivity"
-    android:background="#ffffff"
+    android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    android:paddingBottom="@dimen/activity_vertical_margin">
+    android:background="#ffffff">
 
     <LinearLayout
         android:orientation="vertical"
@@ -23,33 +23,37 @@
             android:id="@+id/tournamentNameEditText"
             android:textSize="18sp"
             android:layout_weight="0.08"
-            android:gravity="bottom"
-            android:hint="Tournament Name" />
+            android:hint="Tournament Name"
+            android:background="#00000000"
+            android:gravity="bottom|center_horizontal" />
+
+        <Space
+            android:layout_width="fill_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.02" />
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="Teams"
+            android:id="@+id/textView"
+            android:textSize="18sp"
+            android:gravity="center_horizontal" />
 
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="0.32"
-            android:background="#f51818">
-
-            <LinearLayout
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="fill_parent"
-                android:layout_weight="0"
-                android:background="#ffffff"
-                android:layout_margin="5sp">
-
-                <ListView
-                    android:layout_width="fill_parent"
-                    android:layout_height="fill_parent"
-                    android:id="@+id/teamsListView"
-                    tools:listitem="@android:layout/simple_expandable_list_item_1"
-                    android:textSize="10dp"/>
-            </LinearLayout>
-
+            android:layout_height="2sp"
+            android:background="#E48700">
         </LinearLayout>
+
+        <ListView
+            android:layout_width="fill_parent"
+            android:layout_height="0dp"
+            android:id="@+id/teamsListView"
+            tools:listitem="@android:layout/simple_expandable_list_item_1"
+            android:textSize="10dp"
+            android:layout_weight="0.25" />
 
         <Space
             android:layout_width="fill_parent"
@@ -62,16 +66,30 @@
             android:text="Add Team"
             android:id="@+id/addTeamButton"
             android:layout_gravity="center_vertical"
-            android:background="#f51616"
+            android:background="#E48700"
             android:textColor="#ffffff"
-            android:layout_weight="0.06"
+            android:layout_weight="0.09"
             android:textSize="18sp"
             android:onClick="addTeamTournamentOnClick" />
 
         <Space
             android:layout_width="fill_parent"
             android:layout_height="0dp"
-            android:layout_weight="0.02" />
+            android:layout_weight="0.05" />
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="Format"
+            android:id="@+id/textView2"
+            android:textSize="18sp"
+            android:gravity="center_horizontal" />
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="2sp"
+            android:background="#E48700" />
 
         <LinearLayout
             android:orientation="vertical"
@@ -98,11 +116,12 @@
                     android:id="@+id/roundRobinRadioButton"
                     android:checked="true"
                     android:textSize="18sp"
-                    android:buttonTint="#f51818"
+                    android:buttonTint="#E48700"
                     android:layout_weight="1"
                     android:clickable="true"
                     android:contextClickable="false"
-                    android:button="@drawable/theme_btn_radio_holo_light" />
+                    android:onClick="roundRobinOnClick"
+                    android:button="@drawable/custom_radio_button_btn_radio_holo_light" />
 "
                     android:onClick="roundRobinOnClick" />
 
@@ -113,10 +132,10 @@
                     android:id="@+id/knockoutRadioButton"
                     android:checked="false"
                     android:textSize="18sp"
-                    android:buttonTint="#f51818"
+                    android:buttonTint="#E48700"
                     android:layout_weight="1"
-                    android:button="@drawable/theme_btn_radio_holo_light"
-                    android:onClick="knockoutRobinOnClick" />
+                    android:onClick="knockoutRobinOnClick"
+                    android:button="@drawable/custom_radio_button_btn_radio_holo_light" />
 
                 <RadioButton
                     android:layout_width="wrap_content"
@@ -125,10 +144,10 @@
                     android:id="@+id/combinationRadioButton"
                     android:checked="false"
                     android:textSize="18sp"
-                    android:buttonTint="#f51818"
+                    android:buttonTint="#E48700"
                     android:layout_weight="1"
-                    android:button="@drawable/theme_btn_radio_holo_light"
-                    android:onClick="combinationRobinOnClick" />
+                    android:onClick="combinationRobinOnClick"
+                    android:button="@drawable/custom_radio_button_btn_radio_holo_light" />
             </RadioGroup>
 
             <LinearLayout
@@ -140,7 +159,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="fill_parent"
-                    android:text="# Round Robin Rounds:"
+                    android:text="# Round Robin Circuits:"
                     android:id="@+id/numRoundsTextView"
                     android:textSize="18sp"
                     android:layout_weight="0"
@@ -148,7 +167,7 @@
                     android:layout_marginLeft="5sp" />
 
                 <Space
-                    android:layout_width="4sp"
+                    android:layout_width="10sp"
                     android:layout_height="fill_parent"
                     android:layout_weight="0" />
 
@@ -158,8 +177,9 @@
                     android:id="@+id/numRoundsEditText"
                     android:layout_weight="0"
                     android:text="1"
-                    android:textSize="15sp"
-                    android:inputType="number" />
+                    android:textSize="18sp"
+                    android:inputType="number"
+                    android:background="#00000000" />
 
             </LinearLayout>
 
@@ -168,33 +188,17 @@
         <Space
             android:layout_width="fill_parent"
             android:layout_height="0dp"
-            android:layout_weight="0.02" />
-
-        <Button
-            android:layout_width="fill_parent"
-            android:layout_height="0dp"
-            android:text="Save Changes"
-            android:id="@+id/saveTournamentButton"
-            android:background="#f51616"
-            android:textColor="#ffffff"
-            android:textSize="18sp"
-            android:layout_weight="0.06"
-            android:onClick="saveOnClick" />
-
-        <Space
-            android:layout_width="fill_parent"
-            android:layout_height="0dp"
-            android:layout_weight="0.02" />
+            android:layout_weight="0.01" />
 
         <Button
             android:layout_width="fill_parent"
             android:layout_height="0dp"
             android:text="Delete Tournament"
             android:id="@+id/deleteTournamentButton"
-            android:background="#f51616"
+            android:background="#E48700"
             android:textColor="#ffffff"
             android:textSize="18sp"
-            android:layout_weight="0.06"
+            android:layout_weight="0.09"
             android:onClick="deleteOnClick" />
 
         <Space
@@ -207,10 +211,10 @@
             android:layout_height="0dp"
             android:text="Start Tournament"
             android:id="@+id/startTournamentButton"
-            android:background="#f51616"
+            android:background="#E48700"
             android:textColor="#ffffff"
             android:textSize="18sp"
-            android:layout_weight="0.06"
+            android:layout_weight="0.09"
             android:onClick="startOnClick" />
 
         <Space

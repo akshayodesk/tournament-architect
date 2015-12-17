@@ -195,6 +195,7 @@ public class CreateTournamentActivity extends Activity {
                     // Go back to the Load Tournament activity
                     Intent intent = new Intent(getApplicationContext(), LoadTournamentActivity.class);
                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP); // Clear current activities
+                    finish();
                     startActivity(intent);
 
                     // If we came from the Home Activity

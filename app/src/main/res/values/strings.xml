@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">TournamentDesigner</string>
+    <string name="app_name">Tournament Designer</string>
 
     <string name="action_settings">Settings</string>
     <string name="title_activity_create_tournament">CreateTournament</string>
@@ -7,7 +7,7 @@
     <string name="title_activity_flag_selection">FlagSelection</string>
     <string name="title_activity_round">RoundActivity</string>
     <string name="title_activity_match_view">MatchView</string>
-    <string name="title_activity_standings">standingsActivity</string>
+    <string name="title_activity_standings">StandingsActivity</string>
     <string name="title_activity_load_tournament">LoadTournament</string>
     <string name="title_activity_help_page">HelpPage</string>
     <string name="title_activity_blank">BlankActivity</string>

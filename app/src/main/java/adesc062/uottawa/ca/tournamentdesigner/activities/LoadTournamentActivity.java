@@ -40,8 +40,10 @@ public class LoadTournamentActivity extends Activity {
 
             if(tournamentsStatus[i].equals("" + 1))
                 tournamentsStatusConverted[i] = "Under Creation";
-            else
+            else if(tournamentsStatus[i].equals("" + 2))
                 tournamentsStatusConverted[i] = "Started";
+            else
+                tournamentsStatusConverted[i] = "Finished";
         }
 
         // Create the tournaments list adapter and set it
@@ -96,6 +98,14 @@ public class LoadTournamentActivity extends Activity {
 
         Intent intent = new Intent(this, LoadTournamentActivity.class);
         startActivity(intent);
+    }
+
+    public void onBackPressed() {
+
+        // Go back to the home page and finish this activity
+        Intent intent = new Intent(this, HomeActivity.class);
+        startActivity(intent);
+        finish();
     }
 
 }

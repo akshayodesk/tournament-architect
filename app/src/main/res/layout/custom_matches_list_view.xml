@@ -10,10 +10,10 @@
 
         <TextView
             android:id="@+id/teamName1TextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
             android:textSize="18sp"
-            android:gravity="left|center_horizontal|right"
+            android:gravity="left|center_vertical"
             android:layout_alignParentLeft="true"
             android:layout_marginLeft="3sp"
             android:layout_weight="1.5"
@@ -22,12 +22,12 @@
 
         <ImageView
             android:id="@+id/team1LogoImageView"
-            android:layout_width="22sp"
+            android:layout_width="0dp"
             android:layout_height="22sp"
             android:layout_alignParentRight="true"
-            android:layout_marginRight="10sp"
-            android:layout_weight="0"
-            android:layout_gravity="center_vertical"
+            android:layout_marginRight="0dp"
+            android:layout_weight="1"
+            android:layout_gravity="left|center_vertical"
             android:layout_marginTop="2sp"
             android:layout_marginBottom="2sp"
             android:src="@drawable/afghanistan" />
@@ -35,38 +35,40 @@
         <TextView
             android:id="@+id/vsTextView"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="fill_parent"
             android:textSize="18sp"
-            android:gravity="center_horizontal"
             android:layout_alignParentLeft="true"
-            android:layout_marginLeft="3sp"
-            android:layout_weight="1.5"
+            android:layout_marginLeft="0dp"
+            android:layout_weight="0.5"
             android:layout_gravity="center_vertical"
-            android:text="vs." />
+            android:text="vs."
+            android:gravity="center_vertical|center_horizontal"
+            android:layout_marginRight="0dp" />
 
         <ImageView
             android:id="@+id/team2LogoImageView"
-            android:layout_width="22sp"
+            android:layout_width="0dp"
             android:layout_height="22sp"
             android:layout_alignParentRight="true"
-            android:layout_marginRight="10sp"
-            android:layout_weight="0"
-            android:layout_gravity="center_vertical"
+            android:layout_marginRight="0dp"
+            android:layout_weight="1"
+            android:layout_gravity="center_vertical|right"
             android:layout_marginTop="2sp"
             android:layout_marginBottom="2sp"
             android:src="@drawable/andorra" />
 
         <TextView
             android:id="@+id/teamName2TextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
             android:textSize="18sp"
-            android:gravity="left|center_horizontal"
             android:layout_alignParentLeft="true"
             android:layout_marginLeft="3sp"
             android:layout_weight="1.5"
             android:layout_gravity="center_vertical"
-            android:text="Andorra" />
+            android:text="Andorra"
+            android:gravity="center_vertical|right"
+            android:layout_marginRight="5sp" />
 
         <ImageView
             android:layout_width="20sp"

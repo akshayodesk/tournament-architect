@@ -9,29 +9,39 @@ import adesc062.uottawa.ca.tournamentdesigner.database.DBAdapter;
 
 public abstract class TournamentFormat {
 
-    protected int size;
+    public int size;
 	protected int[] rounds;
     protected int tournament_id;
 	private boolean isComplete;
 	protected ArrayList<String> formatTeams;
     protected ArrayList<String> orderedTeams;
-	protected int currentRound;
+	public int currentRound;
+    protected boolean isRR;
+    protected boolean justSwitched = false;
 
-	public TournamentFormat(int tournament_id) {
+	public TournamentFormat(Context context, int tournament_id) {
 
 		formatTeams = new ArrayList<String>();
+
+        isRR = false;
 
         this.tournament_id = tournament_id;
 		//if(rounds == null)
 			//rounds = new LinkedList<TournamentRound>();
 
 		//isComplete = false;
-		currentRound = 0; // Used for offsetting match-ups and for preventing null pointers on empty round list
+		currentRound = DBAdapter.getCurrentRound(context, tournament_id); // Used for offsetting match-ups and for preventing null pointers on empty round list
 	}
 
     public void setCurrentRound(Context context) {
 
         currentRound = DBAdapter.getCurrentRound(context, tournament_id);
+    }
+
+    public boolean getJustSwitched() { return justSwitched; }
+    public void setJustSwitched(boolean value) {
+
+        justSwitched = value;
     }
 
     public void setUpFormat(Context context, int tournament_id, int totalCircuits, ArrayList<String> teams) {
@@ -68,27 +78,83 @@ public abstract class TournamentFormat {
         // Create the round
         DBAdapter.insertRound(context, tournament_id, size, format_id);
 
-        /* Add matches to the round */
-        int numOfMatches = orderedTeams.size()/2 + orderedTeams.size()%2;
+        //see algorithm http://assets.usta.com/assets/650/USTA_Import/Northern/dps/doc_37_1812.pdf
 
-        // Set up every round
-        for(int  c = 0; c < numOfMatches; c++) {
+        //match consist of left vs right
+        ArrayList<String> leftTeams= new ArrayList<String>();
+        ArrayList<String> rightTeams= new ArrayList<String>();
 
-            // Get the name of the first team of the match
-            String team1 = orderedTeams.get(c);
+        //if Number of teams is ODD, add a flag for the bye match
+        if(orderedTeams.size()%2 == 1) {
 
-            // The first team plays last team (not based on standings but on random order)
-            // Every round, the place considered last is offset by 1
-
-            int team2Pointer = (orderedTeams.size() - 1) - c - currentRound;
-
-            // If one team is matched up against itself, the number of teams is not a power of two.
-            // Therefore, it receives a bye
-			String team2 = orderedTeams.get(team2Pointer);
-			Match matchTemp = new Match(context, DBAdapter.getCurrentRoundID(context, currentRound, tournament_id), tournament_id, team1, team2);
+            orderedTeams.add("BYE");
         }
 
-        //DBAdapter.insertMatch(context, 1, 1);
+        //Remove first teamName (WORKS)
+        leftTeams.add(orderedTeams.remove(0));
+
+        //Shift remaining teams counter-clockwise according to round (ie first round 0 times, second 1 time...)(IS SHIFTED)
+        //removes last element and adds to front
+        int last = orderedTeams.size() -1;
+        for(int c = 0; c < currentRound; c++ ){
+
+            String temp= orderedTeams.remove(last);
+            orderedTeams.add(0,temp);
+        }
+
+        //now split teams into left and right (except for last team as teams will be oddNUmber at this point)
+        int counter =(orderedTeams.size()/2);
+        /*if(isRR){
+            counter++;
+        }*/
+        for(int c = 0; c < (counter);c++){
+
+            // remove first
+            String tempRightTeam= orderedTeams.remove(0);
+
+            //remove first
+            String tempLeftTeam = orderedTeams.remove(0);
+
+           //Adjusting for BYE (Ie in a BYE team wins against self (cannot use bye as team name as would require a full team object in DB)
+            //getLAST
+            if(tempLeftTeam.equals("BYE")){
+                tempLeftTeam=orderedTeams.get(0);
+            }
+
+            else if(tempRightTeam.equals("BYE")){
+                tempRightTeam=leftTeams.get(leftTeams.size()-1);
+            }
+
+            rightTeams.add(tempRightTeam);
+            leftTeams.add(tempLeftTeam);
+
+        }
+        String tempRightTeam= orderedTeams.remove(0);
+
+        //Add the remaining to to rightTeams
+
+        //BYE
+
+        if(tempRightTeam.equals("BYE")){
+            rightTeams.add(leftTeams.get(leftTeams.size()-1));
+        }
+       else{
+            rightTeams.add(tempRightTeam);
+       }
+
+
+        // Teams are now split, now must create the match between them
+
+        int numOfMatches = leftTeams.size();
+
+        // Set up every round
+        for(int c = 0; c < leftTeams.size(); c++) {
+
+            String leftTeam = leftTeams.get(c);
+            String rightTeam = rightTeams.get(c);
+
+            Match matchTemp = new Match(context, DBAdapter.getCurrentRoundID(context, currentRound, tournament_id), tournament_id, leftTeam, rightTeam);
+        }
 
 		// Increment the current round
         currentRound = currentRound + 1;
@@ -103,7 +169,8 @@ public abstract class TournamentFormat {
     public boolean checkIsRoundComplete(Context context) {
 
         // Get the list of updated values for the latest round
-        ArrayList<Integer> matchesUpdatedValues = DBAdapter.getMatchesUpdatedValues(context, DBAdapter.getCurrentRoundID(context, currentRound - 1, tournament_id));
+        currentRound = DBAdapter.getCurrentRound(context, tournament_id);
+        ArrayList<Integer> matchesUpdatedValues = DBAdapter.getMatchesUpdatedValues(context, currentRound);
 
         // Go through the list and check if a match has not yet been updated
         for(int i = 0; i < matchesUpdatedValues.size(); i++) {
@@ -114,4 +181,6 @@ public abstract class TournamentFormat {
 
         return true;
     }
+
+    public abstract boolean isTournamentComplete(Context context);
 }

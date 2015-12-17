@@ -7,17 +7,23 @@ import java.util.*;
 import adesc062.uottawa.ca.tournamentdesigner.database.DBAdapter;
 
 public class RoundRobinFormat extends TournamentFormat {
+
 	private int numberOfCircuits; //RoundRobinRound
 	
-	public RoundRobinFormat(int tournament_id){
+	public RoundRobinFormat(Context context, int tournament_id){
 
-        super(tournament_id);
+        super(context, tournament_id);
+        isRR = true;
 	}
 	
-	public boolean checkIsTournamentComplete(){
+	public boolean isTournamentComplete(Context context){
 
-        return true;
-		//return (lastRoundNumber>=numberOfCircuits) && checkIsRoundComplete();
+        int numTeams = DBAdapter.getNumTeamsForTournament(context, tournament_id);
+        int currentRound = DBAdapter.getCurrentRound(context, tournament_id);
+        int numRoundsInCircuits = numTeams - 1 + numTeams%2;
+        int maxRounds = numRoundsInCircuits * DBAdapter.getTournamentNumRounds(context, tournament_id);
+
+		return (currentRound >= maxRounds) && checkIsRoundComplete(context);
 	}
 
     public void createNextRound(Context context, int tournament_id) {

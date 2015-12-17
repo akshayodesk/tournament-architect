@@ -16,6 +16,7 @@ import adesc062.uottawa.ca.tournamentdesigner.database.DBAdapter;
 public class MatchesActivity extends Activity {
 
     int round_id;
+    int roundNum;
     ArrayList<Integer> matchIDs;
     String[] team1Names;
     String[] team2Names;
@@ -25,6 +26,7 @@ public class MatchesActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_matches);
+        roundNum = getIntent().getIntExtra("roundNum", -1);
 
         updateMatches();
     }
@@ -49,21 +51,37 @@ public class MatchesActivity extends Activity {
             // Get the team ids for a match
             ArrayList<Integer> matchTeamIDs = DBAdapter.getMatchTeamIDs(getApplicationContext(), matchIDs.get(i));
 
-            for(int j = 0; j < 2; j++) {
+            //For Bye
+            if(matchTeamIDs.size()==1){
 
-                // Get the name and logo for the first team
-                if(j == 0) {
+                team1NamesArray.add(DBAdapter.getTeamName(getApplicationContext(), matchTeamIDs.get(0)));
+                String logo1 = DBAdapter.getTeamLogo(getApplicationContext(), matchTeamIDs.get(0));
+                team1LogosArray.add(getResources().getIdentifier(logo1, "drawable", getPackageName()));
 
-                    team1NamesArray.add(DBAdapter.getTeamName(getApplicationContext(), matchTeamIDs.get(j)));
-                    String logo = DBAdapter.getTeamLogo(getApplicationContext(), matchTeamIDs.get(j));
-                    team1LogosArray.add(getResources().getIdentifier(logo, "drawable", getPackageName()));
-                }
-                // Get the name and logo for the second team
-                else {
 
-                    team2NamesArray.add(DBAdapter.getTeamName(getApplicationContext(), matchTeamIDs.get(j)));
-                    String logo = DBAdapter.getTeamLogo(getApplicationContext(), matchTeamIDs.get(j));
-                    team2LogosArray.add(getResources().getIdentifier(logo, "drawable", getPackageName()));
+                team2NamesArray.add(DBAdapter.getTeamName(getApplicationContext(), matchTeamIDs.get(0)));
+                String logo2 = DBAdapter.getTeamLogo(getApplicationContext(), matchTeamIDs.get(0));
+                team2LogosArray.add(getResources().getIdentifier(logo2, "drawable", getPackageName()));
+
+            }
+            else {
+                for (int j = 0; j < 2; j++) {
+
+
+                    // Get the name and logo for the first team
+                    if (j == 0) {
+
+                        team1NamesArray.add(DBAdapter.getTeamName(getApplicationContext(), matchTeamIDs.get(j)));
+                        String logo = DBAdapter.getTeamLogo(getApplicationContext(), matchTeamIDs.get(j));
+                        team1LogosArray.add(getResources().getIdentifier(logo, "drawable", getPackageName()));
+                    }
+                    // Get the name and logo for the second team
+                    else {
+
+                        team2NamesArray.add(DBAdapter.getTeamName(getApplicationContext(), matchTeamIDs.get(j)));
+                        String logo = DBAdapter.getTeamLogo(getApplicationContext(), matchTeamIDs.get(j));
+                        team2LogosArray.add(getResources().getIdentifier(logo, "drawable", getPackageName()));
+                    }
                 }
             }
         }
@@ -98,13 +116,15 @@ public class MatchesActivity extends Activity {
                 // Put the information in the intent
                 Intent intent = new Intent(getApplicationContext(), MatchViewActivity.class);
                 intent.putExtra("match_id", matchIDs.get(pos));
+                intent.putExtra("roundNum", roundNum);
                 intent.putExtra("team1Name", team1Names[pos]);
                 intent.putExtra("team2Name", team2Names[pos]);
                 intent.putExtra("team1Logo", team1Logos[pos]);
                 intent.putExtra("team2Logo", team2Logos[pos]);
 
-                // Start the edit team activity
-                startActivity(intent);
+                // Start the edit team activity if the match is not a bye
+                if(!team1Names[pos].equals(team2Names[pos]))
+                    startActivity(intent);
             }
         });
     }

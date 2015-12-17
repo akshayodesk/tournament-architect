@@ -208,6 +208,17 @@ public class DBAdapter {
         // Delete the teams associated with that tournament
         db.execSQL("DELETE FROM teams WHERE team_tournament_id = " + tournament_id);
 
+        // Delete the formats associated with that tournament
+        db.execSQL("DELETE FROM formats WHERE format_tournament_id = " + tournament_id);
+
+        // Delete the rounds associated with that tournament
+        db.execSQL("DELETE FROM rounds WHERE round_tournament_id = " + tournament_id);
+
+        // Delete the matches associated with that tournament
+        db.execSQL("DELETE FROM matches WHERE match_tournament_id = " + tournament_id);
+
+        // Delete the match_team_scores associated with that tournament
+        db.execSQL("DELETE FROM match_team_scores WHERE match_team_score_tournament_id = " + tournament_id);
         // Close the database
         db.close();
     }
@@ -1007,7 +1018,7 @@ public class DBAdapter {
 
         // Insert the team
         db.execSQL("UPDATE teams SET format_position = " + formatPosition + " WHERE "
-                    + " team_tournament_id = " + team_tournament_id + " AND name = '" + teamName + "'");
+                + " team_tournament_id = " + team_tournament_id + " AND name = '" + teamName + "'");
 
         // Close the database
         db.close();
@@ -1219,10 +1230,13 @@ public class DBAdapter {
         DB dbHelper = new DB(context);
         SQLiteDatabase db = dbHelper.getWritableDatabase();
 
-        // Insert the team
-        db.execSQL("UPDATE match_team_scores SET score = " + score + ", isWinner = " + isWinner
+        try {
+            // Insert the team
+            db.execSQL("UPDATE match_team_scores SET score = " + score + ", isWinner = " + isWinner
                     + " WHERE match_team_score_team_id = " + team_id + " AND match_team_score_match_id = " + match_id);
-
+        }catch(Exception e) {
+            throw new IllegalArgumentException();
+        }
         // Close the database
         db.close();
     }
@@ -1512,7 +1526,7 @@ public class DBAdapter {
 
             c.moveToFirst();
             {
-                tournament_id = c.getInt(c.getColumnIndex("round_tournament_id"));
+                tournament_id = c.getInt(c.getColumnIndex("match_tournament_id"));
             }
         } catch (Exception e ) {
 
@@ -1524,5 +1538,64 @@ public class DBAdapter {
 
         // Return the number of teams
         return tournament_id;
+    }
+
+    public static int getMatchUpdated(Context context, int match_id) {
+
+        // Open the database
+        DB dbHelper = new DB(context);
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+
+        // Get the information
+        int updated = -1;
+
+        try {
+
+            Cursor c = db.rawQuery("SELECT * FROM matches WHERE match_id = " + match_id, null);
+
+            c.moveToFirst();
+            {
+                updated = c.getInt(c.getColumnIndex("updated"));
+            }
+        } catch (Exception e ) {
+
+            // Do nothing
+        }
+
+        // Close the database
+        db.close();
+
+        // Return the number of teams
+        return updated;
+    }
+
+    public static int getMatchTeamScore(Context context, int team_id, int match_id) {
+
+        // Open the database
+        DB dbHelper = new DB(context);
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+
+        // Get the information
+        int score = -1;
+
+        try {
+
+            Cursor c = db.rawQuery("SELECT * FROM match_team_scores WHERE "
+                    + "match_team_score_team_id = " + team_id + " AND match_team_score_match_id = " + match_id, null);
+
+            c.moveToFirst();
+            {
+                score = c.getInt(c.getColumnIndex("score"));
+            }
+        } catch (Exception e ) {
+
+            // Do nothing
+        }
+
+        // Close the database
+        db.close();
+
+        // Return the number of teams
+        return score;
     }
 }

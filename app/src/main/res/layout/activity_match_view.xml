@@ -66,10 +66,14 @@
                             android:layout_marginRight="8dp"
                             android:layout_weight="1" />
 
-                        <Space
+                        <TextView
                             android:layout_width="0dp"
                             android:layout_height="fill_parent"
-                            android:layout_weight="0.5" />
+                            android:text="vs."
+                            android:id="@+id/versusTextView"
+                            android:textSize="22sp"
+                            android:layout_weight="0.5"
+                            android:gravity="center_vertical|center_horizontal" />
 
                         <ImageView
                             android:layout_width="0dp"
@@ -128,7 +132,7 @@
                         <Space
                             android:layout_width="0dp"
                             android:layout_height="fill_parent"
-                            android:layout_weight="1" />
+                            android:layout_weight="0.3" />
 
                         <EditText
                             android:layout_width="0dp"
@@ -171,7 +175,7 @@
                         <Space
                             android:layout_width="0dp"
                             android:layout_height="fill_parent"
-                            android:layout_weight="1" />
+                            android:layout_weight="0.3" />
                     </LinearLayout>
                 </LinearLayout>
             </LinearLayout>

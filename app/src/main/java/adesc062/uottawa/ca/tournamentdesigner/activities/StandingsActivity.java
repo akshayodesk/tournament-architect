@@ -8,7 +8,9 @@ import android.view.View;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.TextView;
 
+import java.nio.channels.IllegalBlockingModeException;
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -25,12 +27,15 @@ public class StandingsActivity extends Activity {
     int tournament_id;
     int status;
     int formatType;
+    int editedRoundNum;
     TournamentFormat format;
     ArrayList<String> unsortedTeams;
     String[] teamNames;
     Integer[] teamLogos;
     Integer[] teamWinsForDisplay;
     ListView standings;
+    boolean roundWasComplete = false;
+    boolean tournamentWasComplete = false;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,17 +60,18 @@ public class StandingsActivity extends Activity {
         // If the format type is Round Robin
         if(formatType == 1) {
 
-            format = new RoundRobinFormat(tournament_id);
+            format = new RoundRobinFormat(getApplicationContext(), tournament_id);
         }
         // If the format type is Knockout
         else if(formatType == 2) {
 
-            format = new KnockoutFormat(tournament_id);
+            format = new KnockoutFormat(getApplicationContext(), tournament_id);
         }
         // If the format type is Combination
         else {
 
-            format = new CombinationFormat(tournament_id);
+            format = new CombinationFormat(getApplicationContext(), tournament_id);
+            formatType = 3;
         }
 
 
@@ -87,16 +93,54 @@ public class StandingsActivity extends Activity {
 
         // Update the standings
         updateStandings();
-    }
 
-    public void viewRoundsOnClick(View view) {
+        //TextView text = (TextView) findViewById(R.id.standingsTextView);
+        //text.setText(String.valueOf(format.currentRound));
+        //text.setText(String.valueOf(DBAdapter.getCurrentRound(getApplicationContext(), tournament_id)));
+        // Check if the tournament is complete
+        if(format.isTournamentComplete(getApplicationContext())) {
 
+            // Get the list of winners and display them
+            String[] winners = getWinners();
+            displayWinners(winners);
+
+            if(format.getJustSwitched() == false) {
+                DBAdapter.updateTournamentStatus(getApplicationContext(), tournament_id, 3);
+                tournamentWasComplete = true;
+            }
+        }
         // Determine if a new round must be generated
-        if(format.checkIsRoundComplete(getApplicationContext())) {
+        else if(format.checkIsRoundComplete(getApplicationContext())) {
 
             // Create the next round
             format.createNextRound(getApplicationContext(), tournament_id);
+            //text.setText(String.valueOf(DBAdapter.getCurrentRound(getApplicationContext(), tournament_id)));
+            roundWasComplete = true;
         }
+
+        // If we we just saved a match and the tournament is not complete, go to the rounds page
+        if(!tournamentWasComplete && getIntent().hasExtra("editedRoundNum")) {
+
+            int editedRoundNum = getIntent().getIntExtra("editedRoundNum", -2);
+            // Open the rounds page
+            Intent newIntent = new Intent(this, RoundActivity.class);
+            newIntent.putExtra("tournament_id", tournament_id);
+
+            boolean skip = false;
+
+            if(formatType == 3) {
+
+                skip = ((CombinationFormat) format).currentFormat.getJustSwitched();
+            }
+            // If the round was not complete, specify the round to travel to
+            if(!roundWasComplete && !skip)
+                newIntent.putExtra("editedRoundNum", editedRoundNum);
+
+            startActivity(newIntent);
+        }
+    }
+
+    public void viewRoundsOnClick(View view) {
 
         Intent intent = new Intent(this, RoundActivity.class);
         intent.putExtra("tournament_id", tournament_id);
@@ -171,8 +215,8 @@ public class StandingsActivity extends Activity {
             int highestValue = Collections.max(teamWins);
 
             // Iterate through the list of the index of first team with the highest number of wins
-            int k = j;
-            while(k <= teamWins.size() && teamWins.get(k) != highestValue) {
+            int k = 0;
+            while(k < teamWins.size() - 1 && teamWins.get(k) != highestValue) {
 
                 k++;
             }
@@ -224,5 +268,114 @@ public class StandingsActivity extends Activity {
                 teamNames, teamLogos, teamWinsForDisplay);
         standings = (ListView) findViewById(R.id.standingsListView);
         standings.setAdapter(adapter);
+    }
+
+    public String[] getWinners() {
+
+        // Get the team names, the team logos and number of wins for each team from the database
+        ArrayList<String> teamNamesArray = DBAdapter.getTeamNames(this.getApplicationContext(), tournament_id);
+
+        // Get the number of wins for each team
+        ArrayList<Integer> teamWins = new ArrayList<Integer>();
+        for (int i = 0; i < teamNamesArray.size(); i++) {
+
+            teamWins.add(i, DBAdapter.getTeamNumWin(getApplicationContext(), teamNamesArray.get(i), tournament_id));
+        }
+
+        // Only keep the highest wins Teams
+        int maxWins = Collections.max(teamWins);
+        ArrayList<Integer> winners = new ArrayList<Integer>();
+        ArrayList<String> sortedNamesArray = new ArrayList<>();
+        for (int g = 0; g < teamWins.size(); g++) {
+
+            if(teamWins.get(g) == maxWins) {
+                String currentHighestTeamName = teamNamesArray.get(g);
+                teamWins.remove(0);
+                sortedNamesArray.add(currentHighestTeamName);
+            }
+        }
+
+        /*
+        // Sort the arrays based on decreasing number of wins for each team
+        ArrayList<Integer> orderedIndexes = new ArrayList<>(); // Used to store the ordered indexes
+        for (int j = 0; j < teamNamesArray.size(); j++) {
+
+            int highestValue = Collections.max(teamWins);
+
+            // Iterate through the list of the index of first team with the highest number of wins
+            int k = 0;
+            while (k < teamWins.size() - 1 && teamWins.get(k) != highestValue) {
+
+                k++;
+            }
+
+            orderedIndexes.add(k);
+            teamWins.set(k, -1); // Change it to -1 to avoid getting the same value twice
+        } */
+
+        // Get the necessary team names
+        /*
+        ArrayList<String> sortedNamesArray = new ArrayList<>();
+        ArrayList<Integer> copyOrderedIndexes = new ArrayList<>(teamWins);
+        for(int l = 0; l < teamWins.size(); l++) {
+
+            String currentHighestTeamName = teamNamesArray.get(winners.get(0));
+            winners.remove(0);
+            sortedNamesArray.add(currentHighestTeamName);
+        } */
+
+        // Convert the team names to a String array
+        teamNames = new String[sortedNamesArray.size()];
+        teamNames = sortedNamesArray.toArray(teamNames);
+
+        // Return the array of winners
+        return teamNames;
+    }
+
+    private void displayWinners(String[] winners) {
+
+        // Pop up a dialog
+        final Dialog alertWinners = new Dialog(StandingsActivity.this);
+        alertWinners.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        alertWinners.setContentView(R.layout.custom_alert_ok);
+
+        /* Create the message */
+        String message = "Congratulations!" + "\n" + "\n";
+        // If only one team won
+        if(winners.length == 1) {
+
+            message = message + "The winner is " + winners[0] + "!";
+        }
+        // If multiple teams won
+        else {
+            message = message + "The winners of the tournament are ";
+            for (int i = 0; i < winners.length - 1; i++) {
+
+                message = message + winners[i] + ", ";
+            }
+            message = message + "and " + winners[winners.length - 1] + "!";
+        }
+
+        // Set the message
+        TextView winnersTextView = (TextView) alertWinners.findViewById(R.id.messageOkTextView);
+        winnersTextView.setText(message);
+
+        Button okButton = (Button) alertWinners.findViewById(R.id.okButton);
+
+        okButton.setOnClickListener(new View.OnClickListener() {
+
+            public void onClick(View v) {
+                alertWinners.dismiss();
+            }
+        });
+        alertWinners.show();
+    }
+
+    public void onBackPressed() {
+
+        // Go back to the home page and finish this activity
+        Intent intent = new Intent(this, LoadTournamentActivity.class);
+        startActivity(intent);
+        finish();
     }
 }

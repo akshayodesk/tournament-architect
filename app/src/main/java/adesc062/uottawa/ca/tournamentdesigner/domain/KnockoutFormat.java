@@ -8,36 +8,24 @@ import adesc062.uottawa.ca.tournamentdesigner.database.DBAdapter;
 
 public class KnockoutFormat extends TournamentFormat {
 
-	public KnockoutFormat(int tournament_id){
+	public KnockoutFormat(Context context, int tournament_id){
 
-		super(tournament_id);
-		//ignore the circuit pass, kept it for polymorphism
+		super(context, tournament_id); //ignore the circuit pass, kept it for polymorphism
 	}
 
-    /*
-	//override
-	protected boolean generateNextRound(){
-		//Removes half the teams if not first round (eliminate losers)
-		Tournament.sortByWins(formatTeams);
-		if(!rounds.isEmpty()){
-			int numberOfTeamsToRemove= formatTeams.size()/2-formatTeams.size()%2;
-			
-			//when size is 3, 3->1-1->0 removed, therefore it will never become less than 3
-			if(formatTeams.size()==3){
-				
-			}
-			for(int c=0;c<numberOfTeamsToRemove;c++)
-				formatTeams.removeLast();
-		}	
-		return super.generateNextRound();
-	}
+	public boolean isTournamentComplete(Context context){
 
-	*/
-	
-	public boolean checkIsTournamentComplete(){
+        int numTeams = DBAdapter.getNumTeamsForTournament(context, tournament_id);
 
-        return true;
-		//return (formatTeams.size()<3) && checkIsRoundComplete();
+        // Get the number of rounds to play
+        int currentRound = DBAdapter.getCurrentRound(context, tournament_id);
+        double logOfTeams = Math.log10(numTeams)/ Math.log10(2);
+        int wholeOfLogOfTeam = (int) logOfTeams;
+        if(logOfTeams - wholeOfLogOfTeam != 0) {
+            wholeOfLogOfTeam++;
+        }
+
+        return (currentRound >= wholeOfLogOfTeam) && checkIsRoundComplete(context);
 	}
 
     public void createNextRound(Context context, int tournament_id) {
@@ -50,20 +38,75 @@ public class KnockoutFormat extends TournamentFormat {
 
         // Get the current round number
         currentRound = DBAdapter.getCurrentRound(context, tournament_id);
+        double logOfTeams = Math.log10(size)/ Math.log10(2);
+        int wholeOfLogOfTeam = (int) logOfTeams;
+        if(logOfTeams - wholeOfLogOfTeam != 0) {
+            wholeOfLogOfTeam++;
+        }
+
+        // Handling Combination Format
+        /*
+        if(currentRound > orderedTeams.size() - 1) {
+
+            int numCircuits = DBAdapter.getTournamentNumRounds(context, tournament_id);
+            currentRound = currentRound - (orderedTeams.size() - 2) * numCircuits;
+        } */
 
         // If we need to create the current round
         if(currentRound > 0 ) {
 
-
-            /* Calculate the number of teams to remove */
-            int numberOfTeamsToRemove = size;
+            // Calculate the number of teams to remove
+            int numberOfTeamsToRemove = 0;
+            int tempSize;
 
             for(int i = 0; i < currentRound; i++) {
 
-                numberOfTeamsToRemove = numberOfTeamsToRemove/2;
+                tempSize = size/ 2;
+                size = size - tempSize;
+                numberOfTeamsToRemove += tempSize;
             }
 
-            size = size - numberOfTeamsToRemove;
+            ArrayList<String> teamNamesArray = DBAdapter.getTeamNames(context, tournament_id);
+
+            ArrayList<Integer> teamWins = new ArrayList<Integer>();
+            for(int i = 0; i < teamNamesArray.size(); i++) {
+
+                teamWins.add(i, DBAdapter.getTeamNumWin(context, teamNamesArray.get(i), tournament_id));
+            }
+
+            // Sort the arrays based on decreasing number of wins for each team
+            ArrayList<Integer> orderedIndexes = new ArrayList<>(); // Used to store the ordered indexes
+            for(int j = 0; j < teamNamesArray.size(); j++) {
+
+                int highestValue = Collections.max(teamWins);
+
+                // Iterate through the list of the index of first team with the highest number of wins
+                int k = 0;
+                while(k < teamWins.size() - 1 && teamWins.get(k) != highestValue) {
+
+                    k++;
+                }
+
+                orderedIndexes.add(k);
+                teamWins.set(k, -1); // Change it to -1 to avoid getting the same value twice
+            }
+
+            // Re-order the team names and the team logos
+            ArrayList<String> sortedNamesArray = new ArrayList<>();
+
+            for(int l = 0; l < teamNamesArray.size(); l++) {
+
+                String currentHighestTeamName = teamNamesArray.get(orderedIndexes.get(0));
+                orderedIndexes.remove(0);
+                sortedNamesArray.add(currentHighestTeamName);
+            }
+            orderedTeams = new ArrayList<>(sortedNamesArray);
+
+            // Remove the teams
+            for(int c = 0; c < numberOfTeamsToRemove; c++){
+
+                orderedTeams.remove(orderedTeams.size()-1);
+            }
         }
 
         // Call the create next round method from the superclass

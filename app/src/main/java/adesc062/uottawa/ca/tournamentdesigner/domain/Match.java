@@ -22,19 +22,21 @@ public class Match {
         // Create the match team scores
         MatchTeamScore matchTeamScore1 = new MatchTeamScore(context, team1, match_id, tournament_id);
 
-        // If the match is a bye
+        // If the match is not a bye
+
+
+        // If the match is a bye, make the team win against itself
         if(team1.equals(team2)) {
 
             // Update the association class to represent a win
-            matchTeamScore1.makeBye(context);
+             matchTeamScore1.makeBye(context);
 
             // Set the match to completed
-            updateMatch(context, match_id, team1, 0, team1, 0, tournament_id);
+            updateMatch(context, match_id, team1, 0, team1, 1, tournament_id);
         }
-        // If the match is not a bye
-        else {
-
+        else{
             MatchTeamScore matchTeamScore2 = new MatchTeamScore(context, team2, match_id, tournament_id);
+
         }
 	}
 
@@ -45,14 +47,16 @@ public class Match {
 
     public static void updateMatch(Context context, int match_id, String team1, int score1, String team2,
                               int score2, int tournament_id) {
-
+        //Redundant  because Byes are handled by updating on creation
         // Check if the match is a bye
         if(team1.equals(team2)) {
 
             DBAdapter.updateMatch(context, match_id);
         }
         // If the match is not a bye
+
         else {
+
 
             // Get the team id
             int team_id1 = DBAdapter.getTeamId(context, team1, tournament_id);
@@ -80,5 +84,8 @@ public class Match {
                 DBAdapter.updateMatchTeamScore(context, team_id2, match_id, score2, 1);
             }
         }
+
+        // Set the match to updated
+        DBAdapter.updateMatch(context, match_id);
     }
 }

@@ -11,12 +11,12 @@
         <TextView
             android:id="@+id/teamNameForStandingsTextView"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="fill_parent"
             android:textSize="18sp"
-            android:gravity="left|center_horizontal"
+            android:gravity="left|center_vertical|center_horizontal"
             android:layout_alignParentLeft="true"
-            android:layout_marginLeft="3sp"
-            android:layout_weight="1.5"
+            android:layout_marginLeft="0dp"
+            android:layout_weight="1"
             android:layout_gravity="center_vertical"
             android:text="Argentina" />
 
@@ -34,23 +34,25 @@
 
         <TextView
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="fill_parent"
             android:text="Wins:"
             android:id="@+id/winsIndicatorTextView"
             android:layout_gravity="center_vertical"
-            android:layout_weight="1"
+            android:layout_weight="0"
             android:textSize="18sp"
-            android:gravity="right" />
+            android:gravity="center_vertical|right"
+            android:layout_marginLeft="15sp" />
 
         <TextView
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="fill_parent"
             android:text="14"
             android:id="@+id/numberOfWinsTextView"
             android:layout_gravity="center_vertical"
-            android:layout_weight="1"
+            android:layout_weight="0"
             android:textSize="18sp"
-            android:gravity="center_vertical|center|center_horizontal|right" />
+            android:gravity="center_vertical|center|center_horizontal|right"
+            android:layout_marginLeft="15sp" />
 
     </LinearLayout>
 

@@ -23,261 +23,259 @@
             android:text="Choose Flag"
             android:id="@+id/chooseFlagTextView"
             android:layout_gravity="center_horizontal"
-            android:autoText="true"
+            android:autoText="false"
             android:textSize="22sp"
             android:layout_weight="0.1"
-            android:gravity="center" />
+            android:gravity="bottom|center"
+            android:enabled="true" />
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="2sp"
+            android:background="#E48700" />
 
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="fill_parent"
             android:layout_height="0dp"
-            android:background="#f51616"
-            android:layout_weight="0.9" >
+            android:background="#ffffff"
+            android:layout_weight="0.9"
+            android:layout_margin="5dp" >
 
             <LinearLayout
-                android:orientation="vertical"
+                android:orientation="horizontal"
                 android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
-                android:background="#ffffff"
-                android:layout_weight="0.9"
-                android:layout_margin="5dp" >
+                android:layout_height="0dp"
+                android:layout_weight="1">
 
-                <LinearLayout
-                    android:orientation="horizontal"
-                    android:layout_width="fill_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="1">
+                <ImageView
+                    android:layout_width="0dp"
+                    android:layout_height="fill_parent"
+                    android:id="@+id/afghanistanImageView"
+                    android:layout_columnWeight="1"
+                    android:layout_rowWeight="1"
+                    android:src="@drawable/afghanistan"
+                    android:layout_weight="1"
+                    android:onClick="onFlagClick" />
 
-                    <ImageView
-                        android:layout_width="0dp"
-                        android:layout_height="fill_parent"
-                        android:id="@+id/afghanistanImageView"
-                        android:layout_columnWeight="1"
-                        android:layout_rowWeight="1"
-                        android:src="@drawable/afghanistan"
-                        android:layout_weight="1"
-                        android:onClick="onFlagClick" />
+                <ImageView
+                    android:layout_width="0dp"
+                    android:layout_height="fill_parent"
+                    android:id="@+id/andorraImageView"
+                    android:layout_columnWeight="1"
+                    android:layout_rowWeight="1"
+                    android:src="@drawable/andorra"
+                    android:layout_weight="1"
+                    android:onClick="onFlagClick" />
 
-                    <ImageView
-                        android:layout_width="0dp"
-                        android:layout_height="fill_parent"
-                        android:id="@+id/andorraImageView"
-                        android:layout_columnWeight="1"
-                        android:layout_rowWeight="1"
-                        android:src="@drawable/andorra"
-                        android:layout_weight="1"
-                        android:onClick="onFlagClick" />
+                <ImageView
+                    android:layout_width="0dp"
+                    android:layout_height="fill_parent"
+                    android:id="@+id/argentinaImageView"
+                    android:layout_columnWeight="1"
+                    android:layout_rowWeight="1"
+                    android:src="@drawable/argentina"
+                    android:layout_weight="1"
+                    android:onClick="onFlagClick" />
 
-                    <ImageView
-                        android:layout_width="0dp"
-                        android:layout_height="fill_parent"
-                        android:id="@+id/argentinaImageView"
-                        android:layout_columnWeight="1"
-                        android:layout_rowWeight="1"
-                        android:src="@drawable/argentina"
-                        android:layout_weight="1"
-                        android:onClick="onFlagClick" />
+                <ImageView
+                    android:layout_width="0dp"
+                    android:layout_height="fill_parent"
+                    android:id="@+id/belgiumImageView"
+                    android:layout_columnWeight="1"
+                    android:layout_rowWeight="1"
+                    android:src="@drawable/belgium"
+                    android:layout_weight="1"
+                    android:onClick="onFlagClick" />
+            </LinearLayout>
 
-                    <ImageView
-                        android:layout_width="0dp"
-                        android:layout_height="fill_parent"
-                        android:id="@+id/belgiumImageView"
-                        android:layout_columnWeight="1"
-                        android:layout_rowWeight="1"
-                        android:src="@drawable/belgium"
-                        android:layout_weight="1"
-                        android:onClick="onFlagClick" />
-                </LinearLayout>
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="fill_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1">
 
-                <LinearLayout
-                    android:orientation="horizontal"
-                    android:layout_width="fill_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="1">
+                <ImageView
+                    android:layout_width="0dp"
+                    android:layout_height="fill_parent"
+                    android:id="@+id/brazilImageView"
+                    android:layout_columnWeight="1"
+                    android:layout_rowWeight="1"
+                    android:src="@drawable/brazil"
+                    android:layout_weight="1"
+                    android:onClick="onFlagClick" />
 
-                    <ImageView
-                        android:layout_width="0dp"
-                        android:layout_height="fill_parent"
-                        android:id="@+id/brazilImageView"
-                        android:layout_columnWeight="1"
-                        android:layout_rowWeight="1"
-                        android:src="@drawable/brazil"
-                        android:layout_weight="1"
-                        android:onClick="onFlagClick" />
+                <ImageView
+                    android:layout_width="0dp"
+                    android:layout_height="fill_parent"
+                    android:id="@+id/canadaImageView"
+                    android:layout_columnWeight="1"
+                    android:layout_rowWeight="1"
+                    android:src="@drawable/canada"
+                    android:layout_weight="1"
+                    android:onClick="onFlagClick" />
 
-                    <ImageView
-                        android:layout_width="0dp"
-                        android:layout_height="fill_parent"
-                        android:id="@+id/canadaImageView"
-                        android:layout_columnWeight="1"
-                        android:layout_rowWeight="1"
-                        android:src="@drawable/canada"
-                        android:layout_weight="1"
-                        android:onClick="onFlagClick" />
+                <ImageView
+                    android:layout_width="0dp"
+                    android:layout_height="fill_parent"
+                    android:id="@+id/chinaImageView"
+                    android:layout_columnWeight="1"
+                    android:layout_rowWeight="1"
+                    android:src="@drawable/china"
+                    android:layout_weight="1"
+                    android:onClick="onFlagClick" />
 
-                    <ImageView
-                        android:layout_width="0dp"
-                        android:layout_height="fill_parent"
-                        android:id="@+id/chinaImageView"
-                        android:layout_columnWeight="1"
-                        android:layout_rowWeight="1"
-                        android:src="@drawable/china"
-                        android:layout_weight="1"
-                        android:onClick="onFlagClick" />
+                <ImageView
+                    android:layout_width="0dp"
+                    android:layout_height="fill_parent"
+                    android:id="@+id/colombiaImageView"
+                    android:layout_columnWeight="1"
+                    android:layout_rowWeight="1"
+                    android:src="@drawable/colombia"
+                    android:layout_weight="1"
+                    android:onClick="onFlagClick" />
+            </LinearLayout>
 
-                    <ImageView
-                        android:layout_width="0dp"
-                        android:layout_height="fill_parent"
-                        android:id="@+id/colombiaImageView"
-                        android:layout_columnWeight="1"
-                        android:layout_rowWeight="1"
-                        android:src="@drawable/colombia"
-                        android:layout_weight="1"
-                        android:onClick="onFlagClick" />
-                </LinearLayout>
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="fill_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1">
 
-                <LinearLayout
-                    android:orientation="horizontal"
-                    android:layout_width="fill_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="1">
+                <ImageView
+                    android:layout_width="0dp"
+                    android:layout_height="fill_parent"
+                    android:id="@+id/englandImageView"
+                    android:layout_columnWeight="1"
+                    android:layout_rowWeight="1"
+                    android:src="@drawable/england"
+                    android:layout_weight="1"
+                    android:onClick="onFlagClick" />
 
-                    <ImageView
-                        android:layout_width="0dp"
-                        android:layout_height="fill_parent"
-                        android:id="@+id/englandImageView"
-                        android:layout_columnWeight="1"
-                        android:layout_rowWeight="1"
-                        android:src="@drawable/england"
-                        android:layout_weight="1"
-                        android:onClick="onFlagClick" />
+                <ImageView
+                    android:layout_width="0dp"
+                    android:layout_height="fill_parent"
+                    android:id="@+id/franceImageView"
+                    android:layout_columnWeight="1"
+                    android:layout_rowWeight="1"
+                    android:src="@drawable/france"
+                    android:layout_weight="1"
+                    android:onClick="onFlagClick" />
 
-                    <ImageView
-                        android:layout_width="0dp"
-                        android:layout_height="fill_parent"
-                        android:id="@+id/franceImageView"
-                        android:layout_columnWeight="1"
-                        android:layout_rowWeight="1"
-                        android:src="@drawable/france"
-                        android:layout_weight="1"
-                        android:onClick="onFlagClick" />
+                <ImageView
+                    android:layout_width="0dp"
+                    android:layout_height="fill_parent"
+                    android:id="@+id/germanyImageView"
+                    android:layout_columnWeight="1"
+                    android:layout_rowWeight="1"
+                    android:src="@drawable/germany"
+                    android:layout_weight="1"
+                    android:onClick="onFlagClick" />
 
-                    <ImageView
-                        android:layout_width="0dp"
-                        android:layout_height="fill_parent"
-                        android:id="@+id/germanyImageView"
-                        android:layout_columnWeight="1"
-                        android:layout_rowWeight="1"
-                        android:src="@drawable/germany"
-                        android:layout_weight="1"
-                        android:onClick="onFlagClick" />
+                <ImageView
+                    android:layout_width="0dp"
+                    android:layout_height="fill_parent"
+                    android:id="@+id/greeceImageView"
+                    android:layout_columnWeight="1"
+                    android:layout_rowWeight="1"
+                    android:src="@drawable/greece"
+                    android:layout_weight="1"
+                    android:onClick="onFlagClick" />
+            </LinearLayout>
 
-                    <ImageView
-                        android:layout_width="0dp"
-                        android:layout_height="fill_parent"
-                        android:id="@+id/greeceImageView"
-                        android:layout_columnWeight="1"
-                        android:layout_rowWeight="1"
-                        android:src="@drawable/greece"
-                        android:layout_weight="1"
-                        android:onClick="onFlagClick" />
-                </LinearLayout>
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="fill_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1">
 
-                <LinearLayout
-                    android:orientation="horizontal"
-                    android:layout_width="fill_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="1">
+                <ImageView
+                    android:layout_width="0dp"
+                    android:layout_height="fill_parent"
+                    android:id="@+id/hong_kongImageView"
+                    android:layout_columnWeight="1"
+                    android:layout_rowWeight="1"
+                    android:src="@drawable/hong_kong"
+                    android:layout_weight="1"
+                    android:onClick="onFlagClick" />
 
-                    <ImageView
-                        android:layout_width="0dp"
-                        android:layout_height="fill_parent"
-                        android:id="@+id/hong_kongImageView"
-                        android:layout_columnWeight="1"
-                        android:layout_rowWeight="1"
-                        android:src="@drawable/hong_kong"
-                        android:layout_weight="1"
-                        android:onClick="onFlagClick" />
+                <ImageView
+                    android:layout_width="0dp"
+                    android:layout_height="fill_parent"
+                    android:id="@+id/indiaImageView"
+                    android:layout_columnWeight="1"
+                    android:layout_rowWeight="1"
+                    android:src="@drawable/india"
+                    android:layout_weight="1"
+                    android:onClick="onFlagClick" />
 
-                    <ImageView
-                        android:layout_width="0dp"
-                        android:layout_height="fill_parent"
-                        android:id="@+id/indiaImageView"
-                        android:layout_columnWeight="1"
-                        android:layout_rowWeight="1"
-                        android:src="@drawable/india"
-                        android:layout_weight="1"
-                        android:onClick="onFlagClick" />
+                <ImageView
+                    android:layout_width="0dp"
+                    android:layout_height="fill_parent"
+                    android:id="@+id/italyImageView"
+                    android:layout_columnWeight="1"
+                    android:layout_rowWeight="1"
+                    android:src="@drawable/italy"
+                    android:layout_weight="1"
+                    android:onClick="onFlagClick" />
 
-                    <ImageView
-                        android:layout_width="0dp"
-                        android:layout_height="fill_parent"
-                        android:id="@+id/italyImageView"
-                        android:layout_columnWeight="1"
-                        android:layout_rowWeight="1"
-                        android:src="@drawable/italy"
-                        android:layout_weight="1"
-                        android:onClick="onFlagClick" />
+                <ImageView
+                    android:layout_width="0dp"
+                    android:layout_height="fill_parent"
+                    android:id="@+id/japanImageView"
+                    android:layout_columnWeight="1"
+                    android:layout_rowWeight="1"
+                    android:src="@drawable/japan"
+                    android:layout_weight="1"
+                    android:onClick="onFlagClick" />
+            </LinearLayout>
 
-                    <ImageView
-                        android:layout_width="0dp"
-                        android:layout_height="fill_parent"
-                        android:id="@+id/japanImageView"
-                        android:layout_columnWeight="1"
-                        android:layout_rowWeight="1"
-                        android:src="@drawable/japan"
-                        android:layout_weight="1"
-                        android:onClick="onFlagClick" />
-                </LinearLayout>
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="fill_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1">
 
-                <LinearLayout
-                    android:orientation="horizontal"
-                    android:layout_width="fill_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="1">
+                <ImageView
+                    android:layout_width="0dp"
+                    android:layout_height="fill_parent"
+                    android:id="@+id/mexicoImageView"
+                    android:layout_columnWeight="1"
+                    android:layout_rowWeight="1"
+                    android:src="@drawable/mexico"
+                    android:layout_weight="1"
+                    android:onClick="onFlagClick" />
 
-                    <ImageView
-                        android:layout_width="0dp"
-                        android:layout_height="fill_parent"
-                        android:id="@+id/mexicoImageView"
-                        android:layout_columnWeight="1"
-                        android:layout_rowWeight="1"
-                        android:src="@drawable/mexico"
-                        android:layout_weight="1"
-                        android:onClick="onFlagClick" />
+                <ImageView
+                    android:layout_width="0dp"
+                    android:layout_height="fill_parent"
+                    android:id="@+id/united_kingdomImageView"
+                    android:layout_columnWeight="1"
+                    android:layout_rowWeight="1"
+                    android:src="@drawable/united_kingdom"
+                    android:layout_weight="1"
+                    android:onClick="onFlagClick" />
 
-                    <ImageView
-                        android:layout_width="0dp"
-                        android:layout_height="fill_parent"
-                        android:id="@+id/united_kingdomImageView"
-                        android:layout_columnWeight="1"
-                        android:layout_rowWeight="1"
-                        android:src="@drawable/united_kingdom"
-                        android:layout_weight="1"
-                        android:onClick="onFlagClick" />
+                <ImageView
+                    android:layout_width="0dp"
+                    android:layout_height="fill_parent"
+                    android:id="@+id/united_statesImageView"
+                    android:layout_columnWeight="1"
+                    android:layout_rowWeight="1"
+                    android:src="@drawable/united_states"
+                    android:layout_weight="1"
+                    android:onClick="onFlagClick" />
 
-                    <ImageView
-                        android:layout_width="0dp"
-                        android:layout_height="fill_parent"
-                        android:id="@+id/united_statesImageView"
-                        android:layout_columnWeight="1"
-                        android:layout_rowWeight="1"
-                        android:src="@drawable/united_states"
-                        android:layout_weight="1"
-                        android:onClick="onFlagClick" />
-
-                    <ImageView
-                        android:layout_width="0dp"
-                        android:layout_height="fill_parent"
-                        android:id="@+id/tournamentdesignerImageView"
-                        android:layout_columnWeight="1"
-                        android:layout_rowWeight="1"
-                        android:src="@drawable/tournament_designer_logo"
-                        android:layout_weight="1"
-                        android:onClick="onFlagClick" />
-                </LinearLayout>
-
+                <ImageView
+                    android:layout_width="0dp"
+                    android:layout_height="fill_parent"
+                    android:id="@+id/tournamentdesignerImageView"
+                    android:layout_columnWeight="1"
+                    android:layout_rowWeight="1"
+                    android:src="@drawable/thirteenth_attempt"
+                    android:layout_weight="1"
+                    android:onClick="onFlagClick" />
             </LinearLayout>
 
         </LinearLayout>
