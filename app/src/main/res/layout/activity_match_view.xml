@@ -24,11 +24,18 @@
             android:gravity="center" />
 
         <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="2sp"
+            android:background="#E48700" />
+
+        <LinearLayout
             android:orientation="vertical"
             android:layout_width="fill_parent"
             android:layout_height="0dp"
-            android:background="#f51616"
-            android:layout_weight="0.5" >
+            android:background="#ffffff"
+            android:layout_weight="0.5"
+            android:layout_margin="0dp" >
 
             <LinearLayout
                 android:orientation="vertical"
@@ -39,144 +46,135 @@
                 android:layout_margin="5dp" >
 
                 <LinearLayout
-                    android:orientation="vertical"
+                    android:orientation="horizontal"
                     android:layout_width="fill_parent"
-                    android:layout_height="fill_parent"
-                    android:background="#ffffff"
-                    android:layout_weight="0"
-                    android:layout_margin="5dp" >
+                    android:layout_height="0dp"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_weight="0.2">
 
-                    <LinearLayout
-                        android:orientation="horizontal"
-                        android:layout_width="fill_parent"
-                        android:layout_height="0dp"
+                    <ImageView
+                        android:layout_width="0dp"
+                        android:layout_height="fill_parent"
+                        android:id="@+id/team1ImageView"
+                        android:src="@drawable/argentina"
+                        android:layout_rowWeight="0"
+                        android:layout_columnWeight="1"
                         android:layout_gravity="center_horizontal"
-                        android:layout_weight="0.2">
+                        android:layout_column="1"
+                        android:layout_row="0"
+                        android:layout_marginRight="8dp"
+                        android:layout_weight="1" />
 
-                        <ImageView
-                            android:layout_width="0dp"
-                            android:layout_height="fill_parent"
-                            android:id="@+id/team1ImageView"
-                            android:src="@drawable/argentina"
-                            android:layout_rowWeight="0"
-                            android:layout_columnWeight="1"
-                            android:layout_gravity="center_horizontal"
-                            android:layout_column="1"
-                            android:layout_row="0"
-                            android:layout_marginRight="8dp"
-                            android:layout_weight="1" />
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="fill_parent"
+                        android:text="vs."
+                        android:id="@+id/versusTextView"
+                        android:textSize="22sp"
+                        android:layout_weight="0.5"
+                        android:gravity="center_vertical|center_horizontal" />
 
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="fill_parent"
-                            android:text="vs."
-                            android:id="@+id/versusTextView"
-                            android:textSize="22sp"
-                            android:layout_weight="0.5"
-                            android:gravity="center_vertical|center_horizontal" />
+                    <ImageView
+                        android:layout_width="0dp"
+                        android:layout_height="fill_parent"
+                        android:id="@+id/team2ImageView"
+                        android:src="@drawable/colombia"
+                        android:layout_rowWeight="0"
+                        android:layout_columnWeight="1"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_row="0"
+                        android:layout_column="0"
+                        android:layout_weight="1" />
+                </LinearLayout>
 
-                        <ImageView
-                            android:layout_width="0dp"
-                            android:layout_height="fill_parent"
-                            android:id="@+id/team2ImageView"
-                            android:src="@drawable/colombia"
-                            android:layout_rowWeight="0"
-                            android:layout_columnWeight="1"
-                            android:layout_gravity="center_horizontal"
-                            android:layout_row="0"
-                            android:layout_column="0"
-                            android:layout_weight="1" />
-                    </LinearLayout>
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="fill_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="0.05">
 
-                    <LinearLayout
-                        android:orientation="horizontal"
-                        android:layout_width="fill_parent"
-                        android:layout_height="0dp"
-                        android:layout_weight="0.05">
-
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="fill_parent"
-                            android:text="Argentina"
-                            android:id="@+id/teamName1TextView"
-                            android:layout_weight="1"
-                            android:textSize="22sp"
-                            android:gravity="center|center_horizontal" />
-
-                        <Space
-                            android:layout_width="0dp"
-                            android:layout_height="fill_parent"
-                            android:layout_weight="0.5" />
-
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="fill_parent"
-                            android:text="Colombia"
-                            android:id="@+id/teamName2TextView"
-                            android:layout_weight="1"
-                            android:textSize="22sp"
-                            android:gravity="center|center_horizontal" />
-                    </LinearLayout>
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="fill_parent"
+                        android:text="Argentina"
+                        android:id="@+id/teamName1TextView"
+                        android:layout_weight="1"
+                        android:textSize="22sp"
+                        android:gravity="center|center_horizontal" />
 
                     <Space
-                        android:layout_width="fill_parent"
-                        android:layout_height="0dp"
-                        android:layout_weight="0.05" />
+                        android:layout_width="0dp"
+                        android:layout_height="fill_parent"
+                        android:layout_weight="0.5" />
 
-                    <LinearLayout
-                        android:orientation="horizontal"
-                        android:layout_width="fill_parent"
-                        android:layout_height="0dp"
-                        android:layout_weight="0.1">
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="fill_parent"
+                        android:text="Colombia"
+                        android:id="@+id/teamName2TextView"
+                        android:layout_weight="1"
+                        android:textSize="22sp"
+                        android:gravity="center|center_horizontal" />
+                </LinearLayout>
 
-                        <Space
-                            android:layout_width="0dp"
-                            android:layout_height="fill_parent"
-                            android:layout_weight="0.3" />
+                <Space
+                    android:layout_width="fill_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="0.05" />
 
-                        <EditText
-                            android:layout_width="0dp"
-                            android:layout_height="fill_parent"
-                            android:id="@+id/team1ScoreEditText"
-                            android:layout_gravity="center_horizontal"
-                            android:enabled="true"
-                            android:textIsSelectable="false"
-                            android:textSize="40sp"
-                            android:layout_weight="1"
-                            android:gravity="center_vertical|right"
-                            android:clickable="false"
-                            android:inputType="number"
-                            android:hint="0" />
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="fill_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="0.1">
 
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="fill_parent"
-                            android:text="-"
-                            android:id="@+id/dashTextView"
-                            android:textSize="50sp"
-                            android:gravity="center"
-                            android:layout_weight="1" />
+                    <Space
+                        android:layout_width="0dp"
+                        android:layout_height="fill_parent"
+                        android:layout_weight="0.3" />
 
-                        <EditText
-                            android:layout_width="0dp"
-                            android:layout_height="fill_parent"
-                            android:id="@+id/team2ScoreEditTExt"
-                            android:layout_gravity="center_horizontal"
-                            android:enabled="true"
-                            android:gravity="left|center_vertical"
-                            android:textSize="40sp"
-                            android:layout_weight="1"
-                            android:textIsSelectable="false"
-                            android:clickable="false"
-                            android:inputType="number"
-                            android:elegantTextHeight="false"
-                            android:hint="0" />
+                    <EditText
+                        android:layout_width="0dp"
+                        android:layout_height="fill_parent"
+                        android:id="@+id/team1ScoreEditText"
+                        android:layout_gravity="center_horizontal"
+                        android:enabled="true"
+                        android:textIsSelectable="false"
+                        android:textSize="40sp"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical|right"
+                        android:clickable="false"
+                        android:inputType="number"
+                        android:hint="0" />
 
-                        <Space
-                            android:layout_width="0dp"
-                            android:layout_height="fill_parent"
-                            android:layout_weight="0.3" />
-                    </LinearLayout>
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="fill_parent"
+                        android:text="-"
+                        android:id="@+id/dashTextView"
+                        android:textSize="50sp"
+                        android:gravity="center"
+                        android:layout_weight="1" />
+
+                    <EditText
+                        android:layout_width="0dp"
+                        android:layout_height="fill_parent"
+                        android:id="@+id/team2ScoreEditTExt"
+                        android:layout_gravity="center_horizontal"
+                        android:enabled="true"
+                        android:gravity="left|center_vertical"
+                        android:textSize="40sp"
+                        android:layout_weight="1"
+                        android:textIsSelectable="false"
+                        android:clickable="false"
+                        android:inputType="number"
+                        android:elegantTextHeight="false"
+                        android:hint="0" />
+
+                    <Space
+                        android:layout_width="0dp"
+                        android:layout_height="fill_parent"
+                        android:layout_weight="0.3" />
                 </LinearLayout>
             </LinearLayout>
         </LinearLayout>
@@ -191,7 +189,7 @@
             android:layout_height="0dp"
             android:text="Save "
             android:id="@+id/saveScoreButton"
-            android:background="#f51616"
+            android:background="#E48700"
             android:textColor="#ffffff"
             android:textSize="18sp"
             android:layout_weight="0.1"

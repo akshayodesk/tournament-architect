@@ -22,15 +22,9 @@
             android:layout_height="0dp"
             android:id="@+id/tournamentNameEditText"
             android:textSize="18sp"
-            android:layout_weight="0.08"
+            android:layout_weight="0.1"
             android:hint="Tournament Name"
-            android:background="#00000000"
             android:gravity="bottom|center_horizontal" />
-
-        <Space
-            android:layout_width="fill_parent"
-            android:layout_height="0dp"
-            android:layout_weight="0.02" />
 
         <TextView
             android:layout_width="fill_parent"
@@ -53,29 +47,47 @@
             android:id="@+id/teamsListView"
             tools:listitem="@android:layout/simple_expandable_list_item_1"
             android:textSize="10dp"
-            android:layout_weight="0.25" />
+            android:layout_weight="0.32" />
+
+        <Space
+            android:layout_width="fill_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.01" />
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.09">
+
+            <Space
+                android:layout_width="0dp"
+                android:layout_height="fill_parent"
+                android:layout_weight="1" />
+
+            <Button
+                android:layout_width="0dp"
+                android:layout_height="fill_parent"
+                android:text="Add Team"
+                android:id="@+id/addTeamButton"
+                android:layout_gravity="center_vertical"
+                android:background="#E48700"
+                android:textColor="#ffffff"
+                android:layout_weight="1"
+                android:textSize="18sp"
+                android:onClick="addTeamTournamentOnClick" />
+
+            <Space
+                android:layout_width="0dp"
+                android:layout_height="fill_parent"
+                android:layout_weight="1" />
+
+        </LinearLayout>
 
         <Space
             android:layout_width="fill_parent"
             android:layout_height="0dp"
             android:layout_weight="0.02" />
-
-        <Button
-            android:layout_width="fill_parent"
-            android:layout_height="0dp"
-            android:text="Add Team"
-            android:id="@+id/addTeamButton"
-            android:layout_gravity="center_vertical"
-            android:background="#E48700"
-            android:textColor="#ffffff"
-            android:layout_weight="0.09"
-            android:textSize="18sp"
-            android:onClick="addTeamTournamentOnClick" />
-
-        <Space
-            android:layout_width="fill_parent"
-            android:layout_height="0dp"
-            android:layout_weight="0.05" />
 
         <TextView
             android:layout_width="fill_parent"
@@ -154,7 +166,7 @@
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="0.8">
+                android:layout_weight="1">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -179,7 +191,7 @@
                     android:text="1"
                     android:textSize="18sp"
                     android:inputType="number"
-                    android:background="#00000000" />
+                    android:gravity="bottom" />
 
             </LinearLayout>
 

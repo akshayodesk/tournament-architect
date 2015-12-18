@@ -84,13 +84,10 @@ public class CreateTournamentActivity extends Activity {
     }
 
     /**
-     * Called whenever the user clicks the Save button.
      * Save the tournament name, format type and
      * number of rounds in the database.
-     *
-     * @param view the button that was clicked.
      */
-    public void saveOnClick(View view) {
+    private void saveData() {
 
         // Get the tournament name from the EditText
         EditText tournamentNameEditText = (EditText) findViewById(R.id.tournamentNameEditText);
@@ -114,11 +111,6 @@ public class CreateTournamentActivity extends Activity {
             EditText numRoundRobinEditText = (EditText) findViewById(R.id.numRoundsEditText);
             int numRoundRobins = Integer.parseInt(numRoundRobinEditText.getText().toString());
             DBAdapter.saveTournamentNumRounds(getApplicationContext(), numRoundRobins, tournament_id);
-
-
-            // Display a toast saying the data has been saveed
-            Toast.makeText(getApplicationContext(), "Tournament Saved",
-                    Toast.LENGTH_LONG).show();
 
             // If the tournament name is already in use
         }catch (IllegalArgumentException e) {
@@ -470,6 +462,17 @@ public class CreateTournamentActivity extends Activity {
                 startActivityForResult(intent, 0);
             }
         });
+    }
+
+    public void onBackPressed() {
+
+        // Save all the data
+        saveData();
+
+        // Finish activity and return
+        Intent returnIntent = new Intent();
+        setResult(RESULT_OK, returnIntent);
+        finish();
     }
 
 

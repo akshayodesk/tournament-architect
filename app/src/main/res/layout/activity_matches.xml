@@ -27,30 +27,20 @@
             android:gravity="center" />
 
         <LinearLayout
-            android:orientation="vertical"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="2sp"
+            android:background="#E48700" />
+
+        <ListView
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:background="#f51616"
-            android:layout_weight="0.9">
-
-            <LinearLayout
-                android:orientation="vertical"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:background="#FFFFFF"
-                android:layout_weight="0.9"
-                android:layout_margin="5sp">
-
-                <ListView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/matchesListView"
-                    android:layout_gravity="center_horizontal"
-                    tools:listitem="@android:layout/simple_list_item_1"
-                    android:background="#ffffff"
-                    android:layout_margin="5sp" />
-            </LinearLayout>
-        </LinearLayout>
+            android:id="@+id/matchesListView"
+            android:layout_gravity="center_horizontal"
+            tools:listitem="@android:layout/simple_list_item_1"
+            android:background="#ffffff"
+            android:layout_margin="0dp"
+            android:layout_weight="0.9" />
 
     </LinearLayout>
 
