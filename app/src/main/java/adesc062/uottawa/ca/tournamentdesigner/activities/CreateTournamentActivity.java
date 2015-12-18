@@ -32,6 +32,7 @@ public class CreateTournamentActivity extends Activity {
     String[] teamNames;
     Integer[] teamLogos; // These integer correspond to the resource IDs of the drawables
     ListView teamsList;
+    boolean deletingTeams = false;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,7 +42,7 @@ public class CreateTournamentActivity extends Activity {
         tournament_id = getIntent().getIntExtra("tournament_id", -1);
 
         // Set up the list of teams
-        setUpTeamsList();
+        setUpTeamsList(false);
 
         /* If the tournament was already created and is now being edited */
         if(getIntent().hasExtra("tournamentName")){ // If the intent passed a name, then the tournament is being edited
@@ -84,6 +85,56 @@ public class CreateTournamentActivity extends Activity {
         Intent intent = new Intent(this, EditTeamActivity.class);
         intent.putExtra("tournament_id", tournament_id);
         startActivityForResult(intent, 0);
+    }
+
+    public void deleteAndDoneTeamOnClick(View view) {
+
+        /* If we are setting up the teams list for deletion */
+        if (deletingTeams == false) {
+
+            // Set the deleting teams flag to true
+            deletingTeams = true;
+
+            // Set up the list of teams
+            setUpTeamsList(true);
+
+            // Set up on the onClick for the teams list for deleting
+            teamsList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                public void onItemClick(AdapterView<?> arg0, View view, int pos, long arg3) {
+
+                    // Get the team name
+                    TextView teamNameTextView = (TextView) view.findViewById(R.id.txt);
+                    String teamName = teamNameTextView.getText().toString();
+
+                    // Delete the team from the database
+                    DBAdapter.deleteTeam(getApplicationContext(), teamName, tournament_id);
+
+                    // Set the deleting teams flag to true
+                    deletingTeams = false;
+
+                    // Reset the teams list
+                    Button deleteAndDoneTeamButton = (Button) findViewById(R.id.deleteAndDoneTeamButton);
+                    deleteAndDoneTeamButton.performClick();
+                }
+            });
+
+            // Rename the button
+            Button deleteAndDoneTeamButton = (Button) findViewById(R.id.deleteAndDoneTeamButton);
+            deleteAndDoneTeamButton.setText("Done");
+        }
+        /* If we are setting up the teams list back to normal */
+        else {
+
+            // Set the deleting teams flag to true
+            deletingTeams = false;
+
+            // Set up the list of teams
+            setUpTeamsList(false);
+
+            // Rename the button
+            Button deleteAndDoneTeamButton = (Button) findViewById(R.id.deleteAndDoneTeamButton);
+            deleteAndDoneTeamButton.setText("Delete");
+        }
     }
 
     public void saveOnClick(View view) {
@@ -411,9 +462,15 @@ public class CreateTournamentActivity extends Activity {
      * @param data the intent that started this activity again.
      */
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (resultCode == RESULT_CANCELED) return;
 
-        setUpTeamsList();
+        setUpTeamsList(deletingTeams);
+
+        if (deletingTeams) {
+
+            // Reset the teams list
+            Button deleteAndDoneTeamOnClick = (Button) findViewById(R.id.deleteAndDoneTeamButton);
+            deleteAndDoneTeamOnClick.performClick();
+        }
     }
 
     /**
@@ -460,7 +517,7 @@ public class CreateTournamentActivity extends Activity {
      * whenever the user saves or deletes a team and not
      * when the user clicks the Save buton.
      */
-    private void setUpTeamsList() {
+    private void setUpTeamsList(boolean deleting) {
 
         /* Set up the list of teams */
         // Get the information from the database
@@ -477,7 +534,7 @@ public class CreateTournamentActivity extends Activity {
             teamLogos[i] = this.getResources().getIdentifier(teamLogosArray.get(i), "drawable", this.getPackageName());
         }
         // Create the teams list adapter and set it
-        CustomTeamsListViewAdapter adapter = new CustomTeamsListViewAdapter(CreateTournamentActivity.this, teamNames, teamLogos);
+        CustomTeamsListViewAdapter adapter = new CustomTeamsListViewAdapter(CreateTournamentActivity.this, teamNames, teamLogos, deleting);
         teamsList = (ListView) findViewById(R.id.teamsListView);
         teamsList.setAdapter(adapter);
 
@@ -511,76 +568,4 @@ public class CreateTournamentActivity extends Activity {
         setResult(RESULT_OK, returnIntent);
         finish();
     }
-
-
-    /*
-    public void onBackPressed() {
-
-        // If the user changed something
-        TextView numRoundsTextView = (TextView) findViewById(R.id.numRoundsTextView);
-        numRoundsTextView.setText(String.valueOf(checkIfUserChangedName()));
-
-        /*
-        // Ask the user for confirmation on saving changes
-        // Pop up a dialog
-        final Dialog alertConfirmDeletion = new Dialog(CreateTournamentActivity.this);
-        alertConfirmDeletion.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        alertConfirmDeletion.setContentView(R.layout.custom_alert_yes_not);
-
-        Button yesDeleteButton = (Button) alertConfirmDeletion.findViewById(R.id.yesDeleteButon);
-        Button noDeleteButton = (Button) alertConfirmDeletion.findViewById(R.id.noDeleteButon);
-
-        yesDeleteButton.setOnClickListener(new View.OnClickListener() {
-
-            // Delete the tournament and go
-            public void onClick(View v) {
-
-                // If we came from the Load Tournament Activity
-                if (getIntent().hasExtra("tournamentName")) {
-
-                    Intent intent = new Intent(getApplicationContext(), LoadTournamentActivity.class);
-                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    startActivity(intent);
-
-                    // If we came from the Home Activity
-                } else {
-
-                    Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
-                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    startActivity(intent);
-                }
-
-                DBAdapter.deleteTournament(getApplicationContext(), tournament_id);
-            }
-        });
-        noDeleteButton.setOnClickListener(new View.OnClickListener() {
-
-            // Dismiss the alert
-            public void onClick(View v) {
-
-                alertConfirmDeletion.dismiss();
-            }
-        });
-        alertConfirmDeletion.show();
-    }
-
-    /*
-    private boolean checkIfUserChangedName(){
-
-        // Get the original name
-        String originalName = DBAdapter.getTournamentName(getApplicationContext(), tournament_id);
-
-        // Get the current name
-        EditText currentNameTextView = (EditText) findViewById(R.id.tournamentNameEditText);
-        String currentName =  currentNameTextView.getText().toString();
-
-        if(!originalName.isEmpty() && originalName != null){
-            if(originalName.equals(currentName))
-                return false;
-            else
-                return true;
-        }else
-            return false;
-
-    } */
 }

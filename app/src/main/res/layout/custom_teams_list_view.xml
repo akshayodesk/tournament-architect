@@ -34,7 +34,7 @@
         <ImageView
             android:layout_width="20sp"
             android:layout_height="20sp"
-            android:id="@+id/arrowImageView"
+            android:id="@+id/indicatorImageView"
             android:src="@drawable/right_arrow"
             android:layout_weight="0"
             android:layout_gravity="center_vertical"

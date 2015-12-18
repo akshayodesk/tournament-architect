@@ -161,13 +161,13 @@
                     android:layout_width="fill_parent"
                     android:layout_height="0dp"
                     android:text="Delete"
-                    android:id="@+id/deleteTeamButton"
+                    android:id="@+id/deleteAndDoneTeamButton"
                     android:layout_gravity="center_vertical"
                     android:background="#E48700"
                     android:textColor="#ffffff"
                     android:layout_weight="1"
                     android:textSize="18sp"
-                    android:onClick="addTeamTournamentOnClick" />
+                    android:onClick="deleteAndDoneTeamOnClick" />
 
                 <Space
                     android:layout_width="fill_parent"

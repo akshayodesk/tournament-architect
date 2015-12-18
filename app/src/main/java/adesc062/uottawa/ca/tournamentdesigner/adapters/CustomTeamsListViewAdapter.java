@@ -20,14 +20,16 @@ public class CustomTeamsListViewAdapter extends ArrayAdapter<String> {
     private final Activity context;
     private final String[] teamNames;
     private final Integer[] logos; // These integer correspond to the resource IDs of the drawables
+    private boolean deleting;
 
-    public CustomTeamsListViewAdapter(Activity context, String[] teamNames, Integer[] logos) {
+    public CustomTeamsListViewAdapter(Activity context, String[] teamNames, Integer[] logos, boolean deleting) {
 
         super(context, R.layout.custom_teams_list_view, teamNames);
 
         this.context = context;
         this.teamNames = teamNames;
         this.logos = logos;
+        this.deleting = deleting;
     }
 
     public View getView(int position, View view, ViewGroup parent) {
@@ -44,7 +46,16 @@ public class CustomTeamsListViewAdapter extends ArrayAdapter<String> {
         ImageView imageView = (ImageView) rowView.findViewById(R.id.img);
         imageView.setImageResource(logos[position]);
 
+        // If we are in deleting mode, change the indicator
+        if (deleting) {
+
+            ImageView indicator = (ImageView) rowView.findViewById(R.id.indicatorImageView);
+            indicator.setImageResource(R.drawable.delete_x);
+        }
+
+
         // Return the view of the row
         return rowView;
+
     }
 }
