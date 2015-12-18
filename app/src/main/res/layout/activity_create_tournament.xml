@@ -19,75 +19,11 @@
 
         <EditText
             android:layout_width="fill_parent"
-            android:layout_height="0dp"
+            android:layout_height="wrap_content"
             android:id="@+id/tournamentNameEditText"
             android:textSize="18sp"
-            android:layout_weight="0.1"
             android:hint="Tournament Name"
             android:gravity="bottom|center_horizontal" />
-
-        <TextView
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:text="Teams"
-            android:id="@+id/textView"
-            android:textSize="18sp"
-            android:gravity="center_horizontal" />
-
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="2sp"
-            android:background="#E48700">
-        </LinearLayout>
-
-        <ListView
-            android:layout_width="fill_parent"
-            android:layout_height="0dp"
-            android:id="@+id/teamsListView"
-            tools:listitem="@android:layout/simple_expandable_list_item_1"
-            android:textSize="10dp"
-            android:layout_weight="0.32" />
-
-        <Space
-            android:layout_width="fill_parent"
-            android:layout_height="0dp"
-            android:layout_weight="0.01" />
-
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="fill_parent"
-            android:layout_height="0dp"
-            android:layout_weight="0.09">
-
-            <Space
-                android:layout_width="0dp"
-                android:layout_height="fill_parent"
-                android:layout_weight="1" />
-
-            <Button
-                android:layout_width="0dp"
-                android:layout_height="fill_parent"
-                android:text="Add Team"
-                android:id="@+id/addTeamButton"
-                android:layout_gravity="center_vertical"
-                android:background="#E48700"
-                android:textColor="#ffffff"
-                android:layout_weight="1"
-                android:textSize="18sp"
-                android:onClick="addTeamTournamentOnClick" />
-
-            <Space
-                android:layout_width="0dp"
-                android:layout_height="fill_parent"
-                android:layout_weight="1" />
-
-        </LinearLayout>
-
-        <Space
-            android:layout_width="fill_parent"
-            android:layout_height="0dp"
-            android:layout_weight="0.02" />
 
         <TextView
             android:layout_width="fill_parent"
@@ -95,7 +31,7 @@
             android:text="Format"
             android:id="@+id/textView2"
             android:textSize="18sp"
-            android:gravity="center_horizontal" />
+            android:gravity="bottom|center_horizontal" />
 
         <LinearLayout
             android:orientation="horizontal"
@@ -107,22 +43,16 @@
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_gravity="center_horizontal"
-            android:layout_weight="0.25">
-
-            <Space
-                android:layout_width="fill_parent"
-                android:layout_height="0dp"
-                android:layout_weight="0.025" />
+            android:layout_weight="0.3">
 
             <RadioGroup
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="2"
+                android:layout_weight="4"
                 android:id="@+id/formatTypeRadioGroup">
 
                 <RadioButton
-                    android:layout_width="wrap_content"
+                    android:layout_width="fill_parent"
                     android:layout_height="0dp"
                     android:text=" Round Robin"
                     android:id="@+id/roundRobinRadioButton"
@@ -138,7 +68,7 @@
                     android:onClick="roundRobinOnClick" />
 
                 <RadioButton
-                    android:layout_width="wrap_content"
+                    android:layout_width="fill_parent"
                     android:layout_height="0dp"
                     android:text=" Knockout"
                     android:id="@+id/knockoutRadioButton"
@@ -150,7 +80,7 @@
                     android:button="@drawable/custom_radio_button_btn_radio_holo_light" />
 
                 <RadioButton
-                    android:layout_width="wrap_content"
+                    android:layout_width="fill_parent"
                     android:layout_height="0dp"
                     android:text=" Combination"
                     android:id="@+id/combinationRadioButton"
@@ -165,12 +95,12 @@
             <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1">
+                android:layout_height="wrap_content"
+                android:layout_weight="0">
 
                 <TextView
                     android:layout_width="wrap_content"
-                    android:layout_height="fill_parent"
+                    android:layout_height="wrap_content"
                     android:text="# Round Robin Circuits:"
                     android:id="@+id/numRoundsTextView"
                     android:textSize="18sp"
@@ -190,12 +120,106 @@
                     android:layout_weight="0"
                     android:text="1"
                     android:textSize="18sp"
-                    android:inputType="number"
-                    android:gravity="bottom" />
+                    android:inputType="number" />
 
             </LinearLayout>
 
         </LinearLayout>
+
+        <Space
+            android:layout_width="fill_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.025" />
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.1">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:text="Teams"
+                android:id="@+id/textView"
+                android:textSize="18sp"
+                android:gravity="left|bottom"
+                android:layout_weight="0" />
+
+            <Space
+                android:layout_width="0dp"
+                android:layout_height="fill_parent"
+                android:layout_weight="2" />
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="0dp"
+                android:layout_height="fill_parent"
+                android:layout_weight="1" >
+
+                <Button
+                    android:layout_width="fill_parent"
+                    android:layout_height="0dp"
+                    android:text="Delete"
+                    android:id="@+id/deleteTeamButton"
+                    android:layout_gravity="center_vertical"
+                    android:background="#E48700"
+                    android:textColor="#ffffff"
+                    android:layout_weight="1"
+                    android:textSize="18sp"
+                    android:onClick="addTeamTournamentOnClick" />
+
+                <Space
+                    android:layout_width="fill_parent"
+                    android:layout_height="2sp"
+                    android:layout_weight="0" />
+            </LinearLayout>
+
+            <Space
+                android:layout_width="5sp"
+                android:layout_height="fill_parent"
+                android:layout_weight="0" />
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="0dp"
+                android:layout_height="fill_parent"
+                android:layout_weight="1">
+
+                <Button
+                    android:layout_width="fill_parent"
+                    android:layout_height="0dp"
+                    android:text="Add"
+                    android:id="@+id/addTeamButton"
+                    android:layout_gravity="center_vertical"
+                    android:background="#E48700"
+                    android:textColor="#ffffff"
+                    android:layout_weight="1"
+                    android:textSize="18sp"
+                    android:onClick="addTeamTournamentOnClick" />
+
+                <Space
+                    android:layout_width="fill_parent"
+                    android:layout_height="2sp"
+                    android:layout_weight="0" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="2sp"
+            android:background="#E48700">
+        </LinearLayout>
+
+        <ListView
+            android:layout_width="fill_parent"
+            android:layout_height="0dp"
+            android:id="@+id/teamsListView"
+            tools:listitem="@android:layout/simple_expandable_list_item_1"
+            android:textSize="10dp"
+            android:layout_weight="0.35" />
 
         <Space
             android:layout_width="fill_parent"
@@ -205,34 +229,52 @@
         <Button
             android:layout_width="fill_parent"
             android:layout_height="0dp"
-            android:text="Delete Tournament"
-            android:id="@+id/deleteTournamentButton"
-            android:background="#E48700"
-            android:textColor="#ffffff"
-            android:textSize="18sp"
-            android:layout_weight="0.09"
-            android:onClick="deleteOnClick" />
-
-        <Space
-            android:layout_width="fill_parent"
-            android:layout_height="0dp"
-            android:layout_weight="0.02" />
-
-        <Button
-            android:layout_width="fill_parent"
-            android:layout_height="0dp"
             android:text="Start Tournament"
             android:id="@+id/startTournamentButton"
             android:background="#E48700"
             android:textColor="#ffffff"
             android:textSize="18sp"
-            android:layout_weight="0.09"
+            android:layout_weight="0.1"
             android:onClick="startOnClick" />
 
         <Space
             android:layout_width="fill_parent"
             android:layout_height="0dp"
-            android:layout_weight="0.02" />
+            android:layout_weight="0.01" />
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.1">
+
+            <Button
+                android:layout_width="0dp"
+                android:layout_height="fill_parent"
+                android:text="Delete"
+                android:id="@+id/deleteTournamentButton"
+                android:background="#E48700"
+                android:textColor="#ffffff"
+                android:textSize="18sp"
+                android:layout_weight="1"
+                android:onClick="deleteOnClick" />
+
+            <Space
+                android:layout_width="5sp"
+                android:layout_height="fill_parent"
+                android:layout_weight="0" />
+
+            <Button
+                android:layout_width="0dp"
+                android:layout_height="fill_parent"
+                android:text="Save"
+                android:id="@+id/saveTournamentButton"
+                android:background="#E48700"
+                android:textColor="#ffffff"
+                android:textSize="18sp"
+                android:layout_weight="1"
+                android:onClick="saveOnClick" />
+        </LinearLayout>
 
     </LinearLayout>
 

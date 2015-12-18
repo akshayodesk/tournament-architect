@@ -4,7 +4,10 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -83,11 +86,37 @@ public class CreateTournamentActivity extends Activity {
         startActivityForResult(intent, 0);
     }
 
+    public void saveOnClick(View view) {
+
+        // Save all the user entered data
+        if (saveData()) {
+
+            // If the data was saved successfully
+            // Display a toast informing the user the data has been saved
+            LayoutInflater inflater = getLayoutInflater();
+            View layout = inflater.inflate(R.layout.custom_toast,
+                    (ViewGroup) findViewById(R.id.custom_toast_layout_id));
+
+            // Set the message
+            TextView text = (TextView) layout.findViewById(R.id.text);
+            text.setText("Tournament Saved");
+
+            // Set up the toast
+            Toast toast = new Toast(getApplicationContext());
+            toast.setGravity(Gravity.CENTER_VERTICAL, 0, 0);
+            toast.setDuration(Toast.LENGTH_LONG);
+            toast.setView(layout);
+            toast.show();
+        }
+    }
+
     /**
      * Save the tournament name, format type and
      * number of rounds in the database.
+     *
+     * @return boolean representing whether the data was saved successfully
      */
-    private void saveData() {
+    private boolean saveData() {
 
         // Get the tournament name from the EditText
         EditText tournamentNameEditText = (EditText) findViewById(R.id.tournamentNameEditText);
@@ -112,6 +141,9 @@ public class CreateTournamentActivity extends Activity {
             int numRoundRobins = Integer.parseInt(numRoundRobinEditText.getText().toString());
             DBAdapter.saveTournamentNumRounds(getApplicationContext(), numRoundRobins, tournament_id);
 
+            // If the data was saved sucessfully, return true
+            return true;
+
             // If the tournament name is already in use
         }catch (IllegalArgumentException e) {
 
@@ -134,6 +166,9 @@ public class CreateTournamentActivity extends Activity {
             });
             alertTournamentNameAlreadyInUse.show();
 
+            // Return false because the data was not saved
+            return false;
+
             // If the tournament name is empty
         }catch (NullPointerException e) {
 
@@ -155,6 +190,8 @@ public class CreateTournamentActivity extends Activity {
                 }
             });
             alertTournamentNameEmpty.show();
+
+            return false;
         }
     }
 
