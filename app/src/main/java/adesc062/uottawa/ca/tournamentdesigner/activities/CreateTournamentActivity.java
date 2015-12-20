@@ -109,10 +109,10 @@ public class CreateTournamentActivity extends Activity {
                     // Delete the team from the database
                     DBAdapter.deleteTeam(getApplicationContext(), teamName, tournament_id);
 
-                    // Set the deleting teams flag to true
+                    // Set the deleting teams flag to false
                     deletingTeams = false;
 
-                    // Reset the teams list
+                    // Reset the teams list by pressing the button dynamically
                     Button deleteAndDoneTeamButton = (Button) findViewById(R.id.deleteAndDoneTeamButton);
                     deleteAndDoneTeamButton.performClick();
                 }
@@ -534,7 +534,8 @@ public class CreateTournamentActivity extends Activity {
             teamLogos[i] = this.getResources().getIdentifier(teamLogosArray.get(i), "drawable", this.getPackageName());
         }
         // Create the teams list adapter and set it
-        CustomTeamsListViewAdapter adapter = new CustomTeamsListViewAdapter(CreateTournamentActivity.this, teamNames, teamLogos, deleting);
+        CustomTeamsListViewAdapter adapter = new CustomTeamsListViewAdapter(CreateTournamentActivity.this,
+                teamNames, teamLogos, deleting);
         teamsList = (ListView) findViewById(R.id.teamsListView);
         teamsList.setAdapter(adapter);
 
@@ -564,8 +565,6 @@ public class CreateTournamentActivity extends Activity {
         saveData();
 
         // Finish activity and return
-        Intent returnIntent = new Intent();
-        setResult(RESULT_OK, returnIntent);
         finish();
     }
 }

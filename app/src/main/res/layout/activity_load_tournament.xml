@@ -37,7 +37,22 @@
             android:layout_gravity="center_horizontal"
             android:background="#ffffff"
             android:layout_margin="0dp"
-            android:layout_weight="0.9" />
+            android:layout_weight="0.8" />
+
+        <Space
+            android:layout_width="fill_parent"
+            android:layout_height="2sp" />
+
+        <Button
+            android:layout_width="fill_parent"
+            android:layout_height="0dp"
+            android:text="Delete"
+            android:id="@+id/deleteAndDoneTournamentButton"
+            android:background="#E48700"
+            android:textColor="#ffffff"
+            android:textSize="18sp"
+            android:layout_weight="0.1"
+            android:onClick="deleteAndDoneTournamentOnClick" />
 
     </LinearLayout>
 </RelativeLayout>

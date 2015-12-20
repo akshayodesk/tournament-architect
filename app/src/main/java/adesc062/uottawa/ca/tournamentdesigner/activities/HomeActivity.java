@@ -38,7 +38,7 @@ public class HomeActivity extends Activity {
 
         Intent intent = new Intent(this, CreateTournamentActivity.class);
         intent.putExtra("tournament_id", tournament_id);
-        startActivity(intent);
+        startActivityForResult(intent, 1);
     }
 
     /**
@@ -51,18 +51,6 @@ public class HomeActivity extends Activity {
     public void loadTournamentOnClick(View view) {
 
         Intent intent = new Intent(this, LoadTournamentActivity.class);
-        startActivity(intent);
-    }
-
-    /**
-     * Called whenever the user clicks the Help button.
-     * Brings up the Help page.
-     * The Help page has instructions on how to use the application.
-     *
-     * @param view the View that was clicked.
-     */
-    public void helpButtonOnClick(View view) {
-        Intent intent = new Intent(this, HelpActivity.class);
-        startActivity(intent);
+        startActivityForResult(intent, 1);
     }
 }

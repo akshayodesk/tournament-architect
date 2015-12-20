@@ -33,7 +33,7 @@
         <ImageView
             android:layout_width="22sp"
             android:layout_height="22sp"
-            android:id="@+id/tournamentsListViewRightArrow"
+            android:id="@+id/tournamentsModeIndicator"
             android:src="@drawable/right_arrow"
             android:layout_weight="0"
             android:layout_gravity="center_vertical"

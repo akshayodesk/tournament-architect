@@ -27,7 +27,6 @@ public class StandingsActivity extends Activity {
     int tournament_id;
     int status;
     int formatType;
-    int editedRoundNum;
     TournamentFormat format;
     ArrayList<String> unsortedTeams;
     String[] teamNames;
