@@ -10,12 +10,26 @@
 
         <TextView
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="fill_parent"
             android:id="@+id/roundNameIndividualTextView"
             android:textSize="18sp"
             android:text="Sample"
             android:layout_weight="1"
-            android:layout_gravity="center_vertical" />
+            android:layout_gravity="center_vertical"
+            android:gravity="center_vertical"
+            android:textColor="#7F000000" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:text="Finished"
+            android:id="@+id/roundStatusTextView"
+            android:gravity="center_vertical"
+            android:layout_marginRight="5sp"
+            android:textStyle="italic"
+            android:textSize="18sp"
+            android:allowUndo="false"
+            android:textColor="#7F000000" />
 
         <ImageView
             android:layout_width="18sp"
@@ -24,8 +38,8 @@
             android:src="@drawable/right_arrow"
             android:layout_weight="0"
             android:layout_gravity="center_vertical"
-            android:layout_marginTop="2sp"
-            android:layout_marginBottom="2sp"
+            android:layout_marginTop="4sp"
+            android:layout_marginBottom="4sp"
             android:contextClickable="false"
             android:layout_marginRight="0dp" />
     </LinearLayout>

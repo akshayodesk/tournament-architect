@@ -14,17 +14,19 @@ import adesc062.uottawa.ca.tournamentdesigner.database.DBAdapter;
 
 public class RoundActivity extends Activity {
 
-    int tournament_id;
-    int editedRoundNum;
+    private int tournament_id;
+    private int editedRoundNum;
+    private int tournamentStatus;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_round);
 
-        // Get the tournament id
+        // Get the tournament info
         Intent intent = getIntent();
         tournament_id = intent.getIntExtra("tournament_id", 0);
         editedRoundNum = intent.getIntExtra("editedRoundNum", -1);
+        tournamentStatus = DBAdapter.getTournamentStatus(getApplicationContext(), tournament_id);
 
         // Set up the list of rounds
         updateRounds();
@@ -43,7 +45,8 @@ public class RoundActivity extends Activity {
         }
 
         // Create the rounds list adapter and set it
-        CustomRoundsListViewAdapter adapter = new CustomRoundsListViewAdapter(RoundActivity.this, roundNames);
+        CustomRoundsListViewAdapter adapter = new CustomRoundsListViewAdapter(RoundActivity.this,
+                roundNames, tournamentStatus);
         ListView roundsListView = (ListView) findViewById(R.id.roundsListView);
         roundsListView.setAdapter(adapter);
 
