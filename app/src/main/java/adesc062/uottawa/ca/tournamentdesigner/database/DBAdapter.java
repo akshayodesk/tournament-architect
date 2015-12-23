@@ -1306,7 +1306,7 @@ public class DBAdapter {
         SQLiteDatabase db = dbHelper.getReadableDatabase();
 
         // Get the information
-        int numRounds = 3;
+        int numRounds = -1;
 
         try {
 
@@ -1328,7 +1328,7 @@ public class DBAdapter {
         return numRounds;
     }
 
-    public static ArrayList<Integer> getMatchesUpdatedValues(Context context, int currentRound) {
+    public static ArrayList<Integer> getMatchesUpdatedValues(Context context, int currentRound, int match_tournament_id) {
 
         // Open the database
         DB dbHelper = new DB(context);
@@ -1339,7 +1339,8 @@ public class DBAdapter {
 
         try {
 
-            Cursor c = db.rawQuery("SELECT * FROM matches WHERE match_round_id = " + currentRound, null);
+            Cursor c = db.rawQuery("SELECT * FROM matches WHERE match_round_id = " + currentRound
+                    + " AND match_tournament_id = " + match_tournament_id, null);
 
             while (c.moveToNext())
             {
@@ -1356,36 +1357,6 @@ public class DBAdapter {
 
         // Return the list of the status
         return matchesUpdatedValues;
-    }
-
-    public static int getRoundID(Context context, int pos, int tournament_id) {
-
-        // Open the database
-        DB dbHelper = new DB(context);
-        SQLiteDatabase db = dbHelper.getReadableDatabase();
-
-        // Get the information
-        ArrayList<Integer> roundsArray = new ArrayList<>();
-
-        try {
-
-            Cursor c = db.rawQuery("SELECT * FROM rounds WHERE round_tournament_id = " + tournament_id, null);
-
-            while (c.moveToNext())
-            {
-                roundsArray.add(c.getInt(c.getColumnIndex("round_id")));
-
-            }
-        } catch (Exception e ) {
-
-            // Do nothing
-        }
-
-        // Close the database
-        db.close();
-
-        // Return the list of the status
-        return roundsArray.get(pos);
     }
 
     public static ArrayList<Integer> getRoundMatchIDs(Context context, int round_id) {
@@ -1448,7 +1419,7 @@ public class DBAdapter {
         return teamIDs;
     }
 
-    public static int getCurrentRoundID(Context context, int currentRound, int tournament_id) {
+    public static int getRoundID(Context context, int roundNum, int tournament_id) {
 
         // Open the database
         DB dbHelper = new DB(context);
@@ -1473,7 +1444,41 @@ public class DBAdapter {
         }
 
         // Get the current round id
-        currentRoundID = roundIDs.get(currentRound);
+        currentRoundID = roundIDs.get(roundNum);
+
+        // Close the database
+        db.close();
+
+        // Return the list of the status
+        return currentRoundID;
+    }
+
+    public static int getCurrentRoundID(Context context, int tournament_id) {
+
+        // Open the database
+        DB dbHelper = new DB(context);
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+
+        // Get the information
+        ArrayList<Integer> roundIDs = new ArrayList<>();
+        int currentRoundID = -1;
+
+        try {
+
+            Cursor c = db.rawQuery("SELECT * FROM rounds WHERE round_tournament_id = " + tournament_id, null);
+
+            while (c.moveToNext())
+            {
+                roundIDs.add(c.getInt(c.getColumnIndex("round_id")));
+
+            }
+        } catch (Exception e ) {
+
+            // Do nothing
+        }
+
+        // Get the current round id
+        currentRoundID = roundIDs.get(roundIDs.size() - 1);
 
         // Close the database
         db.close();

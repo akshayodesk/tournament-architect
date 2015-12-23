@@ -20,7 +20,7 @@
         <TextView
             android:layout_width="fill_parent"
             android:layout_height="0dp"
-            android:text="Choose Flag"
+            android:text="Choose Logo"
             android:id="@+id/chooseFlagTextView"
             android:layout_gravity="center_horizontal"
             android:autoText="false"

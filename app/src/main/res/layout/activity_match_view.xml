@@ -147,14 +147,40 @@
                         android:inputType="number"
                         android:hint="0" />
 
-                    <TextView
+                    <Space
                         android:layout_width="0dp"
                         android:layout_height="fill_parent"
-                        android:text="-"
-                        android:id="@+id/dashTextView"
-                        android:textSize="50sp"
-                        android:gravity="center"
-                        android:layout_weight="1" />
+                        android:layout_weight="0.3" />
+
+                    <LinearLayout
+                        android:orientation="vertical"
+                        android:layout_width="0dp"
+                        android:layout_height="fill_parent"
+                        android:layout_weight="0.3">
+
+                        <Space
+                            android:layout_width="fill_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="1" />
+
+                        <LinearLayout
+                            android:orientation="horizontal"
+                            android:layout_width="fill_parent"
+                            android:layout_height="0dp"
+                            android:background="#cc040404"
+                            android:layout_weight="0.1"
+                            android:id="@+id/dashLayout"></LinearLayout>
+
+                        <Space
+                            android:layout_width="fill_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="1" />
+                    </LinearLayout>
+
+                    <Space
+                        android:layout_width="0dp"
+                        android:layout_height="fill_parent"
+                        android:layout_weight="0.3" />
 
                     <EditText
                         android:layout_width="0dp"

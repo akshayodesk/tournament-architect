@@ -171,10 +171,10 @@ public class CombinationFormat extends TournamentFormat {
 
         if(isKnockout) {
 
-            matchesUpdatedValues = DBAdapter.getMatchesUpdatedValues(context, currentRound);
+            matchesUpdatedValues = DBAdapter.getMatchesUpdatedValues(context, currentRound, tournament_id);
         }
         else {
-            matchesUpdatedValues = DBAdapter.getMatchesUpdatedValues(context, currentRound);
+            matchesUpdatedValues = DBAdapter.getMatchesUpdatedValues(context, currentRound, tournament_id);
         }
 
         // Go through the list and check if a match has not yet been updated

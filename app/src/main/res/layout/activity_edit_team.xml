@@ -12,8 +12,9 @@
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_centerHorizontal="true"
-        android:layout_alignParentTop="true">
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
 
         <TextView
             android:layout_width="fill_parent"
@@ -58,7 +59,7 @@
         <Space
             android:layout_width="fill_parent"
             android:layout_height="0dp"
-            android:layout_weight="0.1" />
+            android:layout_weight="0.05" />
 
         <Button
             android:layout_width="fill_parent"
@@ -67,14 +68,14 @@
             android:id="@+id/saveTeamButton"
             android:background="#E48700"
             android:textColor="#ffffff"
-            android:layout_weight="0.08"
+            android:layout_weight="0.1"
             android:textSize="18sp"
             android:onClick="saveOnClick" />
 
         <Space
             android:layout_width="fill_parent"
             android:layout_height="0dp"
-            android:layout_weight="0.025" />
+            android:layout_weight="0.01" />
 
         <Button
             android:layout_width="fill_parent"
@@ -83,7 +84,7 @@
             android:id="@+id/deleteTeamButton"
             android:background="#E48700"
             android:textColor="#ffffff"
-            android:layout_weight="0.08"
+            android:layout_weight="0.1"
             android:textSize="18sp"
             android:onClick="deleteOnClick" />
 

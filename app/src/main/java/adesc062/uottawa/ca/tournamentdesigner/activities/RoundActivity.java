@@ -84,5 +84,4 @@ public class RoundActivity extends Activity {
             startActivity(newIntent);
         }
     }
-
 }

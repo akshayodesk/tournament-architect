@@ -73,7 +73,6 @@ public class StandingsActivity extends Activity {
             formatType = 3;
         }
 
-
         // If the tournament has just been started
         if(status == 1) {
 
@@ -93,9 +92,6 @@ public class StandingsActivity extends Activity {
         // Update the standings
         updateStandings();
 
-        //TextView text = (TextView) findViewById(R.id.standingsTextView);
-        //text.setText(String.valueOf(format.currentRound));
-        //text.setText(String.valueOf(DBAdapter.getCurrentRound(getApplicationContext(), tournament_id)));
         // Check if the tournament is complete
         if(format.isTournamentComplete(getApplicationContext())) {
 
@@ -113,7 +109,7 @@ public class StandingsActivity extends Activity {
 
             // Create the next round
             format.createNextRound(getApplicationContext(), tournament_id);
-            //text.setText(String.valueOf(DBAdapter.getCurrentRound(getApplicationContext(), tournament_id)));
+
             roundWasComplete = true;
         }
 
@@ -121,6 +117,7 @@ public class StandingsActivity extends Activity {
         if(!tournamentWasComplete && getIntent().hasExtra("editedRoundNum")) {
 
             int editedRoundNum = getIntent().getIntExtra("editedRoundNum", -2);
+
             // Open the rounds page
             Intent newIntent = new Intent(this, RoundActivity.class);
             newIntent.putExtra("tournament_id", tournament_id);

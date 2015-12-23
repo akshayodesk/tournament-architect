@@ -44,14 +44,6 @@ public class KnockoutFormat extends TournamentFormat {
             wholeOfLogOfTeam++;
         }
 
-        // Handling Combination Format
-        /*
-        if(currentRound > orderedTeams.size() - 1) {
-
-            int numCircuits = DBAdapter.getTournamentNumRounds(context, tournament_id);
-            currentRound = currentRound - (orderedTeams.size() - 2) * numCircuits;
-        } */
-
         // If we need to create the current round
         if(currentRound > 0 ) {
 

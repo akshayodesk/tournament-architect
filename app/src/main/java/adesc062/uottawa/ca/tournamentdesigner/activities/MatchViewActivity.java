@@ -4,13 +4,16 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.media.Image;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.animation.LinearInterpolator;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.view.*;
 
@@ -40,7 +43,6 @@ public class MatchViewActivity extends Activity {
         Intent intent = getIntent();
         roundNum = intent.getIntExtra("roundNum", -2);
 
-
         // Initialize the views
         TextView teamName1TextView = (TextView) findViewById(R.id.teamName1TextView);
         TextView teamName2TextView = (TextView) findViewById(R.id.teamName2TextView);
@@ -64,6 +66,7 @@ public class MatchViewActivity extends Activity {
 
         // If the match was updated, then get the scores for both teams
         // And disable score saving
+        // And reduce the opacity
         int updated = DBAdapter.getMatchUpdated(getApplicationContext(), match_id);
         if(updated == 1) {
 
@@ -84,6 +87,23 @@ public class MatchViewActivity extends Activity {
             // Disable the edit texts
             team1ScoreEditText.setEnabled(false);
             team2ScoreEditText.setEnabled(false);
+
+            // Reduce the opacity
+            teamName1TextView.setTextColor(Color.parseColor("#80000000"));
+            teamName2TextView.setTextColor(Color.parseColor("#80000000"));
+            team1ImageView.setAlpha(0.5f);
+            team2ImageView.setAlpha(0.5f);
+            team1ScoreEditText.setAlpha(0.5f);
+            team2ScoreEditText.setAlpha(0.5f);
+
+            TextView versusTextView = (TextView) findViewById(R.id.versusTextView);
+            versusTextView.setTextColor(Color.parseColor("#80000000"));
+
+            LinearLayout dashLayout = (LinearLayout) findViewById(R.id.dashLayout);
+            dashLayout.setAlpha(0.5f);
+
+            Button saveScoreButton = (Button) findViewById(R.id.saveScoreButton);
+            saveScoreButton.setAlpha(0.5f);
         }
     }
 

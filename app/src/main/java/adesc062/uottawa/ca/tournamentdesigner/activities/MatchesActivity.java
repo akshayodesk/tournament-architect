@@ -51,8 +51,8 @@ public class MatchesActivity extends Activity {
             // Get the team ids for a match
             ArrayList<Integer> matchTeamIDs = DBAdapter.getMatchTeamIDs(getApplicationContext(), matchIDs.get(i));
 
-            //For Bye
-            if(matchTeamIDs.size()==1){
+            //For byes
+            if(matchTeamIDs.size() == 1){
 
                 team1NamesArray.add(DBAdapter.getTeamName(getApplicationContext(), matchTeamIDs.get(0)));
                 String logo1 = DBAdapter.getTeamLogo(getApplicationContext(), matchTeamIDs.get(0));
@@ -66,7 +66,6 @@ public class MatchesActivity extends Activity {
             }
             else {
                 for (int j = 0; j < 2; j++) {
-
 
                     // Get the name and logo for the first team
                     if (j == 0) {
@@ -104,7 +103,7 @@ public class MatchesActivity extends Activity {
 
 
         // Create the rounds list adapter and set it
-        CustomMatchesListViewAdapter adapter = new CustomMatchesListViewAdapter(MatchesActivity.this, team1Names,
+        CustomMatchesListViewAdapter adapter = new CustomMatchesListViewAdapter(MatchesActivity.this, matchIDs, team1Names,
                 team1Logos, team2Names, team2Logos);
         ListView matchesListView = (ListView) findViewById(R.id.matchesListView);
         matchesListView.setAdapter(adapter);
