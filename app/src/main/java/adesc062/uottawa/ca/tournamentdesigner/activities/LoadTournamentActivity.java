@@ -26,6 +26,12 @@ public class LoadTournamentActivity extends Activity {
         setContentView(R.layout.activity_load_tournament);
 
         setUpTournamentsList();
+
+        // If there are no tournaments left, disable the button
+        if (DBAdapter.getTournaments(getApplicationContext()).isEmpty()) {
+
+            disableButton();
+        }
     }
 
     public void deleteAndDoneTournamentOnClick(View view) {
@@ -56,12 +62,20 @@ public class LoadTournamentActivity extends Activity {
                     // Set the deleting tournaments flag to false
                     deletingTournaments = false;
 
-                    // Reset the tournaments list by pressing the button dynamically
-                    Button deleteAndDoneTournamentButton = (Button) findViewById(R.id.deleteAndDoneTournamentButton);
-                    deleteAndDoneTournamentButton.performClick();
+                    // If there are no tournaments left, disable the button
+                    if (DBAdapter.getTournaments(getApplicationContext()).isEmpty()) {
+
+                        disableButton();
+                    }
+                    // Otherwise
+                    else {
+
+                        // Reset the tournaments list by pressing the button dynamically
+                        Button deleteAndDoneTournamentButton = (Button) findViewById(R.id.deleteAndDoneTournamentButton);
+                        deleteAndDoneTournamentButton.performClick();
+                    }
                 }
             });
-
             // Rename the button
             Button deleteAndDoneTournamentButton = (Button) findViewById(R.id.deleteAndDoneTournamentButton);
             deleteAndDoneTournamentButton.setText("Done");
@@ -166,5 +180,15 @@ public class LoadTournamentActivity extends Activity {
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
         finish();
+    }
+
+    private void disableButton() {
+
+        Button deleteAndDoneTournamentButton = (Button) findViewById(R.id.deleteAndDoneTournamentButton);
+        deleteAndDoneTournamentButton.setEnabled(false);
+        deleteAndDoneTournamentButton.setAlpha(0.5f);
+        deleteAndDoneTournamentButton.setText("Delete");
+
+        setUpTournamentsList();
     }
 }

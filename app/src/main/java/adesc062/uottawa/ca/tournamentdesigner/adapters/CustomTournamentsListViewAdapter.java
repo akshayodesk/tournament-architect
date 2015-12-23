@@ -52,6 +52,16 @@ public class CustomTournamentsListViewAdapter extends ArrayAdapter<String> {
             indicator.setImageResource(R.drawable.delete_x);
         }
 
+        // If the tournament is finished, reduce opacity
+        if (tournamentStatus[position].equals("Finished")) {
+
+            tournamentNameTextView.setAlpha(0.5f);
+            tournamentStatusTextView.setAlpha(0.5f);
+
+            ImageView tournamentsModeIndicator = (ImageView) rowView.findViewById(R.id.tournamentsModeIndicator);
+            tournamentsModeIndicator.setAlpha(0.5f);
+        }
+
         // Return the view of the row
         return rowView;
     }

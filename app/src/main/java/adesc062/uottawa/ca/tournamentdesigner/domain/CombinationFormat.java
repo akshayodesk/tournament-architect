@@ -29,7 +29,7 @@ public class CombinationFormat extends TournamentFormat {
             // If the tournament is switching to Knockout
             ArrayList<String> teams = DBAdapter.getTeamNames(context, tournament_id);
             int numTeams = teams.size();
-            int circuits = DBAdapter.getTournamentNumRounds(context, tournament_id);
+            int circuits = DBAdapter.getTournamentNumCircuits(context, tournament_id);
             int numRoundRobinRounds = ((numTeams - 1) + (numTeams%2)) * circuits;
             if(currentRound == numRoundRobinRounds) {
 
@@ -52,7 +52,8 @@ public class CombinationFormat extends TournamentFormat {
             wholeOfLogOfTeam++;
         }
 
-        boolean knockoutCompleted = (currentRound >= ((wholeOfLogOfTeam - (numTeams%2))  + ((numTeams - 1) + (numTeams%2))* DBAdapter.getTournamentNumRounds(context, tournament_id))) && checkIsRoundComplete(context);
+        boolean knockoutCompleted = (currentRound >= ((wholeOfLogOfTeam - (numTeams%2))  + ((numTeams - 1)
+                + (numTeams%2)) * DBAdapter.getTournamentNumCircuits(context, tournament_id))) && checkIsRoundComplete(context);
 
         if(isKnockout && knockoutCompleted) {
 
@@ -90,7 +91,7 @@ public class CombinationFormat extends TournamentFormat {
             // Handling Combination Format
              if(currentRound > orderedTeams.size() - 1) {
 
-                 int numCircuits = DBAdapter.getTournamentNumRounds(context, tournament_id);
+                 int numCircuits = DBAdapter.getTournamentNumCircuits(context, tournament_id);
                  currentRound = currentRound - (orderedTeams.size() - 1) * numCircuits;
              }
 
@@ -167,7 +168,6 @@ public class CombinationFormat extends TournamentFormat {
 
         // Get the number of round robin rounds
         int numTeams = DBAdapter.getNumTeamsForTournament(context, tournament_id);
-        int numRoundRobinRounds = numTeams * DBAdapter.getTournamentNumRounds(context, tournament_id);
 
         if(isKnockout) {
 

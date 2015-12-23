@@ -45,7 +45,7 @@ public class CreateTournamentActivity extends Activity {
         setUpTeamsList(false);
 
         /* If the tournament was already created and is now being edited */
-        if(getIntent().hasExtra("tournamentName")){ // If the intent passed a name, then the tournament is being edited
+        if (getIntent().hasExtra("tournamentName")) { // If the intent passed a name, then the tournament is being edited
 
             // Set the tournament name
             EditText tournamentNameTextView = (EditText) findViewById(R.id.tournamentNameEditText);
@@ -55,21 +55,25 @@ public class CreateTournamentActivity extends Activity {
             // Set the format type in the radio group
             int formatType = DBAdapter.getTournamentFormatType(getApplicationContext(), tournament_id);
             RadioGroup formatTypeRadioGroup = (RadioGroup) findViewById(R.id.formatTypeRadioGroup);
-            if(formatType == 1) {
+            if (formatType == 1) {
                 formatTypeRadioGroup.check(R.id.roundRobinRadioButton);
-            }
-            else if(formatType == 2) {
+            } else if (formatType == 2) {
                 formatTypeRadioGroup.check(R.id.knockoutRadioButton);
-                EditText numRoundRobinEditText = (EditText) findViewById(R.id.numRoundsEditText);
+                EditText numRoundRobinEditText = (EditText) findViewById(R.id.numCircuitsEditText);
                 numRoundRobinEditText.setEnabled(false);
-            }
-            else {
+            } else {
                 formatTypeRadioGroup.check(R.id.combinationRadioButton);
             }
 
             // Set the number of Round Robin rounds
-            EditText numRoundRoundsEditText = (EditText) findViewById(R.id.numRoundsEditText);
-            numRoundRoundsEditText.setText(String.valueOf(DBAdapter.getTournamentNumRounds(getApplicationContext(), tournament_id)));
+            EditText numRoundRoundsEditText = (EditText) findViewById(R.id.numCircuitsEditText);
+            numRoundRoundsEditText.setText(String.valueOf(DBAdapter.getTournamentNumCircuits(getApplicationContext(), tournament_id)));
+        }
+
+        // If there are no teams, disable the button
+        if (DBAdapter.getTeamNames(getApplicationContext(), tournament_id).isEmpty()) {
+
+            disableDeleteTeamButton();
         }
     }
 
@@ -112,9 +116,18 @@ public class CreateTournamentActivity extends Activity {
                     // Set the deleting teams flag to false
                     deletingTeams = false;
 
-                    // Reset the teams list by pressing the button dynamically
-                    Button deleteAndDoneTeamButton = (Button) findViewById(R.id.deleteAndDoneTeamButton);
-                    deleteAndDoneTeamButton.performClick();
+                    // If there are no teams left, disable the button
+                    if (DBAdapter.getTeamNames(getApplicationContext(), tournament_id).isEmpty()) {
+
+                        disableDeleteTeamButton();
+                    }
+                    // Otherwise
+                    else {
+
+                        // Reset the teams list by pressing the button dynamically
+                        Button deleteAndDoneTeamButton = (Button) findViewById(R.id.deleteAndDoneTeamButton);
+                        deleteAndDoneTeamButton.performClick();
+                    }
                 }
             });
 
@@ -173,10 +186,9 @@ public class CreateTournamentActivity extends Activity {
         EditText tournamentNameEditText = (EditText) findViewById(R.id.tournamentNameEditText);
         String tournamentName = tournamentNameEditText.getText().toString();
 
-        try{
+        try {
 
             // Save the tournament name in the database
-            // Save the name
             DBAdapter.changeTournamentName(getApplicationContext(), tournament_id, tournamentName);
 
             // Save the format type
@@ -187,16 +199,46 @@ public class CreateTournamentActivity extends Activity {
             formatType++; // 1: RoundRobin, 2: Knockout, 3: Combination
             DBAdapter.saveTournamentFormatType(getApplicationContext(), formatType, tournament_id);
 
-            // Save the number of round robin rounds
-            EditText numRoundRobinEditText = (EditText) findViewById(R.id.numRoundsEditText);
-            int numRoundRobins = Integer.parseInt(numRoundRobinEditText.getText().toString());
-            DBAdapter.saveTournamentNumRounds(getApplicationContext(), numRoundRobins, tournament_id);
+            // Try to save the number of round robin rounds
+            EditText numCircuitsEditText = (EditText) findViewById(R.id.numCircuitsEditText);
+            String numCircuitsString = numCircuitsEditText.getText().toString();
 
-            // If the data was saved sucessfully, return true
-            return true;
+            // If the num of circuits is empty, stop the saving process and inform the user
+            if (numCircuitsString.equals("")) {
+
+                // Pop up a dialog
+                final Dialog alertTournamentNameAlreadyInUse = new Dialog(CreateTournamentActivity.this);
+                alertTournamentNameAlreadyInUse.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                alertTournamentNameAlreadyInUse.setContentView(R.layout.custom_alert_ok);
+
+                // Set the message
+                TextView messageTournamentNameAlreadyInUse = (TextView) alertTournamentNameAlreadyInUse.findViewById(R.id.messageOkTextView);
+                messageTournamentNameAlreadyInUse.setText("Please enter a number of Round Robin Circuits.");
+
+                Button okButton = (Button) alertTournamentNameAlreadyInUse.findViewById(R.id.okButton);
+
+                okButton.setOnClickListener(new View.OnClickListener() {
+
+                    public void onClick(View v) {
+                        alertTournamentNameAlreadyInUse.dismiss();
+                    }
+                });
+                alertTournamentNameAlreadyInUse.show();
+
+                // Return false because the data was not saved
+                return false;
+            }
+            // Otherwise, complete the saving process
+            else {
+                int numRoundRobins = Integer.parseInt(numCircuitsString);
+                DBAdapter.saveTournamentNumCircuits(getApplicationContext(), numRoundRobins, tournament_id);
+
+                // If the data was saved successfully, return true
+                return true;
+            }
 
             // If the tournament name is already in use
-        }catch (IllegalArgumentException e) {
+        } catch (IllegalArgumentException e) {
 
             // Pop up a dialog
             final Dialog alertTournamentNameAlreadyInUse = new Dialog(CreateTournamentActivity.this);
@@ -221,7 +263,7 @@ public class CreateTournamentActivity extends Activity {
             return false;
 
             // If the tournament name is empty
-        }catch (NullPointerException e) {
+        } catch (NullPointerException e) {
 
             // Pop up a dialog
             final Dialog alertTournamentNameEmpty = new Dialog(CreateTournamentActivity.this);
@@ -270,7 +312,7 @@ public class CreateTournamentActivity extends Activity {
             public void onClick(View v) {
 
                 // If we came from the Load Tournament Activity
-                if(getIntent().hasExtra("tournamentName")){
+                if (getIntent().hasExtra("tournamentName")) {
 
                     // Go back to the Load Tournament activity
                     Intent intent = new Intent(getApplicationContext(), LoadTournamentActivity.class);
@@ -317,7 +359,7 @@ public class CreateTournamentActivity extends Activity {
         int numTeams = DBAdapter.getNumTeamsForTournament(getApplicationContext(), tournament_id);
 
         // If the tournament has less than three teams
-        if(numTeams < 3){
+        if (numTeams < 3) {
 
             // Pop up a dialog to inform the user
             final Dialog alertNotEnoughTeams = new Dialog(CreateTournamentActivity.this);
@@ -328,8 +370,7 @@ public class CreateTournamentActivity extends Activity {
 
             okButton.setOnClickListener(new View.OnClickListener() {
 
-                public void onClick(View v)
-                {
+                public void onClick(View v) {
                     alertNotEnoughTeams.dismiss();
                 }
             });
@@ -337,7 +378,7 @@ public class CreateTournamentActivity extends Activity {
 
         /* If the tournament has at least three teams,
             then proceed with starting it. */
-        }else {
+        } else {
 
             // Ask the user for confirmation on starting the tournament
             // Pop up a dialog
@@ -361,84 +402,17 @@ public class CreateTournamentActivity extends Activity {
 
                     alertConfirmStart.dismiss();
 
-                    /* Before starting, save the tournament data */
-                    // Get the tournament name from the EditText
-                    EditText tournamentNameEditText = (EditText) findViewById(R.id.tournamentNameEditText);
-                    String tournamentName = tournamentNameEditText.getText().toString();
+                    // Before starting, save the tournament data
+                    if (saveData()) {
 
-                    try{
-
-                        // Save the tournament name
-                        DBAdapter.changeTournamentName(getApplicationContext(), tournament_id, tournamentName);
-
-                        // Save the format type
-                        RadioGroup radioGroup = (RadioGroup) findViewById(R.id.formatTypeRadioGroup);
-                        int radioButtonID = radioGroup.getCheckedRadioButtonId();
-                        View radioButton = radioGroup.findViewById(radioButtonID);
-                        int formatType = radioGroup.indexOfChild(radioButton);
-                        formatType++; // 1: RoundRobin, 2: Knockout, 3: Combination
-                        DBAdapter.saveTournamentFormatType(getApplicationContext(), formatType, tournament_id);
-
-                        // Save the number of round robin rounds
-                        EditText numRoundRobinEditText = (EditText) findViewById(R.id.numRoundsEditText);
-                        int numRoundRobins = Integer.parseInt(numRoundRobinEditText.getText().toString());
-                        DBAdapter.saveTournamentNumRounds(getApplicationContext(), numRoundRobins, tournament_id);
-
+                        // If saving is successful, start the tournament and go to the Standings page
                         Intent intent = new Intent(getApplicationContext(), StandingsActivity.class);
                         intent.putExtra("tournament_id", tournament_id);
                         finish();
                         startActivity(intent);
-
-                        // Change tournament status to started, (2)
-                        //DBAdapter.changeTournamentStatus(getApplicationContext(), tournament_id);
-
-                    // If the tournament name is already in use - cancel start
-                    }catch (IllegalArgumentException e) {
-
-                        // Pop up a dialog to inform the user
-                        final Dialog alertTournamentNameAlreadyInUse = new Dialog(CreateTournamentActivity.this);
-                        alertTournamentNameAlreadyInUse.requestWindowFeature(Window.FEATURE_NO_TITLE);
-                        alertTournamentNameAlreadyInUse.setContentView(R.layout.custom_alert_ok);
-
-                        // Set the message
-                        TextView messageTournamentNameAlreadyInUse = (TextView) alertTournamentNameAlreadyInUse.findViewById(R.id.messageOkTextView);
-                        messageTournamentNameAlreadyInUse.setText("Tournament name already in use.");
-
-                        Button okButton = (Button) alertTournamentNameAlreadyInUse.findViewById(R.id.okButton);
-
-                        okButton.setOnClickListener(new View.OnClickListener() {
-
-                            public void onClick(View v) {
-                                alertTournamentNameAlreadyInUse.dismiss();
-                            }
-                        });
-                        alertTournamentNameAlreadyInUse.show();
-
-                    // If the tournament name is empty - cancel start
-                    }catch (NullPointerException e) {
-
-                        // Pop up a dialog to inform the user
-                        final Dialog alertTournamentNameEmpty = new Dialog(CreateTournamentActivity.this);
-                        alertTournamentNameEmpty.requestWindowFeature(Window.FEATURE_NO_TITLE);
-                        alertTournamentNameEmpty.setContentView(R.layout.custom_alert_ok);
-
-                        // Set the message
-                        TextView messageTournamentNameAlreadyInUse = (TextView) alertTournamentNameEmpty.findViewById(R.id.messageOkTextView);
-                        messageTournamentNameAlreadyInUse.setText("Please enter a tournament name.");
-
-                        Button okButton = (Button) alertTournamentNameEmpty.findViewById(R.id.okButton);
-
-                        okButton.setOnClickListener(new View.OnClickListener() {
-
-                            public void onClick(View v) {
-                                alertTournamentNameEmpty.dismiss();
-                            }
-                        });
-                        alertTournamentNameEmpty.show();
                     }
                 }
             });
-
             /* If if the user clicks No, then do not start */
             noDeleteButton.setOnClickListener(new View.OnClickListener() {
 
@@ -458,8 +432,8 @@ public class CreateTournamentActivity extends Activity {
      * It updates the teams list/
      *
      * @param requestCode the code that was requested when the intent was started.
-     * @param resultCode the code passed back from the edit team activity.
-     * @param data the intent that started this activity again.
+     * @param resultCode  the code passed back from the edit team activity.
+     * @param data        the intent that started this activity again.
      */
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
@@ -471,6 +445,12 @@ public class CreateTournamentActivity extends Activity {
             Button deleteAndDoneTeamOnClick = (Button) findViewById(R.id.deleteAndDoneTeamButton);
             deleteAndDoneTeamOnClick.performClick();
         }
+
+        // If there are teams, activate the Delete teams button
+        if (!DBAdapter.getTeamNames(getApplicationContext(), tournament_id).isEmpty()) {
+
+            enableDeleteTeamButton();
+        }
     }
 
     /**
@@ -481,8 +461,8 @@ public class CreateTournamentActivity extends Activity {
      */
     public void roundRobinOnClick(View view) {
 
-        EditText numRoundRobinEditText = (EditText) findViewById(R.id.numRoundsEditText);
-        numRoundRobinEditText.setEnabled(true); // Enables the user to change the number of rounds
+        EditText numRoundRobinEditText = (EditText) findViewById(R.id.numCircuitsEditText);
+        numRoundRobinEditText.setEnabled(true); // Enables the user to change the number of circuits
     }
 
     /**
@@ -493,8 +473,8 @@ public class CreateTournamentActivity extends Activity {
      */
     public void knockoutRobinOnClick(View view) {
 
-        EditText numRoundRobinEditText = (EditText) findViewById(R.id.numRoundsEditText);
-        numRoundRobinEditText.setEnabled(false); // Disables the user from changing the number of rounds
+        EditText numRoundRobinEditText = (EditText) findViewById(R.id.numCircuitsEditText);
+        numRoundRobinEditText.setEnabled(false); // Disables the user from changing the number of circuits
     }
 
     /**
@@ -507,8 +487,8 @@ public class CreateTournamentActivity extends Activity {
      */
     public void combinationRobinOnClick(View view) {
 
-        EditText numRoundRobinEditText = (EditText) findViewById(R.id.numRoundsEditText);
-        numRoundRobinEditText.setEnabled(true); // Enables the user to change the number of rounds
+        EditText numRoundRobinEditText = (EditText) findViewById(R.id.numCircuitsEditText);
+        numRoundRobinEditText.setEnabled(true); // Enables the user to change the number of circuits
     }
 
     /**
@@ -530,7 +510,7 @@ public class CreateTournamentActivity extends Activity {
 
         // Convert the team logos to an integer array of the resource ids
         teamLogos = new Integer[teamLogosArray.size()];
-        for(int i = 0; i < teamLogos.length; i++){
+        for (int i = 0; i < teamLogos.length; i++) {
             teamLogos[i] = this.getResources().getIdentifier(teamLogosArray.get(i), "drawable", this.getPackageName());
         }
         // Create the teams list adapter and set it
@@ -544,7 +524,7 @@ public class CreateTournamentActivity extends Activity {
             public void onItemClick(AdapterView<?> arg0, View view, int pos, long arg3) {
 
                 // Get the team name
-                TextView  teamNameTextView = (TextView) view.findViewById(R.id.txt);
+                TextView teamNameTextView = (TextView) view.findViewById(R.id.txt);
                 String teamName = teamNameTextView.getText().toString();
 
                 // Put the information in the intent
@@ -559,12 +539,24 @@ public class CreateTournamentActivity extends Activity {
         });
     }
 
-    public void onBackPressed() {
+    private void disableDeleteTeamButton() {
 
-        // Save all the data
-        saveData();
+        Button deleteAndDoneTeamButton = (Button) findViewById(R.id.deleteAndDoneTeamButton);
+        deleteAndDoneTeamButton.setEnabled(false);
+        deleteAndDoneTeamButton.setAlpha(0.5f);
+        deleteAndDoneTeamButton.setText("Delete");
 
-        // Finish activity and return
-        finish();
+        setUpTeamsList(false);
+
+    }
+
+    private void enableDeleteTeamButton() {
+
+        Button deleteAndDoneTeamButton = (Button) findViewById(R.id.deleteAndDoneTeamButton);
+        deleteAndDoneTeamButton.setEnabled(true);
+        deleteAndDoneTeamButton.setAlpha(1f);
+        deleteAndDoneTeamButton.setText("Delete");
+
+        setUpTeamsList(false);
     }
 }

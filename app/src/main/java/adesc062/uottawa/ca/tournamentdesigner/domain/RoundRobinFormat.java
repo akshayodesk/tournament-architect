@@ -21,7 +21,7 @@ public class RoundRobinFormat extends TournamentFormat {
         int numTeams = DBAdapter.getNumTeamsForTournament(context, tournament_id);
         int currentRound = DBAdapter.getCurrentRound(context, tournament_id);
         int numRoundsInCircuits = numTeams - 1 + numTeams%2;
-        int maxRounds = numRoundsInCircuits * DBAdapter.getTournamentNumRounds(context, tournament_id);
+        int maxRounds = numRoundsInCircuits * DBAdapter.getTournamentNumCircuits(context, tournament_id);
 
 		return (currentRound >= maxRounds) && checkIsRoundComplete(context);
 	}

@@ -53,7 +53,7 @@ public class StandingsActivity extends Activity {
         formatType = DBAdapter.getTournamentFormatType(getApplicationContext(), tournament_id);
 
         // Get the number of rounds
-        int numRounds = DBAdapter.getTournamentNumRounds(getApplicationContext(), tournament_id);
+        int numRounds = DBAdapter.getTournamentNumCircuits(getApplicationContext(), tournament_id);
 
         /* Set up the format type */
         // If the format type is Round Robin

@@ -227,17 +227,19 @@ public class DBAdapter {
      * Used to save the number of rounds for a tournament of given tournament_id.
      *
      * @param context is the current application context.
-     * @param numRounds is the number of rounds to be saved
+     * @param numCircuits is the number of rounds to be saved
      * @param tournament_id is the id of the tournament to change the number of rounds of.
      */
-    public static void saveTournamentNumRounds(Context context, int numRounds, int tournament_id) {
+    public static void saveTournamentNumCircuits(Context context, int numCircuits, int tournament_id) {
 
         // Open the database
         DB dbHelper = new DB(context);
         SQLiteDatabase db = dbHelper.getWritableDatabase();
 
+        // If the number of circuits is
+
         // Save the number of rounds
-        db.execSQL("UPDATE tournaments SET numRounds = " + numRounds + " WHERE tournament_id = " + tournament_id);
+        db.execSQL("UPDATE tournaments SET numRounds = " + numCircuits + " WHERE tournament_id = " + tournament_id);
 
         // Close the database
         db.close();
@@ -312,7 +314,7 @@ public class DBAdapter {
      * @param tournament_id is the id of the tournament to get the number of rounds of.
      * @return the number of rounds for the tournament.
      */
-    public static int getTournamentNumRounds(Context context, int tournament_id) {
+    public static int getTournamentNumCircuits(Context context, int tournament_id) {
 
         // Open the database
         DB dbHelper = new DB(context);

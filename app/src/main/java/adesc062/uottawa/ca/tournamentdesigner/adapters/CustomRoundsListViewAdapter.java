@@ -50,6 +50,9 @@ public class CustomRoundsListViewAdapter extends ArrayAdapter<String> {
             roundStatusTextView.setText("In Progress");
             roundNameIndividualTextView.setTextColor(Color.parseColor("#FF000000"));
             roundStatusTextView.setTextColor(Color.parseColor("#FF000000"));
+
+            ImageView tournamentsListViewRightArrow = (ImageView) rowView.findViewById(R.id.tournamentsListViewRightArrow);
+            tournamentsListViewRightArrow.setAlpha(1f);
         }
 
         // Return the view of the row
