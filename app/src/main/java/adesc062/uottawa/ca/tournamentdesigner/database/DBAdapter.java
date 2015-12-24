@@ -26,7 +26,7 @@ public class DBAdapter {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
 
         // Insert the tournament
-        db.execSQL("INSERT INTO tournaments (type, numRounds, status) VALUES (1, 1, 1)");
+        db.execSQL("INSERT INTO tournaments (type, numCircuits, status) VALUES (1, 1, 1)");
         try {
             changeTournamentName(context, getMostRecentTournamentId(context), null);
         } catch (Exception e) {
@@ -173,17 +173,17 @@ public class DBAdapter {
      * @param context the current application context.
      * @param name the name of the tournament.
      * @param type the format of the tournament: 1: Round-Robin, 2: Bracket, 3: Combination.
-     * @param numRounds the number of rounds of the Round-Robin part of the tournament.
+     * @param numCircuits the number of rounds of the Round-Robin part of the tournament.
      */
-    public static void insertTournament(Context context, String name, int type, int numRounds) {
+    public static void insertTournament(Context context, String name, int type, int numCircuits) {
 
         // Open the database
         DB dbHelper = new DB(context);
         SQLiteDatabase db = dbHelper.getWritableDatabase();
 
         // Insert the tournament
-        db.execSQL("INSERT INTO tournaments (name, type, numRounds, status) VALUES "
-                + "('" + name + "', " + type + ", " + numRounds + ", 1)");
+        db.execSQL("INSERT INTO tournaments (name, type, numCircuits, status) VALUES "
+                + "('" + name + "', " + type + ", " + numCircuits + ", 1)");
 
         // Close the database
         db.close();
@@ -239,7 +239,7 @@ public class DBAdapter {
         // If the number of circuits is
 
         // Save the number of rounds
-        db.execSQL("UPDATE tournaments SET numRounds = " + numCircuits + " WHERE tournament_id = " + tournament_id);
+        db.execSQL("UPDATE tournaments SET numCircuits = " + numCircuits + " WHERE tournament_id = " + tournament_id);
 
         // Close the database
         db.close();
@@ -321,7 +321,7 @@ public class DBAdapter {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
 
         // Get the information
-        int numRounds = 0;
+        int numCircuits = 0;
 
         try {
 
@@ -330,7 +330,7 @@ public class DBAdapter {
             c.moveToFirst();
             {
                 try {
-                    numRounds = c.getInt(c.getColumnIndex("numRounds"));
+                    numCircuits = c.getInt(c.getColumnIndex("numCircuits"));
                 }
                 catch (Exception e) {
                     throw new IllegalArgumentException();
@@ -346,7 +346,7 @@ public class DBAdapter {
         db.close();
 
         // Return the number of rounds
-        return numRounds;
+        return numCircuits;
     }
 
     /**
@@ -1308,7 +1308,7 @@ public class DBAdapter {
         SQLiteDatabase db = dbHelper.getReadableDatabase();
 
         // Get the information
-        int numRounds = -1;
+        int numCircuits = -1;
 
         try {
 
@@ -1316,18 +1316,18 @@ public class DBAdapter {
 
             c.moveToFirst();
             {
-                numRounds = c.getInt(0);
+                numCircuits = c.getInt(0);
             }
         } catch (Exception e ) {
 
-            numRounds = 0;
+            numCircuits = 0;
         }
 
         // Close the database
         db.close();
 
         // Return the list of the status
-        return numRounds;
+        return numCircuits;
     }
 
     public static ArrayList<Integer> getMatchesUpdatedValues(Context context, int currentRound, int match_tournament_id) {

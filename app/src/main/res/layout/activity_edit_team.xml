@@ -54,6 +54,7 @@
             android:layout_weight="0.1"
             android:textSize="22sp"
             android:gravity="bottom|center_horizontal"
+            android:maxLength="20"
             android:hint="Team Name" />
 
         <Space

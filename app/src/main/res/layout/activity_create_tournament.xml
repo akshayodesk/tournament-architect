@@ -23,6 +23,7 @@
             android:id="@+id/tournamentNameEditText"
             android:textSize="18sp"
             android:hint="Tournament Name"
+            android:maxLength="28"
             android:gravity="bottom|center_horizontal" />
 
         <TextView
@@ -119,6 +120,7 @@
                     android:id="@+id/numCircuitsEditText"
                     android:layout_weight="0"
                     android:text="1"
+                    android:maxLength="2"
                     android:textSize="18sp"
                     android:inputType="number" />
 

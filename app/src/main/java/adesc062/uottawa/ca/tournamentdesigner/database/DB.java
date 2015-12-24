@@ -37,7 +37,7 @@ public class DB extends SQLiteOpenHelper {
         db.execSQL("CREATE TABLE tournaments (tournament_id INTEGER PRIMARY KEY, "
                 + "name TEXT UNIQUE, "
                 + "type INTEGER NOT NULL, "
-                + "numRounds INTEGER, "
+                + "numCircuits INTEGER, "
                 + "status INTEGER NOT NULL)");
 
         // Create the teams table

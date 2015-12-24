@@ -52,8 +52,7 @@ public class CombinationFormat extends TournamentFormat {
             wholeOfLogOfTeam++;
         }
 
-        boolean knockoutCompleted = (currentRound >= ((wholeOfLogOfTeam - (numTeams%2))  + ((numTeams - 1)
-                + (numTeams%2)) * DBAdapter.getTournamentNumCircuits(context, tournament_id))) && checkIsRoundComplete(context);
+        boolean knockoutCompleted = currentRound >= (wholeOfLogOfTeam - (numTeams%2)) && checkIsRoundComplete(context);
 
         if(isKnockout && knockoutCompleted) {
 
@@ -65,14 +64,8 @@ public class CombinationFormat extends TournamentFormat {
 
     public void createNextRound(Context context, int tournament_id) {
 
-        /*
-        currentRound = DBAdapter.getCurrentRound(context, tournament_id);
-        ArrayList<String> teams = DBAdapter.getTeamNames(context, tournament_id);
-
-        if(currentRound >= teams.size()) { */
-
         // If the format is Knockout
-        if(isKnockout) {
+        if (isKnockout) {
 
             // Get the list of ordered teams
             orderedTeams = DBAdapter.getFormatOrderedTeams(context, tournament_id);
@@ -82,24 +75,16 @@ public class CombinationFormat extends TournamentFormat {
 
             // Get the current round number
             currentRound = DBAdapter.getCurrentRound(context, tournament_id);
-            double logOfTeams = Math.log10(size) / Math.log10(2);
-            int wholeOfLogOfTeam = (int) logOfTeams;
-            if (logOfTeams - wholeOfLogOfTeam != 0) {
-                wholeOfLogOfTeam++;
-            }
 
-            // Handling Combination Format
-             if(currentRound > orderedTeams.size() - 1) {
+            // Handling switch from Round Robin to Knockout
+             if(currentRound >= (orderedTeams.size() - 1) * DBAdapter.getTournamentNumCircuits(context, tournament_id)) {
 
-                 int numCircuits = DBAdapter.getTournamentNumCircuits(context, tournament_id);
-                 currentRound = currentRound - (orderedTeams.size() - 1) * numCircuits;
+                 currentRound = 1;
              }
 
-            // If we need to create the current round
             // Calculate the number of teams to remove
             int numberOfTeamsToRemove = 0;
             int tempSize;
-
             for (int i = 0; i < currentRound; i++) {
 
                 tempSize = size / 2;
@@ -107,8 +92,10 @@ public class CombinationFormat extends TournamentFormat {
                 numberOfTeamsToRemove += tempSize;
             }
 
+            // Get the list of team names
             ArrayList<String> teamNamesArray = DBAdapter.getTeamNames(context, tournament_id);
 
+            // Get the number of wins for each team
             ArrayList<Integer> teamWins = new ArrayList<Integer>();
             for (int i = 0; i < teamNamesArray.size(); i++) {
 
@@ -143,7 +130,7 @@ public class CombinationFormat extends TournamentFormat {
             }
             orderedTeams = new ArrayList<>(sortedNamesArray);
 
-            // Remove the teams
+            // Cut the teams that were lower-ranked
             for (int c = 0; c < numberOfTeamsToRemove; c++) {
 
                 orderedTeams.remove(orderedTeams.size() - 1);
@@ -157,25 +144,18 @@ public class CombinationFormat extends TournamentFormat {
 
             currentFormat.createNextRound(context, tournament_id);
         }
-        //DBAdapter.incrementCurrentRound(context, DBAdapter.getFormatId(context, tournament_id), currentRound);
     }
 
     public boolean checkIsRoundComplete(Context context) {
 
         // Get the list of updated values for the latest round
-        currentRound = DBAdapter.getCurrentRound(context, tournament_id) ;
+        int currentRoundID = DBAdapter.getCurrentRoundID(context, tournament_id) ;
         ArrayList<Integer> matchesUpdatedValues;
 
         // Get the number of round robin rounds
         int numTeams = DBAdapter.getNumTeamsForTournament(context, tournament_id);
 
-        if(isKnockout) {
-
-            matchesUpdatedValues = DBAdapter.getMatchesUpdatedValues(context, currentRound, tournament_id);
-        }
-        else {
-            matchesUpdatedValues = DBAdapter.getMatchesUpdatedValues(context, currentRound, tournament_id);
-        }
+        matchesUpdatedValues = DBAdapter.getMatchesUpdatedValues(context, currentRoundID, tournament_id);
 
         // Go through the list and check if a match has not yet been updated
         for(int i = 0; i < matchesUpdatedValues.size(); i++) {

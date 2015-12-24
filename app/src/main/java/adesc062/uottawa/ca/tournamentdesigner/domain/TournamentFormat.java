@@ -90,9 +90,9 @@ public abstract class TournamentFormat {
         // Remove first teamName
         leftTeams.add(orderedTeams.remove(0));
 
-        // Shift remaining teams counter-clockwise according to round (ie first round 0 times, second 1 time...)(IS SHIFTED)
+        // Shift remaining teams counter-clockwise according to round (i.e.: first round 0 times, second 1 time...)
         // Removes last element and adds to front
-        int last = orderedTeams.size() -1;
+        int last = orderedTeams.size() - 1;
         for(int c = 0; c < currentRound; c++ ){
 
             String temp= orderedTeams.remove(last);
@@ -109,15 +109,14 @@ public abstract class TournamentFormat {
             // Remove first
             String tempLeftTeam = orderedTeams.remove(0);
 
-           //Adjusting for BYE (i.e.: in a BYE, team wins against self (cannot use bye as team name as would require a full team object in DB)
-            //getLAST
+            // Adjusting for BYE (i.e.: in a BYE, team wins against self (cannot use bye as team name since it would require a full team object in DB)
             if (tempLeftTeam.equals("BYE")) {
 
-                tempLeftTeam=orderedTeams.get(0);
+                tempLeftTeam = orderedTeams.get(0);
             }
             else if (tempRightTeam.equals("BYE")) {
 
-                tempRightTeam=leftTeams.get(leftTeams.size()-1);
+                tempRightTeam = leftTeams.get(leftTeams.size() - 1);
             }
 
             rightTeams.add(tempRightTeam);

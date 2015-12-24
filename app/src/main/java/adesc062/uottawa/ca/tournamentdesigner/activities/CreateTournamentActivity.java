@@ -59,15 +59,15 @@ public class CreateTournamentActivity extends Activity {
                 formatTypeRadioGroup.check(R.id.roundRobinRadioButton);
             } else if (formatType == 2) {
                 formatTypeRadioGroup.check(R.id.knockoutRadioButton);
-                EditText numRoundRobinEditText = (EditText) findViewById(R.id.numCircuitsEditText);
-                numRoundRobinEditText.setEnabled(false);
+                EditText numCircuitsEditText = (EditText) findViewById(R.id.numCircuitsEditText);
+                numCircuitsEditText.setEnabled(false);
             } else {
                 formatTypeRadioGroup.check(R.id.combinationRadioButton);
             }
 
-            // Set the number of Round Robin rounds
-            EditText numRoundRoundsEditText = (EditText) findViewById(R.id.numCircuitsEditText);
-            numRoundRoundsEditText.setText(String.valueOf(DBAdapter.getTournamentNumCircuits(getApplicationContext(), tournament_id)));
+            // Set the number of Round Robin circuits
+            EditText numCircuitsEditText = (EditText) findViewById(R.id.numCircuitsEditText);
+            numCircuitsEditText.setText(String.valueOf(DBAdapter.getTournamentNumCircuits(getApplicationContext(), tournament_id)));
         }
 
         // If there are no teams, disable the button
@@ -176,7 +176,7 @@ public class CreateTournamentActivity extends Activity {
 
     /**
      * Save the tournament name, format type and
-     * number of rounds in the database.
+     * number of circuits in the database.
      *
      * @return boolean representing whether the data was saved successfully
      */
@@ -199,12 +199,80 @@ public class CreateTournamentActivity extends Activity {
             formatType++; // 1: RoundRobin, 2: Knockout, 3: Combination
             DBAdapter.saveTournamentFormatType(getApplicationContext(), formatType, tournament_id);
 
-            // Try to save the number of round robin rounds
-            EditText numCircuitsEditText = (EditText) findViewById(R.id.numCircuitsEditText);
-            String numCircuitsString = numCircuitsEditText.getText().toString();
+            // If the format is Round Robin or Combination
+            if (DBAdapter.getTournamentFormatType(getApplicationContext(), tournament_id) != 2) {
 
-            // If the num of circuits is empty, stop the saving process and inform the user
-            if (numCircuitsString.equals("")) {
+                // Try to save the number of round robin circuits
+                EditText numCircuitsEditText = (EditText) findViewById(R.id.numCircuitsEditText);
+                String numCircuitsString = numCircuitsEditText.getText().toString();
+
+                // If the num of circuits is empty, stop the saving process and inform the user
+                if (numCircuitsString.equals("")) {
+
+                    // Pop up a dialog
+                    final Dialog alertTournamentNameAlreadyInUse = new Dialog(CreateTournamentActivity.this);
+                    alertTournamentNameAlreadyInUse.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                    alertTournamentNameAlreadyInUse.setContentView(R.layout.custom_alert_ok);
+
+                    // Set the message
+                    TextView messageTournamentNameAlreadyInUse = (TextView) alertTournamentNameAlreadyInUse.findViewById(R.id.messageOkTextView);
+                    messageTournamentNameAlreadyInUse.setText("Please enter a number of Round Robin Circuits.");
+
+                    Button okButton = (Button) alertTournamentNameAlreadyInUse.findViewById(R.id.okButton);
+
+                    okButton.setOnClickListener(new View.OnClickListener() {
+
+                        public void onClick(View v) {
+                            alertTournamentNameAlreadyInUse.dismiss();
+                        }
+                    });
+                    alertTournamentNameAlreadyInUse.show();
+
+                    // Return false because the data was not saved
+                    return false;
+                }
+                // If the num of circuits is empty, stop the saving process and inform the user
+                else if(numCircuitsString.equals("0")) {
+
+                    // Pop up a dialog
+                    final Dialog alertTournamentNameAlreadyInUse = new Dialog(CreateTournamentActivity.this);
+                    alertTournamentNameAlreadyInUse.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                    alertTournamentNameAlreadyInUse.setContentView(R.layout.custom_alert_ok);
+
+                    // Set the message
+                    TextView messageTournamentNameAlreadyInUse = (TextView) alertTournamentNameAlreadyInUse.findViewById(R.id.messageOkTextView);
+                    messageTournamentNameAlreadyInUse.setText("The number of Round Robin Circuits must be above 0.");
+
+                    Button okButton = (Button) alertTournamentNameAlreadyInUse.findViewById(R.id.okButton);
+
+                    okButton.setOnClickListener(new View.OnClickListener() {
+
+                        public void onClick(View v) {
+                            alertTournamentNameAlreadyInUse.dismiss();
+                        }
+                    });
+                    alertTournamentNameAlreadyInUse.show();
+
+                    // Return false because the data was not saved
+                    return false;
+                }
+                // Otherwise, complete the saving process
+                else {
+
+                    int numCircuits = Integer.parseInt(numCircuitsString);
+                    DBAdapter.saveTournamentNumCircuits(getApplicationContext(), numCircuits, tournament_id);
+
+                    // If the data was saved successfully, return true
+                    return true;
+                }
+            }
+            // If the format is Knockout, complete the saving process without saving the number of circuits
+            else {
+
+                return true;
+            }
+                // If the tournament name is already in use
+            }catch(IllegalArgumentException e){
 
                 // Pop up a dialog
                 final Dialog alertTournamentNameAlreadyInUse = new Dialog(CreateTournamentActivity.this);
@@ -213,7 +281,7 @@ public class CreateTournamentActivity extends Activity {
 
                 // Set the message
                 TextView messageTournamentNameAlreadyInUse = (TextView) alertTournamentNameAlreadyInUse.findViewById(R.id.messageOkTextView);
-                messageTournamentNameAlreadyInUse.setText("Please enter a number of Round Robin Circuits.");
+                messageTournamentNameAlreadyInUse.setText("Tournament name already in use.");
 
                 Button okButton = (Button) alertTournamentNameAlreadyInUse.findViewById(R.id.okButton);
 
@@ -227,65 +295,31 @@ public class CreateTournamentActivity extends Activity {
 
                 // Return false because the data was not saved
                 return false;
+
+                // If the tournament name is empty
+            }catch(NullPointerException e){
+
+                // Pop up a dialog
+                final Dialog alertTournamentNameEmpty = new Dialog(CreateTournamentActivity.this);
+                alertTournamentNameEmpty.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                alertTournamentNameEmpty.setContentView(R.layout.custom_alert_ok);
+
+                // Set the message
+                TextView messageTournamentNameAlreadyInUse = (TextView) alertTournamentNameEmpty.findViewById(R.id.messageOkTextView);
+                messageTournamentNameAlreadyInUse.setText("Please enter a tournament name.");
+
+                Button okButton = (Button) alertTournamentNameEmpty.findViewById(R.id.okButton);
+
+                okButton.setOnClickListener(new View.OnClickListener() {
+
+                    public void onClick(View v) {
+                        alertTournamentNameEmpty.dismiss();
+                    }
+                });
+                alertTournamentNameEmpty.show();
+
+                return false;
             }
-            // Otherwise, complete the saving process
-            else {
-                int numRoundRobins = Integer.parseInt(numCircuitsString);
-                DBAdapter.saveTournamentNumCircuits(getApplicationContext(), numRoundRobins, tournament_id);
-
-                // If the data was saved successfully, return true
-                return true;
-            }
-
-            // If the tournament name is already in use
-        } catch (IllegalArgumentException e) {
-
-            // Pop up a dialog
-            final Dialog alertTournamentNameAlreadyInUse = new Dialog(CreateTournamentActivity.this);
-            alertTournamentNameAlreadyInUse.requestWindowFeature(Window.FEATURE_NO_TITLE);
-            alertTournamentNameAlreadyInUse.setContentView(R.layout.custom_alert_ok);
-
-            // Set the message
-            TextView messageTournamentNameAlreadyInUse = (TextView) alertTournamentNameAlreadyInUse.findViewById(R.id.messageOkTextView);
-            messageTournamentNameAlreadyInUse.setText("Tournament name already in use.");
-
-            Button okButton = (Button) alertTournamentNameAlreadyInUse.findViewById(R.id.okButton);
-
-            okButton.setOnClickListener(new View.OnClickListener() {
-
-                public void onClick(View v) {
-                    alertTournamentNameAlreadyInUse.dismiss();
-                }
-            });
-            alertTournamentNameAlreadyInUse.show();
-
-            // Return false because the data was not saved
-            return false;
-
-            // If the tournament name is empty
-        } catch (NullPointerException e) {
-
-            // Pop up a dialog
-            final Dialog alertTournamentNameEmpty = new Dialog(CreateTournamentActivity.this);
-            alertTournamentNameEmpty.requestWindowFeature(Window.FEATURE_NO_TITLE);
-            alertTournamentNameEmpty.setContentView(R.layout.custom_alert_ok);
-
-            // Set the message
-            TextView messageTournamentNameAlreadyInUse = (TextView) alertTournamentNameEmpty.findViewById(R.id.messageOkTextView);
-            messageTournamentNameAlreadyInUse.setText("Please enter a tournament name.");
-
-            Button okButton = (Button) alertTournamentNameEmpty.findViewById(R.id.okButton);
-
-            okButton.setOnClickListener(new View.OnClickListener() {
-
-                public void onClick(View v) {
-                    alertTournamentNameEmpty.dismiss();
-                }
-            });
-            alertTournamentNameEmpty.show();
-
-            return false;
-        }
     }
 
     /**
@@ -451,6 +485,11 @@ public class CreateTournamentActivity extends Activity {
 
             enableDeleteTeamButton();
         }
+        // If there are no teams, disable the Delete teams button
+        else {
+
+            disableDeleteTeamButton();
+        }
     }
 
     /**
@@ -461,8 +500,8 @@ public class CreateTournamentActivity extends Activity {
      */
     public void roundRobinOnClick(View view) {
 
-        EditText numRoundRobinEditText = (EditText) findViewById(R.id.numCircuitsEditText);
-        numRoundRobinEditText.setEnabled(true); // Enables the user to change the number of circuits
+        EditText numCircuitsEditText = (EditText) findViewById(R.id.numCircuitsEditText);
+        numCircuitsEditText.setEnabled(true); // Enables the user to change the number of circuits
     }
 
     /**
@@ -473,8 +512,8 @@ public class CreateTournamentActivity extends Activity {
      */
     public void knockoutRobinOnClick(View view) {
 
-        EditText numRoundRobinEditText = (EditText) findViewById(R.id.numCircuitsEditText);
-        numRoundRobinEditText.setEnabled(false); // Disables the user from changing the number of circuits
+        EditText numCircuitsEditText = (EditText) findViewById(R.id.numCircuitsEditText);
+        numCircuitsEditText.setEnabled(false); // Disables the user from changing the number of circuits
     }
 
     /**
@@ -487,8 +526,8 @@ public class CreateTournamentActivity extends Activity {
      */
     public void combinationRobinOnClick(View view) {
 
-        EditText numRoundRobinEditText = (EditText) findViewById(R.id.numCircuitsEditText);
-        numRoundRobinEditText.setEnabled(true); // Enables the user to change the number of circuits
+        EditText numCircuitsEditText = (EditText) findViewById(R.id.numCircuitsEditText);
+        numCircuitsEditText.setEnabled(true); // Enables the user to change the number of circuits
     }
 
     /**
