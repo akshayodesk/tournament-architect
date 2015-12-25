@@ -27,6 +27,8 @@ import adesc062.uottawa.ca.tournamentdesigner.domain.MatchTeamScore;
 public class MatchViewActivity extends Activity {
 
     int match_id;
+    int tournament_id;
+    int formatType;
     String team1Name;
     String team2Name;
     int team1Logo;
@@ -39,9 +41,28 @@ public class MatchViewActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_match_view);
 
-        // Initialize the intent
+        // Initialize the intent and the data
         Intent intent = getIntent();
+        match_id = intent.getIntExtra("match_id", 0);
         roundNum = intent.getIntExtra("roundNum", -2);
+
+        // Get the tournament format type
+        tournament_id = DBAdapter.getTournamentId(getApplicationContext(), match_id);
+        formatType = DBAdapter.getTournamentFormatType(getApplicationContext(), tournament_id);
+
+        // If the format is combination, determine if we are in the Round Robin or Knockout stage
+        if (formatType == 3) {
+
+            int currentRound = DBAdapter.getTournamentNumCurrentRound(getApplicationContext(), tournament_id);
+            int numCircuits = DBAdapter.getTournamentNumCircuits(getApplicationContext(), tournament_id);
+            int numTeams = DBAdapter.getNumTeamsForTournament(getApplicationContext(), tournament_id);
+            int numRoundRobinRounds = ((numTeams - 1) + (numTeams%2)) * numCircuits;
+
+            if (currentRound > numRoundRobinRounds)
+                formatType = 2;
+            else
+                formatType = 1;
+        }
 
         // Initialize the views
         TextView teamName1TextView = (TextView) findViewById(R.id.teamName1TextView);
@@ -58,17 +79,16 @@ public class MatchViewActivity extends Activity {
         team2Logo = intent.getIntExtra("team2Logo", 0);
 
         // Set the team logos, names and the match id
-        match_id = intent.getIntExtra("match_id", 0);
         teamName1TextView.setText(team1Name);
         teamName2TextView.setText(team2Name);
         team1ImageView.setImageResource(team1Logo);
         team2ImageView.setImageResource(team2Logo);
 
-        // If the match was updated, then get the scores for both teams
-        // And disable score saving
-        // And reduce the opacity
+        /*If the match was updated, then get the scores for both teams
+         * And disable score saving
+         * And reduce the opacity */
         int updated = DBAdapter.getMatchUpdated(getApplicationContext(), match_id);
-        if(updated == 1) {
+        if (updated == 1) {
 
             // Get the team IDs for both teams
             int team1ID = DBAdapter.getTeamId(getApplicationContext(), team1Name,
@@ -134,6 +154,7 @@ public class MatchViewActivity extends Activity {
         }
         // If the match had not been updated
         else {
+
             // Initialize the edit texts
             team1ScoreEditText = (EditText) findViewById(R.id.team1ScoreEditText);
             team2ScoreEditText = (EditText) findViewById(R.id.team2ScoreEditTExt);
@@ -145,8 +166,9 @@ public class MatchViewActivity extends Activity {
             // If the user entered scores for both teams, save them
             if (!team1Score.equals("") && !team2Score.equals("")) {
 
-                // If the match is a tie, do not let ther user save
-                if(team1Score.equals(team2Score)) {
+                // If the match is a tie and the format is Knockout, do not save
+                if(team1Score.equals(team2Score) && formatType == 2) {
+
                     // Pop up a dialog to inform the user
                     final Dialog alertTournamentNameAlreadyInUse = new Dialog(MatchViewActivity.this);
                     alertTournamentNameAlreadyInUse.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -154,7 +176,7 @@ public class MatchViewActivity extends Activity {
 
                     // Set the message
                     TextView messageTournamentNameAlreadyInUse = (TextView) alertTournamentNameAlreadyInUse.findViewById(R.id.messageOkTextView);
-                    messageTournamentNameAlreadyInUse.setText("Matches cannot end in ties.");
+                    messageTournamentNameAlreadyInUse.setText("Knockout matches cannot end in ties.");
 
                     Button okButton = (Button) alertTournamentNameAlreadyInUse.findViewById(R.id.okButton);
 

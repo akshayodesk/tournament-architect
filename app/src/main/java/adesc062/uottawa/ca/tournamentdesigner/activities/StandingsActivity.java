@@ -10,12 +10,11 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import java.nio.channels.IllegalBlockingModeException;
 import java.util.ArrayList;
 import java.util.Collections;
 
 import adesc062.uottawa.ca.tournamentdesigner.R;
-import adesc062.uottawa.ca.tournamentdesigner.adapters.CustomTeamsListViewNotClickableWithNumWinsAdapter;
+import adesc062.uottawa.ca.tournamentdesigner.adapters.CustomTeamsListViewNotClickableWithScoreAdapter;
 import adesc062.uottawa.ca.tournamentdesigner.database.DBAdapter;
 import adesc062.uottawa.ca.tournamentdesigner.domain.CombinationFormat;
 import adesc062.uottawa.ca.tournamentdesigner.domain.KnockoutFormat;
@@ -31,7 +30,7 @@ public class StandingsActivity extends Activity {
     ArrayList<String> unsortedTeams;
     String[] teamNames;
     Integer[] teamLogos;
-    Integer[] teamWinsForDisplay;
+    Integer[] teamScoresForDisplay;
     ListView standings;
     boolean roundWasComplete = false;
     boolean tournamentWasComplete = false;
@@ -196,29 +195,54 @@ public class StandingsActivity extends Activity {
         ArrayList<String> teamNamesArray = DBAdapter.getTeamNames(this.getApplicationContext(), tournament_id);
         ArrayList<String> teamLogosArray = DBAdapter.getTeamLogos(this.getApplicationContext(), tournament_id);
 
-        // Get the number of wins for each team
-        ArrayList<Integer> teamWins = new ArrayList<Integer>();
-        for(int i = 0; i < teamNamesArray.size(); i++) {
+        /* Get the corresponding score to order teams */
+        ArrayList<Integer> teamScores = new ArrayList<Integer>();
 
-            teamWins.add(i, DBAdapter.getTeamNumWin(getApplicationContext(), teamNamesArray.get(i), tournament_id));
+        // If the format is Round Robin, order the teams by score
+        if (formatType == 1) {
+
+            // Get the score for each team
+            for(int i = 0; i < teamNamesArray.size(); i++) {
+
+                int teamID = DBAdapter.getTeamId(getApplicationContext(), teamNamesArray.get(i), tournament_id);
+                teamScores.add(i, DBAdapter.getTeamScore(getApplicationContext(), teamID));
+            }
+        }
+        // If the format is Knockout, order the teams by wins
+        else if (formatType == 2) {
+
+            // Get the number of wins for each team
+            for (int i = 0; i < teamNamesArray.size(); i++) {
+
+                teamScores.add(i, DBAdapter.getTeamNumWin(getApplicationContext(), teamNamesArray.get(i), tournament_id));
+            }
+        }
+        // If the format is Combination, order the teams by score
+        else {
+
+            // Get the score for each team
+            for(int i = 0; i < teamNamesArray.size(); i++) {
+
+                int teamID = DBAdapter.getTeamId(getApplicationContext(), teamNamesArray.get(i), tournament_id);
+                teamScores.add(i, DBAdapter.getTeamScore(getApplicationContext(), teamID));
+            }
         }
 
-
-        // Sort the arrays based on decreasing number of wins for each team
+        // Sort the arrays based on decreasing score for each team
         ArrayList<Integer> orderedIndexes = new ArrayList<>(); // Used to store the ordered indexes
         for(int j = 0; j < teamNamesArray.size(); j++) {
 
-            int highestValue = Collections.max(teamWins);
+            int highestValue = Collections.max(teamScores);
 
             // Iterate through the list of the index of first team with the highest number of wins
             int k = 0;
-            while(k < teamWins.size() - 1 && teamWins.get(k) != highestValue) {
+            while(k < teamScores.size() - 1 && teamScores.get(k) != highestValue) {
 
                 k++;
             }
 
             orderedIndexes.add(k);
-            teamWins.set(k, -1); // Change it to -1 to avoid getting the same value twice
+            teamScores.set(k, -1); // Change it to -1 to avoid getting the same value twice
         }
 
         // Re-order the team names and the team logos
@@ -234,13 +258,38 @@ public class StandingsActivity extends Activity {
             sortedLogosArray.add(currentHighestTeamLogo);
         }
 
-        // Get the number of wins for each team
-        ArrayList<Integer> sortedWins = new ArrayList<>();
-        for(int b = 0; b < sortedNamesArray.size(); b++) {
+        /* Get the score for each team */
+        ArrayList<Integer> sortedScores = new ArrayList<Integer>();
 
-            sortedWins.add(b, DBAdapter.getTeamNumWin(getApplicationContext(), sortedNamesArray.get(b),tournament_id));
+        // If the format is Round Robin, order the teams by score
+        if (formatType == 1) {
+
+            // Get the score for each team
+            for(int i = 0; i < sortedNamesArray.size(); i++) {
+
+                int teamID = DBAdapter.getTeamId(getApplicationContext(), sortedNamesArray.get(i), tournament_id);
+                sortedScores.add(i, DBAdapter.getTeamScore(getApplicationContext(), teamID));
+            }
         }
+        // If the format is Knockout, order the teams by wins
+        else if (formatType == 2) {
 
+            // Get the number of wins for each team
+            for (int i = 0; i < sortedNamesArray.size(); i++) {
+
+                sortedScores.add(i, DBAdapter.getTeamNumWin(getApplicationContext(), sortedNamesArray.get(i), tournament_id));
+            }
+        }
+        // If the format is Combination, order the teams by score
+        else {
+
+            // Get the score for each team
+            for(int i = 0; i < sortedNamesArray.size(); i++) {
+
+                int teamID = DBAdapter.getTeamId(getApplicationContext(), sortedNamesArray.get(i), tournament_id);
+                sortedScores.add(i, DBAdapter.getTeamScore(getApplicationContext(), teamID));
+            }
+        }
 
         // Convert the team names to a String array
         teamNames = new String[sortedNamesArray.size()];
@@ -252,73 +301,70 @@ public class StandingsActivity extends Activity {
             teamLogos[n] = this.getResources().getIdentifier(sortedLogosArray.get(n), "drawable", this.getPackageName());
         }
 
-        // Convert the number of wins for each team to an integer array
-        teamWinsForDisplay = new Integer[sortedWins.size()];
-        for(int m = 0; m < teamWinsForDisplay.length; m++) {
+        // Convert the score for each team to an integer array
+        teamScoresForDisplay = new Integer[sortedScores.size()];
+        for(int m = 0; m < teamScoresForDisplay.length; m++) {
 
-            teamWinsForDisplay[m] = sortedWins.get(m);
+            teamScoresForDisplay[m] = sortedScores.get(m);
         }
 
         // Create the teams list adapter and set it
-        CustomTeamsListViewNotClickableWithNumWinsAdapter adapter = new CustomTeamsListViewNotClickableWithNumWinsAdapter(StandingsActivity.this,
-                teamNames, teamLogos, teamWinsForDisplay);
+        CustomTeamsListViewNotClickableWithScoreAdapter adapter = new CustomTeamsListViewNotClickableWithScoreAdapter(StandingsActivity.this, formatType,
+                teamNames, teamLogos, teamScoresForDisplay);
         standings = (ListView) findViewById(R.id.standingsListView);
         standings.setAdapter(adapter);
     }
 
     public String[] getWinners() {
 
-        // Get the team names, the team logos and number of wins for each team from the database
+        // Get the team names
         ArrayList<String> teamNamesArray = DBAdapter.getTeamNames(this.getApplicationContext(), tournament_id);
 
-        // Get the number of wins for each team
-        ArrayList<Integer> teamWins = new ArrayList<Integer>();
-        for (int i = 0; i < teamNamesArray.size(); i++) {
+        // Initialize the list that will hold the scores of all the teams
+        ArrayList<Integer> teamScores = new ArrayList<Integer>();
 
-            teamWins.add(i, DBAdapter.getTeamNumWin(getApplicationContext(), teamNamesArray.get(i), tournament_id));
+        // If the format is Round Robin, order the teams by score
+        if (formatType == 1) {
+
+            // Get the score for each team
+            for(int i = 0; i < teamNamesArray.size(); i++) {
+
+                int teamID = DBAdapter.getTeamId(getApplicationContext(), teamNamesArray.get(i), tournament_id);
+                teamScores.add(i, DBAdapter.getTeamScore(getApplicationContext(), teamID));
+            }
+        }
+        // If the format is Knockout, order the teams by wins
+        else if (formatType == 2) {
+
+            // Get the number of wins for each team
+            for (int i = 0; i < teamNamesArray.size(); i++) {
+
+                teamScores.add(DBAdapter.getTeamNumWin(getApplicationContext(), teamNamesArray.get(i), tournament_id));
+            }
+        }
+        // If the format is Combination, order the teams by score
+        else {
+
+            /*
+            // Get the score for each team
+            for(int i = 0; i < sortedNamesArray.size(); i++) {
+
+                int teamID = DBAdapter.getTeamId(getApplicationContext(), sortedNamesArray.get(i), tournament_id);
+                sortedScores.add(i, DBAdapter.getTeamScore(getApplicationContext(), teamID));
+            } */
         }
 
-        // Only keep the highest wins Teams
-        int maxWins = Collections.max(teamWins);
-        ArrayList<Integer> winners = new ArrayList<Integer>();
+        // Only keep the highest score teams
+        int maxWins = Collections.max(teamScores);
         ArrayList<String> sortedNamesArray = new ArrayList<>();
-        for (int g = 0; g < teamWins.size(); g++) {
+        for (int g = 0; g < teamScores.size(); g++) {
 
-            if(teamWins.get(g) == maxWins) {
+            if(teamScores.get(g) == maxWins) {
                 String currentHighestTeamName = teamNamesArray.get(g);
-                teamWins.remove(0);
+                teamScores.remove(0);
                 sortedNamesArray.add(currentHighestTeamName);
             }
         }
-
-        /*
-        // Sort the arrays based on decreasing number of wins for each team
-        ArrayList<Integer> orderedIndexes = new ArrayList<>(); // Used to store the ordered indexes
-        for (int j = 0; j < teamNamesArray.size(); j++) {
-
-            int highestValue = Collections.max(teamWins);
-
-            // Iterate through the list of the index of first team with the highest number of wins
-            int k = 0;
-            while (k < teamWins.size() - 1 && teamWins.get(k) != highestValue) {
-
-                k++;
-            }
-
-            orderedIndexes.add(k);
-            teamWins.set(k, -1); // Change it to -1 to avoid getting the same value twice
-        } */
-
-        // Get the necessary team names
-        /*
-        ArrayList<String> sortedNamesArray = new ArrayList<>();
-        ArrayList<Integer> copyOrderedIndexes = new ArrayList<>(teamWins);
-        for(int l = 0; l < teamWins.size(); l++) {
-
-            String currentHighestTeamName = teamNamesArray.get(winners.get(0));
-            winners.remove(0);
-            sortedNamesArray.add(currentHighestTeamName);
-        } */
 
         // Convert the team names to a String array
         teamNames = new String[sortedNamesArray.size()];

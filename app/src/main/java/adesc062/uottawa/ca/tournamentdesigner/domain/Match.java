@@ -22,9 +22,6 @@ public class Match {
         // Create the match team scores
         MatchTeamScore matchTeamScore1 = new MatchTeamScore(context, team1, match_id, tournament_id);
 
-        // If the match is not a bye
-
-
         // If the match is a bye, make the team win against itself
         if(team1.equals(team2)) {
 
@@ -35,8 +32,8 @@ public class Match {
             updateMatch(context, match_id, team1, 0, team1, 1, tournament_id);
         }
         else{
-            MatchTeamScore matchTeamScore2 = new MatchTeamScore(context, team2, match_id, tournament_id);
 
+            MatchTeamScore matchTeamScore2 = new MatchTeamScore(context, team2, match_id, tournament_id);
         }
 	}
 
@@ -47,16 +44,15 @@ public class Match {
 
     public static void updateMatch(Context context, int match_id, String team1, int score1, String team2,
                               int score2, int tournament_id) {
-        //Redundant  because Byes are handled by updating on creation
+
+        // Redundant  because Byes are handled by updating on creation
         // Check if the match is a bye
-        if(team1.equals(team2)) {
+        if (team1.equals(team2)) {
 
             DBAdapter.updateMatch(context, match_id);
         }
         // If the match is not a bye
-
         else {
-
 
             // Get the team id
             int team_id1 = DBAdapter.getTeamId(context, team1, tournament_id);
@@ -68,6 +64,10 @@ public class Match {
                 // Set the match team scores
                 DBAdapter.updateMatchTeamScore(context, team_id1, match_id, score1, 0);
                 DBAdapter.updateMatchTeamScore(context, team_id2, match_id, score2, 0);
+
+                // Give both teams a tie, i.e. one point
+                DBAdapter.giveTeamTie(context, team_id1);
+                DBAdapter.giveTeamTie(context, team_id2);
             }
             // If team1 won
             else if(score1 > score2) {
@@ -75,6 +75,9 @@ public class Match {
                 // Set the match team scores
                 DBAdapter.updateMatchTeamScore(context, team_id1, match_id, score1, 1);
                 DBAdapter.updateMatchTeamScore(context, team_id2, match_id, score2, 0);
+
+                // Give team1 a win, i.e. three points
+                DBAdapter.giveTeamWin(context, team_id1);
             }
             // If team2 won
             else {
@@ -82,6 +85,9 @@ public class Match {
                 // Set the match team scores
                 DBAdapter.updateMatchTeamScore(context, team_id1, match_id, score1, 0);
                 DBAdapter.updateMatchTeamScore(context, team_id2, match_id, score2, 1);
+
+                // Give team2 a win, i.e. three points
+                DBAdapter.giveTeamWin(context, team_id2);
             }
         }
 

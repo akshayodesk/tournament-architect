@@ -14,18 +14,20 @@ import adesc062.uottawa.ca.tournamentdesigner.R;
  * Used for the teams list view in the Standings activity.
  *
  */
-public class CustomTeamsListViewNotClickableWithNumWinsAdapter extends ArrayAdapter<String> {
+public class CustomTeamsListViewNotClickableWithScoreAdapter extends ArrayAdapter<String> {
 
     private final Activity context;
+    private final int formatType;
     private final String[] teamNames;
     private final Integer[] logos; // These integer correspond to the resource IDs of the drawables
     private final Integer[] teamWins;
 
-    public CustomTeamsListViewNotClickableWithNumWinsAdapter(Activity context, String[] teamNames, Integer[] logos, Integer[] teamWins) {
+    public CustomTeamsListViewNotClickableWithScoreAdapter(Activity context, int formatType, String[] teamNames, Integer[] logos, Integer[] teamWins) {
 
         super(context, R.layout.custom_teams_list_view, teamNames);
 
         this.context = context;
+        this.formatType = formatType;
         this.teamNames = teamNames;
         this.logos = logos;
         this.teamWins = teamWins;
@@ -48,6 +50,12 @@ public class CustomTeamsListViewNotClickableWithNumWinsAdapter extends ArrayAdap
         // Set up the number of wins for each team
         TextView numberOfWinsTextView = (TextView) rowView.findViewById(R.id.numberOfWinsTextView);
         numberOfWinsTextView.setText(String.valueOf(teamWins[position]));
+
+        // If the format is Knockout, change "Score:" to "Wins:"
+        if (formatType == 2) {
+            TextView scoreIndicatorTextView = (TextView) rowView.findViewById(R.id.scoreIndicatorTextView);
+            scoreIndicatorTextView.setText("Wins:");
+        }
 
         // Return the view of the row
         return rowView;

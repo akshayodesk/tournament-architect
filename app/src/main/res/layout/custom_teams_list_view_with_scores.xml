@@ -35,8 +35,8 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="fill_parent"
-            android:text="Wins:"
-            android:id="@+id/winsIndicatorTextView"
+            android:text="Score:"
+            android:id="@+id/scoreIndicatorTextView"
             android:layout_gravity="center_vertical"
             android:layout_weight="0"
             android:textSize="18sp"
@@ -44,15 +44,14 @@
             android:layout_marginLeft="15sp" />
 
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="60sp"
             android:layout_height="fill_parent"
             android:text="14"
             android:id="@+id/numberOfWinsTextView"
             android:layout_gravity="center_vertical"
-            android:layout_weight="0"
             android:textSize="18sp"
             android:gravity="center_vertical|center|center_horizontal|right"
-            android:layout_marginLeft="15sp" />
+            android:layout_marginLeft="0dp" />
 
     </LinearLayout>
 

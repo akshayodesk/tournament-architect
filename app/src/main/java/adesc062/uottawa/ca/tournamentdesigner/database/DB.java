@@ -45,6 +45,7 @@ public class DB extends SQLiteOpenHelper {
                 + "name TEXT NOT NULL, "
                 + "logo TEXT NOT NULL, "
                 + "format_position INTEGER, "
+                + "score INTEGER NOT NULL, "
                 + "team_tournament_id INTEGER NOT NULL, "
                 + "FOREIGN KEY(team_tournament_id) REFERENCES tournaments(tournament_id))");
 

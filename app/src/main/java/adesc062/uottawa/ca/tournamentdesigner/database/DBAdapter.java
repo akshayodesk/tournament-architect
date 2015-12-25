@@ -457,6 +457,7 @@ public class DBAdapter {
         dataToInsert.put("name", name);
         dataToInsert.put("logo", logo);
         dataToInsert.put("format_position", 0);
+        dataToInsert.put("score", 0);
         dataToInsert.put("team_tournament_id", team_tournament_id);
         String[] whereArgs = new String[]{String.valueOf(team_tournament_id)};
 
@@ -1301,14 +1302,14 @@ public class DBAdapter {
         return teamWins;
     }
 
-    public static int getTournamentNumCurrentRounds(Context context, int tournament_id) {
+    public static int getTournamentNumCurrentRound(Context context, int tournament_id) {
 
         // Open the database
         DB dbHelper = new DB(context);
         SQLiteDatabase db = dbHelper.getReadableDatabase();
 
         // Get the information
-        int numCircuits = -1;
+        int numCurrentRound = -1;
 
         try {
 
@@ -1316,18 +1317,18 @@ public class DBAdapter {
 
             c.moveToFirst();
             {
-                numCircuits = c.getInt(0);
+                numCurrentRound = c.getInt(0);
             }
         } catch (Exception e ) {
 
-            numCircuits = 0;
+            numCurrentRound = 0;
         }
 
         // Close the database
         db.close();
 
         // Return the list of the status
-        return numCircuits;
+        return numCurrentRound;
     }
 
     public static ArrayList<Integer> getMatchesUpdatedValues(Context context, int currentRound, int match_tournament_id) {
@@ -1603,6 +1604,61 @@ public class DBAdapter {
         db.close();
 
         // Return the number of teams
+        return score;
+    }
+
+    public static void giveTeamWin(Context context, int team_id) {
+
+        // Open the database
+        DB dbHelper = new DB(context);
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+
+        // Give the team +3 to score
+        db.execSQL("UPDATE teams SET score = score + 3 WHERE team_id = " + team_id);
+
+        // Close the database
+        db.close();
+    }
+
+    public static void giveTeamTie(Context context, int team_id) {
+
+        // Open the database
+        DB dbHelper = new DB(context);
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+
+        // Give the team +3 to score
+        db.execSQL("UPDATE teams SET score = score + 1 WHERE team_id = " + team_id);
+
+        // Close the database
+        db.close();
+    }
+
+    public static int getTeamScore(Context context, int team_id) {
+
+        // Open the database
+        DB dbHelper = new DB(context);
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+
+        // Get the information
+        int score = -1;
+
+        try {
+
+            Cursor c = db.rawQuery("SELECT * FROM teams WHERE " + "team_id = " + team_id, null);
+
+            c.moveToFirst();
+            {
+                score = c.getInt(c.getColumnIndex("score"));
+            }
+        } catch (Exception e ) {
+
+            // Do nothing
+        }
+
+        // Close the database
+        db.close();
+
+        // Return the score
         return score;
     }
 }

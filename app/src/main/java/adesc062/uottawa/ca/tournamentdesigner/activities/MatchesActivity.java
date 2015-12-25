@@ -51,7 +51,7 @@ public class MatchesActivity extends Activity {
             // Get the team ids for a match
             ArrayList<Integer> matchTeamIDs = DBAdapter.getMatchTeamIDs(getApplicationContext(), matchIDs.get(i));
 
-            //For byes
+            // For byes
             if(matchTeamIDs.size() == 1){
 
                 team1NamesArray.add(DBAdapter.getTeamName(getApplicationContext(), matchTeamIDs.get(0)));

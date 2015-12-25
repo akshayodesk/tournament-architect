@@ -40,7 +40,7 @@ public class RoundActivity extends Activity {
     private void updateRounds() {
 
         // Get the number of rounds currently available
-        int numCurrentRounds = DBAdapter.getTournamentNumCurrentRounds(getApplicationContext(), tournament_id);
+        int numCurrentRounds = DBAdapter.getTournamentNumCurrentRound(getApplicationContext(), tournament_id);
 
         // Get the number of teams
         int numTeams = DBAdapter.getNumTeamsForTournament(getApplicationContext(), tournament_id);
