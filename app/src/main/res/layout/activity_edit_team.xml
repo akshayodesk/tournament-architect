@@ -34,8 +34,8 @@
             android:layout_width="fill_parent"
             android:layout_height="0dp"
             android:id="@+id/teamLogoImageView"
-            android:src="@drawable/twelth_attempt"
-            android:layout_weight="0.4"
+            android:src="@drawable/tournament_designer_logo_lowres"
+            android:layout_weight="0.3"
             android:clickable="false"
             android:onClick="logoOnClick"
             android:focusable="false"
@@ -44,7 +44,7 @@
         <Space
             android:layout_width="fill_parent"
             android:layout_height="0dp"
-            android:layout_weight="0.05" />
+            android:layout_weight="0.08" />
 
         <EditText
             android:layout_width="fill_parent"
@@ -60,7 +60,7 @@
         <Space
             android:layout_width="fill_parent"
             android:layout_height="0dp"
-            android:layout_weight="0.05" />
+            android:layout_weight="0.1" />
 
         <Button
             android:layout_width="fill_parent"

@@ -273,7 +273,7 @@
                     android:id="@+id/tournamentdesignerImageView"
                     android:layout_columnWeight="1"
                     android:layout_rowWeight="1"
-                    android:src="@drawable/thirteenth_attempt"
+                    android:src="@drawable/tournament_designer_logo_lowres"
                     android:layout_weight="1"
                     android:onClick="onFlagClick" />
             </LinearLayout>

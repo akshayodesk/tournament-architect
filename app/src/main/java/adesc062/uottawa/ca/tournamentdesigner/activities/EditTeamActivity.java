@@ -45,7 +45,7 @@ public class EditTeamActivity extends Activity {
 
         // If we are editing a team
         } else
-            logo = "tournament_designer_logo";
+            logo = "tournament_designer_logo_lowres";
 
     }
 
@@ -307,7 +307,7 @@ public class EditTeamActivity extends Activity {
         drawableName = drawableName.replaceAll("adesc062.uottawa.ca.tournamentdesigner/", "");
         drawableName = drawableName.replaceAll("id/", "");
         if(drawableName.equals("tournamentdesigner"))
-            drawableName = "tournament_designer_logo";
+            drawableName = "tournament_designer_logo_lowres";
 
         int resID = getResources().getIdentifier(drawableName, "drawable", getPackageName());
         teamLogo.setImageResource(resID);

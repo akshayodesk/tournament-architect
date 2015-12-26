@@ -9,8 +9,9 @@ public class MatchTeamScore {
     int team_id;
     int match_id;
     int tournament_id;
+    int formatType;
 
-	public MatchTeamScore(Context context, String team1, int match_id, int tournament_id) {
+	public MatchTeamScore(Context context, String team1, int match_id, int tournament_id, int formatType) {
 
         // Get the team id
         team_id = DBAdapter.getTeamId(context, team1, tournament_id);
@@ -23,12 +24,15 @@ public class MatchTeamScore {
 
         // Set the tournament id
         this.tournament_id = tournament_id;
+
+        // Set the formatType
+        this.formatType = formatType;
 	}
 
     public void makeBye(Context context) {
 
         // Make the match team score a win in the database because the match is a bye
-        DBAdapter.updateMatchTeamScore(context, team_id, match_id, 0, 1);
+        DBAdapter.updateMatchTeamScore(context, team_id, match_id, 0, 1, formatType);
 
     }
 }

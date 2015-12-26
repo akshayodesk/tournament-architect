@@ -50,20 +50,37 @@
                     android:layout_width="fill_parent"
                     android:layout_height="0dp"
                     android:layout_gravity="center_horizontal"
-                    android:layout_weight="0.2">
+                    android:layout_weight="0.15">
 
-                    <ImageView
+                    <LinearLayout
+                        android:orientation="horizontal"
                         android:layout_width="0dp"
                         android:layout_height="fill_parent"
-                        android:id="@+id/team1ImageView"
-                        android:src="@drawable/argentina"
-                        android:layout_rowWeight="0"
-                        android:layout_columnWeight="1"
-                        android:layout_gravity="center_horizontal"
-                        android:layout_column="1"
-                        android:layout_row="0"
-                        android:layout_marginRight="8dp"
-                        android:layout_weight="1" />
+                        android:layout_weight="1">
+
+                        <Space
+                            android:layout_width="0dp"
+                            android:layout_height="fill_parent"
+                            android:layout_weight="0.5" />
+
+                        <ImageView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/team1ImageView"
+                            android:src="@drawable/argentina"
+                            android:layout_rowWeight="0"
+                            android:layout_columnWeight="1"
+                            android:layout_gravity="center_horizontal"
+                            android:layout_column="1"
+                            android:layout_row="0"
+                            android:layout_marginRight="8dp"
+                            android:layout_weight="2" />
+
+                        <Space
+                            android:layout_width="0dp"
+                            android:layout_height="fill_parent"
+                            android:layout_weight="0.5" />
+                    </LinearLayout>
 
                     <TextView
                         android:layout_width="0dp"
@@ -74,17 +91,35 @@
                         android:layout_weight="0.5"
                         android:gravity="center_vertical|center_horizontal" />
 
-                    <ImageView
+                    <LinearLayout
+                        android:orientation="horizontal"
                         android:layout_width="0dp"
-                        android:layout_height="fill_parent"
-                        android:id="@+id/team2ImageView"
-                        android:src="@drawable/colombia"
-                        android:layout_rowWeight="0"
-                        android:layout_columnWeight="1"
-                        android:layout_gravity="center_horizontal"
-                        android:layout_row="0"
-                        android:layout_column="0"
-                        android:layout_weight="1" />
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1">
+
+                        <Space
+                            android:layout_width="0dp"
+                            android:layout_height="fill_parent"
+                            android:layout_weight="0.5" />
+
+                        <ImageView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/team2ImageView"
+                            android:src="@drawable/colombia"
+                            android:layout_rowWeight="0"
+                            android:layout_columnWeight="1"
+                            android:layout_gravity="center_horizontal"
+                            android:layout_row="0"
+                            android:layout_column="0"
+                            android:layout_weight="2" />
+
+                        <Space
+                            android:layout_width="0dp"
+                            android:layout_height="fill_parent"
+                            android:layout_weight="0.5" />
+                    </LinearLayout>
+
                 </LinearLayout>
 
                 <LinearLayout

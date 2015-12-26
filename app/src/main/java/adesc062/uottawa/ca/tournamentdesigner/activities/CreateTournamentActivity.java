@@ -10,10 +10,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.RadioGroup;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 import java.util.ArrayList;
@@ -75,6 +77,12 @@ public class CreateTournamentActivity extends Activity {
 
             disableDeleteTeamButton();
         }
+
+        // Set up the spinner for the number of circuits
+        Spinner numCircuitsSpinner = (Spinner) findViewById(R.id.numCircuitsSpinner);
+        Integer[] numCircuits = new Integer[]{1, 2, 3, 4, 5};
+        ArrayAdapter<Integer> adapter = new ArrayAdapter<Integer>(this, android.R.layout.simple_spinner_item, numCircuits);
+        numCircuitsSpinner.setAdapter(adapter);
     }
 
     /**

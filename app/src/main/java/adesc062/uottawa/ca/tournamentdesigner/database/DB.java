@@ -77,6 +77,7 @@ public class DB extends SQLiteOpenHelper {
         db.execSQL("CREATE TABLE match_team_scores (match_team_score_id INTEGER PRIMARY KEY, "
                 + "score INTEGER, "
                 + "isWinner INTEGER, "
+                + "formatType INTEGER, "
                 + "match_team_score_team_id INTEGER NOT NULL, "
                 + "match_team_score_match_id INTEGER NOT NULL, "
                 + "match_team_score_tournament_id INTEGER NOT NULL, "

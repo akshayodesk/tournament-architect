@@ -38,7 +38,7 @@
                 android:layout_height="fill_parent"
                 android:id="@+id/logoImageView"
                 android:layout_gravity="center_vertical"
-                android:src="@drawable/twelth_attempt"
+                android:src="@drawable/tournament_designer_logo_highres"
                 android:layout_weight="6"
                 android:background="#FFFFFF"
                 android:longClickable="false" />

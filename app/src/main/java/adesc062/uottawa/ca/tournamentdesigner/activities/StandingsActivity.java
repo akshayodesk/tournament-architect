@@ -214,17 +214,31 @@ public class StandingsActivity extends Activity {
             // Get the number of wins for each team
             for (int i = 0; i < teamNamesArray.size(); i++) {
 
-                teamScores.add(i, DBAdapter.getTeamNumWin(getApplicationContext(), teamNamesArray.get(i), tournament_id));
+                teamScores.add(i, DBAdapter.getTeamNumWins(getApplicationContext(), teamNamesArray.get(i), tournament_id));
             }
         }
-        // If the format is Combination, order the teams by score
+        // If the format is Combination, order the teams by score in the Round Robin portion
+        // and by number of wins in the Knockout portion
         else {
 
-            // Get the score for each team
-            for(int i = 0; i < teamNamesArray.size(); i++) {
+            // If the tournament is currently in the Round Robin, order the teams by score
+            if(!((CombinationFormat) format).getIsKnockout()) {
 
-                int teamID = DBAdapter.getTeamId(getApplicationContext(), teamNamesArray.get(i), tournament_id);
-                teamScores.add(i, DBAdapter.getTeamScore(getApplicationContext(), teamID));
+                // Get the score for each team
+                for(int i = 0; i < teamNamesArray.size(); i++) {
+
+                    int teamID = DBAdapter.getTeamId(getApplicationContext(), teamNamesArray.get(i), tournament_id);
+                    teamScores.add(i, DBAdapter.getTeamScore(getApplicationContext(), teamID));
+                }
+            }
+            // If the tournament is currently in the Knockout, order the teams by wins in the Knockout
+            else {
+
+                // Get the number of wins for each team
+                for (int i = 0; i < teamNamesArray.size(); i++) {
+
+                    teamScores.add(DBAdapter.getTeamNumKnockoutWins(getApplicationContext(), teamNamesArray.get(i), tournament_id));
+                }
             }
         }
 
@@ -248,7 +262,6 @@ public class StandingsActivity extends Activity {
         // Re-order the team names and the team logos
         ArrayList<String> sortedNamesArray = new ArrayList<>();
         ArrayList<String> sortedLogosArray = new ArrayList<>();
-        ArrayList<Integer> copyOrderedIndexes = new ArrayList<>(orderedIndexes);
         for(int l = 0; l < teamNamesArray.size(); l++) {
 
             String currentHighestTeamName = teamNamesArray.get(orderedIndexes.get(0));
@@ -277,20 +290,33 @@ public class StandingsActivity extends Activity {
             // Get the number of wins for each team
             for (int i = 0; i < sortedNamesArray.size(); i++) {
 
-                sortedScores.add(i, DBAdapter.getTeamNumWin(getApplicationContext(), sortedNamesArray.get(i), tournament_id));
+                sortedScores.add(i, DBAdapter.getTeamNumWins(getApplicationContext(), sortedNamesArray.get(i), tournament_id));
             }
         }
-        // If the format is Combination, order the teams by score
+        // If the format is Combination, order the teams by score in the Round Robin portion
+        // and by number of wins in the Knockout portion
         else {
 
-            // Get the score for each team
-            for(int i = 0; i < sortedNamesArray.size(); i++) {
+            // If the tournament is currently in the Round Robin, order the teams by score
+            if(!((CombinationFormat) format).getIsKnockout()) {
 
-                int teamID = DBAdapter.getTeamId(getApplicationContext(), sortedNamesArray.get(i), tournament_id);
-                sortedScores.add(i, DBAdapter.getTeamScore(getApplicationContext(), teamID));
+                // Get the score for each team
+                for(int i = 0; i < sortedNamesArray.size(); i++) {
+
+                    int teamID = DBAdapter.getTeamId(getApplicationContext(), sortedNamesArray.get(i), tournament_id);
+                    sortedScores.add(i, DBAdapter.getTeamScore(getApplicationContext(), teamID));
+                }
+            }
+            // If the tournament is currently in the Knockout, order the teams by wins in the Knockout
+            else {
+
+                // Get the number of wins for each team
+                for (int i = 0; i < sortedNamesArray.size(); i++) {
+
+                    sortedScores.add(DBAdapter.getTeamNumKnockoutWins(getApplicationContext(), sortedNamesArray.get(i), tournament_id));
+                }
             }
         }
-
         // Convert the team names to a String array
         teamNames = new String[sortedNamesArray.size()];
         teamNames = sortedNamesArray.toArray(teamNames);
@@ -308,8 +334,18 @@ public class StandingsActivity extends Activity {
             teamScoresForDisplay[m] = sortedScores.get(m);
         }
 
+        // If the format is Combination, get the actual current format type
+        int actualFormatType = formatType;
+        if (formatType == 3 ) {
+
+            if(!((CombinationFormat) format).getIsKnockout())
+                actualFormatType = 1;
+            else
+                actualFormatType = 2;
+        }
+
         // Create the teams list adapter and set it
-        CustomTeamsListViewNotClickableWithScoreAdapter adapter = new CustomTeamsListViewNotClickableWithScoreAdapter(StandingsActivity.this, formatType,
+        CustomTeamsListViewNotClickableWithScoreAdapter adapter = new CustomTeamsListViewNotClickableWithScoreAdapter(StandingsActivity.this, actualFormatType,
                 teamNames, teamLogos, teamScoresForDisplay);
         standings = (ListView) findViewById(R.id.standingsListView);
         standings.setAdapter(adapter);
@@ -339,19 +375,17 @@ public class StandingsActivity extends Activity {
             // Get the number of wins for each team
             for (int i = 0; i < teamNamesArray.size(); i++) {
 
-                teamScores.add(DBAdapter.getTeamNumWin(getApplicationContext(), teamNamesArray.get(i), tournament_id));
+                teamScores.add(DBAdapter.getTeamNumWins(getApplicationContext(), teamNamesArray.get(i), tournament_id));
             }
         }
-        // If the format is Combination, order the teams by score
+        // If the format is Combination, order the teams by wins in Knockout
         else {
 
-            /*
-            // Get the score for each team
-            for(int i = 0; i < sortedNamesArray.size(); i++) {
+            // Get the number of wins for each team
+            for (int i = 0; i < teamNamesArray.size(); i++) {
 
-                int teamID = DBAdapter.getTeamId(getApplicationContext(), sortedNamesArray.get(i), tournament_id);
-                sortedScores.add(i, DBAdapter.getTeamScore(getApplicationContext(), teamID));
-            } */
+                teamScores.add(DBAdapter.getTeamNumKnockoutWins(getApplicationContext(), teamNamesArray.get(i), tournament_id));
+            }
         }
 
         // Only keep the highest score teams

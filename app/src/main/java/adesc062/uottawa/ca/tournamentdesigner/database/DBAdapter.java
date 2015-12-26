@@ -1226,7 +1226,7 @@ public class DBAdapter {
         db.close();
     }
 
-    public static void updateMatchTeamScore(Context context, int team_id, int match_id, int score, int isWinner) {
+    public static void updateMatchTeamScore(Context context, int team_id, int match_id, int score, int isWinner, int formatType) {
 
 
         // Open the database
@@ -1235,7 +1235,7 @@ public class DBAdapter {
 
         try {
             // Insert the team
-            db.execSQL("UPDATE match_team_scores SET score = " + score + ", isWinner = " + isWinner
+            db.execSQL("UPDATE match_team_scores SET score = " + score + ", isWinner = " + isWinner + ", formatType = " + formatType
                     + " WHERE match_team_score_team_id = " + team_id + " AND match_team_score_match_id = " + match_id);
         }catch(Exception e) {
             throw new IllegalArgumentException();
@@ -1270,7 +1270,7 @@ public class DBAdapter {
         db.close();
     }
 
-    public static int getTeamNumWin(Context context, String teamName, int tournament_id) {
+    public static int getTeamNumWins(Context context, String teamName, int tournament_id) {
 
         // Open the database
         DB dbHelper = new DB(context);
@@ -1279,11 +1279,48 @@ public class DBAdapter {
         /* Get the information */
         // Get the list of team ids
         int team_id = getTeamId(context, teamName, tournament_id);
+
+        // Initialize the variable that will hold the number of wins for the team to 0
         int teamWins = 0;
 
         try {
 
             Cursor c = db.rawQuery("SELECT sum(isWinner) FROM match_team_scores WHERE match_team_score_team_id = " + team_id, null);
+
+            c.moveToFirst();
+            {
+                teamWins = c.getInt(0);
+
+            }
+        } catch (Exception e ) {
+
+            // Do nothing
+        }
+
+        // Close the database
+        db.close();
+
+        // Return the list of the status
+        return teamWins;
+    }
+
+    public static int getTeamNumKnockoutWins(Context context, String teamName, int tournament_id) {
+
+        // Open the database
+        DB dbHelper = new DB(context);
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+
+        /* Get the information */
+        // Get the list of team ids
+        int team_id = getTeamId(context, teamName, tournament_id);
+
+        // Initialize the variable that will hold the number of wins for the team to 0
+        int teamWins = 0;
+
+        try {
+
+            Cursor c = db.rawQuery("SELECT sum(isWinner) FROM match_team_scores WHERE match_team_score_team_id = " + team_id
+                    + " AND formatType = 2", null);
 
             c.moveToFirst();
             {

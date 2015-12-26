@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!-- Generated with http://android-holo-colors.com -->
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+
+  <style name="holocolors" parent="@style/_holocolors"/>
+
+  <style name="_holocolors" parent="Theme.AppCompat.Light">
+
+    <item name="android:listChoiceIndicatorSingle">@drawable/holocolors_btn_radio_holo_light</item>
+
+    <item name="android:dropDownSpinnerStyle">@style/Spinnerholocolors</item>
+
+  </style>
+
+</resources>

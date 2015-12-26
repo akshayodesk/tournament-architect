@@ -63,7 +63,7 @@ public class KnockoutFormat extends TournamentFormat {
             ArrayList<Integer> teamWins = new ArrayList<Integer>();
             for(int i = 0; i < teamNamesArray.size(); i++) {
 
-                teamWins.add(i, DBAdapter.getTeamNumWin(context, teamNamesArray.get(i), tournament_id));
+                teamWins.add(i, DBAdapter.getTeamNumWins(context, teamNamesArray.get(i), tournament_id));
             }
 
             // Sort the arrays based on decreasing number of wins for each team

@@ -199,7 +199,7 @@ public class MatchViewActivity extends Activity {
 
                     // Update the match
                     Match.updateMatch(getApplicationContext(), match_id, team1Name, team1ScoreInt,
-                            team2Name, team2ScoreInt, tournament_id);
+                            team2Name, team2ScoreInt, tournament_id, formatType);
 
                     // Open the standings page and clear previous activities
                     Intent intent = new Intent(MatchViewActivity.this, StandingsActivity.class);

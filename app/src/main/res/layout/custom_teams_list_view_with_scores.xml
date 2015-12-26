@@ -44,7 +44,7 @@
             android:layout_marginLeft="15sp" />
 
         <TextView
-            android:layout_width="60sp"
+            android:layout_width="40sp"
             android:layout_height="fill_parent"
             android:text="14"
             android:id="@+id/numberOfWinsTextView"

@@ -64,9 +64,7 @@
                     android:clickable="true"
                     android:contextClickable="false"
                     android:onClick="roundRobinOnClick"
-                    android:button="@drawable/custom_radio_button_btn_radio_holo_light" />
-"
-                    android:onClick="roundRobinOnClick" />
+                    style="@style/RadioButtonholocolors"/>
 
                 <RadioButton
                     android:layout_width="fill_parent"
@@ -78,19 +76,19 @@
                     android:buttonTint="#E48700"
                     android:layout_weight="1"
                     android:onClick="knockoutRobinOnClick"
-                    android:button="@drawable/custom_radio_button_btn_radio_holo_light" />
+                    style="@style/RadioButtonholocolors" />
 
                 <RadioButton
                     android:layout_width="fill_parent"
                     android:layout_height="0dp"
-                    android:text=" Combination"
+                    android:text="Round Robin then Knockout"
                     android:id="@+id/combinationRadioButton"
                     android:checked="false"
                     android:textSize="18sp"
                     android:buttonTint="#E48700"
                     android:layout_weight="1"
                     android:onClick="combinationRobinOnClick"
-                    android:button="@drawable/custom_radio_button_btn_radio_holo_light" />
+                    style="@style/RadioButtonholocolors" />
             </RadioGroup>
 
             <LinearLayout
@@ -102,12 +100,12 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="# Round Robin Circuits:"
+                    android:text="Games per team:"
                     android:id="@+id/numRoundsTextView"
                     android:textSize="18sp"
                     android:layout_weight="0"
                     android:gravity="center_vertical"
-                    android:layout_marginLeft="5sp" />
+                    android:layout_marginLeft="10sp" />
 
                 <Space
                     android:layout_width="10sp"
@@ -123,6 +121,15 @@
                     android:maxLength="2"
                     android:textSize="18sp"
                     android:inputType="number" />
+
+                <Spinner
+                    android:layout_width="40sp"
+                    android:layout_height="40sp"
+                    android:id="@+id/numCircuitsSpinner"
+                    android:gravity="bottom|right"
+                    android:background="#E48700"
+                    style="@style/Spinnerholocolors"
+                    android:layout_gravity="center_vertical" />
 
             </LinearLayout>
 
