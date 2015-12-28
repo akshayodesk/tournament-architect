@@ -113,7 +113,7 @@
                     android:layout_weight="0" />
 
                 <Spinner
-                    android:layout_width="70sp"
+                    android:layout_width="60sp"
                     android:layout_height="40sp"
                     android:id="@+id/numCircuitsSpinner"
                     android:gravity="right"

@@ -33,6 +33,7 @@ public class CombinationFormat extends TournamentFormat {
             int numRoundRobinRounds = ((numTeams - 1) + (numTeams%2)) * circuits;
             if(currentRound == numRoundRobinRounds) {
 
+                justSwitched = true;
                 this.createNextRound(context, tournament_id);
                 currentFormat.setJustSwitched(true);
             }
@@ -44,15 +45,24 @@ public class CombinationFormat extends TournamentFormat {
         ArrayList<String> teams = DBAdapter.getTeamNames(context, tournament_id);
         int numTeams = teams.size();
 
-        // Get the number of rounds to play
+        // Determine the number of Round Robin rounds
+        // Find the number of rounds per circuit
+        int numRoundsPerCircuit = numTeams - 1 + numTeams%2;
+        // Get the number of circuits for the tournament
+        int numCircuits = DBAdapter.getTournamentNumCircuits(context, tournament_id);
+        // Find the number of Round Robin rounds that will be played
+        int numTotalRoundRobinRounds = numRoundsPerCircuit * numCircuits;
+
+        // Determine the number of Knockout rounds
         int currentRound = DBAdapter.getCurrentRound(context, tournament_id);
         double logOfTeams = Math.log10(numTeams)/ Math.log10(2);
-        int wholeOfLogOfTeam = (int) logOfTeams;
-        if(logOfTeams - wholeOfLogOfTeam != 0) {
-            wholeOfLogOfTeam++;
+        int numTotalKnockoutRounds = (int) logOfTeams;
+        if(logOfTeams - numTotalKnockoutRounds != 0) {
+            numTotalKnockoutRounds++;
         }
 
-        boolean knockoutCompleted = currentRound >= (wholeOfLogOfTeam - (numTeams%2)) && checkIsRoundComplete(context);
+        boolean knockoutCompleted = currentRound >= (numTotalRoundRobinRounds + numTotalKnockoutRounds)
+                && checkIsRoundComplete(context);
 
         if(isKnockout && knockoutCompleted) {
 
@@ -76,152 +86,184 @@ public class CombinationFormat extends TournamentFormat {
             // Get the current round number
             currentRound = DBAdapter.getCurrentRound(context, tournament_id);
 
-            // Handling switch from Round Robin to Knockout
-             if(currentRound >= (orderedTeams.size() - 1) * DBAdapter.getTournamentNumCircuits(context, tournament_id)) {
+            // If this is the first Knockout round to be created
+            if (justSwitched) {
 
-                 currentRound = 1;
-             }
+                /* We must order the teams based by score from the
+                   Round Robin, and then match up the best teams
+                   against the worst teams
+                 */
 
-            // Calculate the number of teams to remove
-            int numberOfTeamsToRemove = 0;
-            int tempSize;
-            for (int i = 0; i < currentRound; i++) {
+                // Get the score for each team
+                ArrayList<Integer> teamWins = new ArrayList<Integer>();
+                for (int i = 0; i < orderedTeams.size(); i++) {
 
-                tempSize = size / 2;
-                size = size - tempSize;
-                numberOfTeamsToRemove += tempSize;
-            }
-
-            // Get the list of team names
-            ArrayList<String> teamNamesArray = DBAdapter.getTeamNames(context, tournament_id);
-
-            // Get the number of wins for each team
-            ArrayList<Integer> teamWins = new ArrayList<Integer>();
-            for (int i = 0; i < teamNamesArray.size(); i++) {
-
-                teamWins.add(i, DBAdapter.getTeamNumWins(context, teamNamesArray.get(i), tournament_id));
-            }
-
-            // Sort the arrays based on decreasing number of wins for each team
-            ArrayList<Integer> orderedIndexes = new ArrayList<>(); // Used to store the ordered indexes
-            for (int j = 0; j < teamNamesArray.size(); j++) {
-
-                int highestValue = Collections.max(teamWins);
-
-                // Iterate through the list of the index of first team with the highest number of wins
-                int k = 0;
-                while (k < teamWins.size() - 1 && teamWins.get(k) != highestValue) {
-
-                    k++;
+                    int teamID = DBAdapter.getTeamId(context, orderedTeams.get(i), tournament_id);
+                    teamWins.add(i, DBAdapter.getTeamScore(context, teamID));
                 }
 
-                orderedIndexes.add(k);
-                teamWins.set(k, -1); // Change it to -1 to avoid getting the same value twice
+                // Sort the list based on decreasing score for each team
+                ArrayList<Integer> orderedIndexes = new ArrayList<>(); // Used to store the ordered indexes
+                for (int j = 0; j < orderedTeams.size(); j++) {
+
+                    int highestValue = Collections.max(teamWins);
+
+                    // Iterate through the list of the index of first team with the highest number of wins
+                    int k = 0;
+                    while (k < teamWins.size() - 1 && teamWins.get(k) != highestValue) {
+
+                        k++;
+                    }
+
+                    orderedIndexes.add(k);
+                    teamWins.set(k, -1); // Change it to -1 to avoid getting the same value twice
+                }
+
+                // Re-order the team names
+                ArrayList<String> sortedNamesArray = new ArrayList<>();
+
+                for (int l = 0; l < orderedTeams.size(); l++) {
+
+                    String currentHighestTeamName = orderedTeams.get(orderedIndexes.get(0));
+                    orderedIndexes.remove(0);
+                    sortedNamesArray.add(currentHighestTeamName);
+                }
+                orderedTeams = new ArrayList<>(sortedNamesArray);
+
+
+                // If the number of teams is odd, give a bye to the best team
+                if (orderedTeams.size()%2 == 1) {
+
+                    orderedTeams.add(orderedTeams.get(0));
+                }
+
+                // Now set pairs of the best team against the worst team, etc
+                for (int i = 0; i < orderedTeams.size(); i = i + 2) {
+
+                    // Save the 2nd best team
+                    String tempTeam = orderedTeams.get(i + 1);
+
+                    // Put the worst team right after the best team
+                    orderedTeams.set(i + 1, orderedTeams.get(orderedTeams.size() - 1));
+
+                    // Put the 2nd best team back in
+                    orderedTeams.add(i + 2, tempTeam);
+
+                    // Remove the extra worst team
+                    orderedTeams.remove(orderedTeams.size() - 1);
+                }
+
+                // Now order the pairs so that the best team never meets
+                // the 2nd best team before the finals
+
+                // Split the teams in upper and lower brackets
+                ArrayList<String> upperBracket = new ArrayList<>();
+                ArrayList<String> lowerBracket = new ArrayList<>();
+                for(int i = 0; i < orderedTeams.size() / 2; i++) {
+
+                    // Put two teams in the upper bracket
+                    upperBracket.add(orderedTeams.get(0));
+                    upperBracket.add(orderedTeams.get(1));
+
+                    // Remove those two teams
+                    orderedTeams.remove(0);
+                    orderedTeams.remove(0);
+
+                    // Put two teams in the lower bracket if size allows it
+                    if(!orderedTeams.isEmpty()) {
+
+                        lowerBracket.add(orderedTeams.get(0));
+                        lowerBracket.add(orderedTeams.get(1));
+
+                        // Remove those two teams
+                        orderedTeams.remove(0);
+                        orderedTeams.remove(0);
+                    }
+                }
+
+                // Join the two brackets
+                for(int i = 0; i < upperBracket.size(); i++)
+                    orderedTeams.add(upperBracket.get(i));
+                for (int i = 0; i < lowerBracket.size(); i++)
+                    orderedTeams.add(lowerBracket.get(i));
+
+            }
+            // If this is not the first Knockout round to be created
+            else {
+
+                // Remove teams that have been eliminated
+                ArrayList<String> competingTeams = new ArrayList<>(orderedTeams);
+                for (int i = competingTeams.size() - 1; i >= 0; i--) {
+
+                    // Get the format position for the team
+                    int formatPosition = DBAdapter.getTeamFormatPosition(context, competingTeams.get(i), tournament_id);
+
+                    // If the format position is -1, the team has been eliminated, so remove it
+                    if (formatPosition == -1)
+                        competingTeams.remove(i);
+                }
+
+                // Get the number of wins for each team
+                ArrayList<Integer> teamWins = new ArrayList<Integer>();
+                for (int i = 0; i < competingTeams.size(); i++) {
+
+                    teamWins.add(i, DBAdapter.getTeamNumKnockoutWins(context, competingTeams.get(i), tournament_id));
+                }
+
+                // Determine the winners of the previous rounds that will advance
+                ArrayList<String> winnerTeams = new ArrayList<String>();
+                for (int v = 0; v < competingTeams.size() - 1; v = v + 2) {
+
+                    // If the first team won, add it
+                    if (teamWins.get(v) > teamWins.get(v + 1))
+                        winnerTeams.add(competingTeams.get(v));
+                        // Otherwise, add the second team
+                    else
+                        winnerTeams.add(competingTeams.get(v + 1));
+                }
+                // If the number of competing teams is odd,
+                // add the last one, because it must have been in a bye
+                if (competingTeams.size()%2 == 1)
+                    winnerTeams.add(competingTeams.get(competingTeams.size() - 1));
+
+                // Remove the old format positions
+                DBAdapter.removeFormatPositions(context, tournament_id);
+
+                // Set the new format positions for the winning teams
+                for(int i = 0; i < winnerTeams.size(); i++) {
+
+                    DBAdapter.setTeamFormatPosition(context, tournament_id, winnerTeams.get(i), i + 1);
+                }
+
+                // Set the ordered teams to be the determined winners
+                orderedTeams = winnerTeams;
             }
 
-            // Re-order the team names and the team logos
-            ArrayList<String> sortedNamesArray = new ArrayList<>();
-
-            for (int l = 0; l < teamNamesArray.size(); l++) {
-
-                String currentHighestTeamName = teamNamesArray.get(orderedIndexes.get(0));
-                orderedIndexes.remove(0);
-                sortedNamesArray.add(currentHighestTeamName);
-            }
-            orderedTeams = new ArrayList<>(sortedNamesArray);
-
-            // Cut the teams that were lower-ranked
-            for (int c = 0; c < numberOfTeamsToRemove; c++) {
-
-                orderedTeams.remove(orderedTeams.size() - 1);
-            }
-
-            // Now, create the matches
-            // Initialize variables
+            // Get the format id
             int format_id = DBAdapter.getFormatId(context, tournament_id);
-            currentRound = DBAdapter.getCurrentRound(context, tournament_id);
 
             // Create the round
             DBAdapter.insertRound(context, tournament_id, size, format_id);
 
-            // See algorithm: http://assets.usta.com/assets/650/USTA_Import/Northern/dps/doc_37_1812.pdf
+            // Set up every match
+            for (int c = 0; c < orderedTeams.size() - 1; c = c + 2) {
 
-            // Matches consist of left vs right
-            ArrayList<String> leftTeams= new ArrayList<String>();
-            ArrayList<String> rightTeams= new ArrayList<String>();
+                String leftTeam = orderedTeams.get(c);
+                String rightTeam = orderedTeams.get(c + 1);
 
-            // If Number of teams is ODD, add a flag for the bye match
-            if(orderedTeams.size()%2 == 1) {
-
-                orderedTeams.add("BYE");
+                new Match(context, DBAdapter.getRoundID(context, currentRound, tournament_id), tournament_id, leftTeam, rightTeam);
             }
+            // If needed, set up the bye
+            if (orderedTeams.size()%2 == 1) {
 
-            // Remove first teamName
-            leftTeams.add(orderedTeams.remove(0));
+                String team = orderedTeams.get(orderedTeams.size() - 1);
 
-            // Shift remaining teams counter-clockwise according to round (i.e.: first round 0 times, second 1 time...)
-            // Removes last element and adds to front
-            int last = orderedTeams.size() - 1;
-            for(int c = 0; c < currentRound; c++ ){
-
-                String temp = orderedTeams.remove(last);
-                orderedTeams.add(0,temp);
-            }
-
-            // Split teams into left and right (except for last team as teams will be oddNUmber at this point)
-            int counter = (orderedTeams.size()/2);
-            for(int c = 0; c < (counter);c++){
-
-                // Remove first
-                String tempRightTeam= orderedTeams.remove(0);
-
-                // Remove first
-                String tempLeftTeam = orderedTeams.remove(0);
-
-                // Adjusting for BYE (i.e.: in a BYE, team wins against self (cannot use bye as team name since it would require a full team object in DB)
-                if (tempLeftTeam.equals("BYE")) {
-
-                    tempLeftTeam = orderedTeams.get(0);
-                }
-                else if (tempRightTeam.equals("BYE")) {
-
-                    tempRightTeam = leftTeams.get(leftTeams.size() - 1);
-                }
-
-                rightTeams.add(tempRightTeam);
-                leftTeams.add(tempLeftTeam);
-            }
-
-            String tempRightTeam = orderedTeams.remove(0);
-
-            //Add the remaining to to rightTeams
-            //BYE
-            if (tempRightTeam.equals("BYE")) {
-
-                rightTeams.add(leftTeams.get(leftTeams.size()-1));
-            }
-            else {
-                rightTeams.add(tempRightTeam);
-            }
-
-            // Teams are now split, now must create the match between them
-            int numOfMatches = leftTeams.size();
-
-            // Set up every round
-            for(int c = 0; c < leftTeams.size(); c++) {
-
-                String leftTeam = leftTeams.get(c);
-                String rightTeam = rightTeams.get(c);
-
-                Match matchTemp = new Match(context, DBAdapter.getRoundID(context, currentRound, tournament_id), tournament_id, leftTeam, rightTeam);
+                new Match(context, DBAdapter.getRoundID(context, currentRound, tournament_id), tournament_id, team, team);
             }
 
             // Increment the current round
             currentRound = currentRound + 1;
             DBAdapter.setCurrentRound(context, format_id, currentRound);
-
-            // Call the create next round method from the superclass
-            super.createNextRound(context, tournament_id);
         }
         // If the format is Round Robin
         else {

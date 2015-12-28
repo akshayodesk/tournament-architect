@@ -190,17 +190,15 @@ public class RoundActivity extends Activity {
                 }
             }
 
-            /* Name the Knockout Rounds */
-            // Get the number of rounds that will be played
+            // Calculate the number of Knockout rounds that will be played
             double logOfTeams = Math.log10(numTeams)/ Math.log10(2);
-            int wholeOfLogOfTeam = (int) logOfTeams;
-            if(logOfTeams - wholeOfLogOfTeam != 0) {
-                wholeOfLogOfTeam++;
+            int numKnockoutRounds = (int) logOfTeams;
+            if(logOfTeams - numKnockoutRounds != 0) {
+                numKnockoutRounds++;
             }
 
             // Variables used to name the rounds
-            int numKnockoutRounds = wholeOfLogOfTeam/2 - 1; // The number of rounds that will be played
-            int nameNumber = (int) Math.pow(2, numKnockoutRounds); // The number used to name each round
+            int nameNumber = (int) Math.pow(2, numKnockoutRounds - 1); // The number used to name each round
             String roundName;
 
             // Name the rounds

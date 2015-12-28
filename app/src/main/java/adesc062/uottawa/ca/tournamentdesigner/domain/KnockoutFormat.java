@@ -64,7 +64,7 @@ public class KnockoutFormat extends TournamentFormat {
 
             // Determine the winners of the previous rounds that will advance
             ArrayList<String> winnerTeams = new ArrayList<String>();
-            for (int v = 0; v < competingTeams.size(); v = v + 2) {
+            for (int v = 0; v < competingTeams.size() - 1; v = v + 2) {
 
                 // If the first team won, add it
                 if (teamWins.get(v) > teamWins.get(v + 1))
@@ -73,6 +73,10 @@ public class KnockoutFormat extends TournamentFormat {
                 else
                     winnerTeams.add(competingTeams.get(v + 1));
             }
+            // If the number of competing teams is odd,
+            // add the last one, because it must have been in a bye
+            if (competingTeams.size()%2 == 1)
+                winnerTeams.add(competingTeams.get(competingTeams.size() - 1));
 
             // Remove the old format positions
             DBAdapter.removeFormatPositions(context, tournament_id);
@@ -94,14 +98,20 @@ public class KnockoutFormat extends TournamentFormat {
         DBAdapter.insertRound(context, tournament_id, size, format_id);
 
         // Set up every match
-        for (int c = 0; c < orderedTeams.size(); c = c + 2) {
+        for (int c = 0; c < orderedTeams.size() - 1; c = c + 2) {
 
             String leftTeam = orderedTeams.get(c);
             String rightTeam = orderedTeams.get(c + 1);
 
             new Match(context, DBAdapter.getRoundID(context, currentRound, tournament_id), tournament_id, leftTeam, rightTeam);
         }
+        // If needed, set up the bye
+        if (orderedTeams.size()%2 == 1) {
 
+            String team = orderedTeams.get(orderedTeams.size() - 1);
+
+            new Match(context, DBAdapter.getRoundID(context, currentRound, tournament_id), tournament_id, team, team);
+        }
 
         // Increment the current round
         currentRound = currentRound + 1;
