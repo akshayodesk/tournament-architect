@@ -209,6 +209,9 @@ public class CreateTournamentActivity extends Activity {
 
             // Save the number of round robin circuits
             int numCircuits = numCircuitsSpinner.getSelectedItemPosition() + 1;
+            // If the format is Knockout, set that number to be 0
+            if (formatType == 2)
+                numCircuits = 0;
             DBAdapter.saveTournamentNumCircuits(getApplicationContext(), numCircuits, tournament_id);
 
             // Return true because the data was saved successfully

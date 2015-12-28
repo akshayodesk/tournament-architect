@@ -346,7 +346,7 @@ public class StandingsActivity extends Activity {
 
         // Create the teams list adapter and set it
         CustomTeamsListViewNotClickableWithScoreAdapter adapter = new CustomTeamsListViewNotClickableWithScoreAdapter(StandingsActivity.this, actualFormatType,
-                teamNames, teamLogos, teamScoresForDisplay);
+                teamNames, teamLogos, teamScoresForDisplay, tournament_id);
         standings = (ListView) findViewById(R.id.standingsListView);
         standings.setAdapter(adapter);
     }

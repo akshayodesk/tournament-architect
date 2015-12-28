@@ -95,7 +95,7 @@ public class CombinationFormat extends TournamentFormat {
                  */
 
                 // Get the score for each team
-                ArrayList<Integer> teamWins = new ArrayList<Integer>();
+                ArrayList<Integer> teamWins = new ArrayList<>();
                 for (int i = 0; i < orderedTeams.size(); i++) {
 
                     int teamID = DBAdapter.getTeamId(context, orderedTeams.get(i), tournament_id);
@@ -121,7 +121,6 @@ public class CombinationFormat extends TournamentFormat {
 
                 // Re-order the team names
                 ArrayList<String> sortedNamesArray = new ArrayList<>();
-
                 for (int l = 0; l < orderedTeams.size(); l++) {
 
                     String currentHighestTeamName = orderedTeams.get(orderedIndexes.get(0));
@@ -187,6 +186,12 @@ public class CombinationFormat extends TournamentFormat {
                 for (int i = 0; i < lowerBracket.size(); i++)
                     orderedTeams.add(lowerBracket.get(i));
 
+                // Set the new format positions in the database
+                for(int i = 0; i < orderedTeams.size(); i++) {
+
+                    DBAdapter.setTeamFormatPosition(context, tournament_id, orderedTeams.get(i), i + 1);
+                }
+
             }
             // If this is not the first Knockout round to be created
             else {
@@ -211,21 +216,31 @@ public class CombinationFormat extends TournamentFormat {
                 }
 
                 // Determine the winners of the previous rounds that will advance
-                ArrayList<String> winnerTeams = new ArrayList<String>();
+                ArrayList<String> winnerTeams = new ArrayList<>();
+                boolean gotBye = false; // Boolean used to check that we had a bye
                 for (int v = 0; v < competingTeams.size() - 1; v = v + 2) {
 
+                    // If two succeeding teams have the same the number of wins,
+                    // then one had a bye, so add it
+                    if (teamWins.get(v) == teamWins.get(v + 1)) {
+
+                        winnerTeams.add(competingTeams.get(v));
+                        v--; // Because we only covered one team
+                        gotBye = true;
+                    }
                     // If the first team won, add it
-                    if (teamWins.get(v) > teamWins.get(v + 1))
+                    else if (teamWins.get(v) > teamWins.get(v + 1))
                         winnerTeams.add(competingTeams.get(v));
                         // Otherwise, add the second team
                     else
                         winnerTeams.add(competingTeams.get(v + 1));
                 }
-                // If the number of competing teams is odd,
-                // add the last one, because it must have been in a bye
-                if (competingTeams.size()%2 == 1)
-                    winnerTeams.add(competingTeams.get(competingTeams.size() - 1));
 
+                // If the number of teams is odd and we did not see a bye,
+                // then the last team must have had a bye, so add it
+                if (gotBye && competingTeams.size()%2 == 1)
+                    winnerTeams.add(competingTeams.get(competingTeams.size() - 1));
+                
                 // Remove the old format positions
                 DBAdapter.removeFormatPositions(context, tournament_id);
 

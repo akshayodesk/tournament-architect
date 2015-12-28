@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import adesc062.uottawa.ca.tournamentdesigner.R;
+import adesc062.uottawa.ca.tournamentdesigner.database.DBAdapter;
 
 /**
  * Used for the teams list view in the Standings activity.
@@ -18,16 +19,19 @@ public class CustomTeamsListViewNotClickableWithScoreAdapter extends ArrayAdapte
 
     private final Activity context;
     private final int formatType;
+    private final int tournament_id;
     private final String[] teamNames;
     private final Integer[] logos; // These integer correspond to the resource IDs of the drawables
     private final Integer[] teamWins;
 
-    public CustomTeamsListViewNotClickableWithScoreAdapter(Activity context, int formatType, String[] teamNames, Integer[] logos, Integer[] teamWins) {
+    public CustomTeamsListViewNotClickableWithScoreAdapter(Activity context, int formatType, String[] teamNames,
+                                                           Integer[] logos, Integer[] teamWins, int tournament_id) {
 
         super(context, R.layout.custom_teams_list_view, teamNames);
 
         this.context = context;
         this.formatType = formatType;
+        this.tournament_id = tournament_id;
         this.teamNames = teamNames;
         this.logos = logos;
         this.teamWins = teamWins;
@@ -53,8 +57,21 @@ public class CustomTeamsListViewNotClickableWithScoreAdapter extends ArrayAdapte
 
         // If the format is Knockout, change "Score:" to "Wins:"
         if (formatType == 2) {
+
             TextView scoreIndicatorTextView = (TextView) rowView.findViewById(R.id.scoreIndicatorTextView);
             scoreIndicatorTextView.setText("Wins:");
+        }
+
+        // If a team has been eliminated, reduce its opacity
+        if (DBAdapter.getTeamFormatPosition(context, teamNames[position], tournament_id) == - 1) {
+
+            teamNameForStandingsTextView.setAlpha(0.5f);
+            teamLogoForStandingsImageView.setAlpha(0.5f);
+            numberOfWinsTextView.setAlpha(0.5f);
+
+            TextView scoreIndicatorTextView = (TextView) rowView.findViewById(R.id.scoreIndicatorTextView);
+            scoreIndicatorTextView.setAlpha(0.5f);
+
         }
 
         // Return the view of the row

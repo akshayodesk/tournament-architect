@@ -19,6 +19,8 @@ import android.view.*;
 
 import org.w3c.dom.Text;
 
+import java.util.ArrayList;
+
 import adesc062.uottawa.ca.tournamentdesigner.R;
 import adesc062.uottawa.ca.tournamentdesigner.database.DBAdapter;
 import adesc062.uottawa.ca.tournamentdesigner.domain.Match;
@@ -200,6 +202,41 @@ public class MatchViewActivity extends Activity {
                     // Update the match
                     Match.updateMatch(getApplicationContext(), match_id, team1Name, team1ScoreInt,
                             team2Name, team2ScoreInt, tournament_id, formatType);
+
+                    // If  this was the last round of a Knockout portion, update the format position of the loser
+                    if(formatType == 2) {
+
+                        // Determine the number of rounds
+                        ArrayList<String> teams = DBAdapter.getTeamNames(getApplicationContext(), tournament_id);
+                        int numTeams = teams.size();
+                        // Determine the number of Round Robin rounds
+                        // Find the number of rounds per circuit
+                        int numRoundsPerCircuit = numTeams - 1 + numTeams%2;
+                        // Get the number of circuits for the tournament
+                        int numCircuits = DBAdapter.getTournamentNumCircuits(getApplicationContext(), tournament_id);
+                        // Find the number of Round Robin rounds that will be played
+                        int numTotalRoundRobinRounds = numRoundsPerCircuit * numCircuits;
+
+                        // Determine the number of Knockout rounds
+                        int currentRound = DBAdapter.getCurrentRound(getApplicationContext(), tournament_id);
+                        double logOfTeams = Math.log10(numTeams)/ Math.log10(2);
+                        int numTotalKnockoutRounds = (int) logOfTeams;
+                        if(logOfTeams - numTotalKnockoutRounds != 0) {
+                            numTotalKnockoutRounds++;
+                        }
+
+                        // If this is the last round, set the losing team to be eliminated
+                        if(currentRound >= (numTotalRoundRobinRounds + numTotalKnockoutRounds)) {
+
+                          // If team2 lost
+                          if (team1ScoreInt > team2ScoreInt)
+                              DBAdapter.setTeamFormatPosition(getApplicationContext(), tournament_id, team2Name, -1);
+                          // If team 1 lost
+                          else
+                              DBAdapter.setTeamFormatPosition(getApplicationContext(), tournament_id, team1Name, -1);
+                      }
+
+                    }
 
                     // Open the standings page and clear previous activities
                     Intent intent = new Intent(MatchViewActivity.this, StandingsActivity.class);
