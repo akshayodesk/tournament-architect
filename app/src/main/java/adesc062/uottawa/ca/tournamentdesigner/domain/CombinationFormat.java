@@ -238,9 +238,9 @@ public class CombinationFormat extends TournamentFormat {
 
                 // If the number of teams is odd and we did not see a bye,
                 // then the last team must have had a bye, so add it
-                if (gotBye && competingTeams.size()%2 == 1)
+                if (!gotBye && competingTeams.size()%2 == 1)
                     winnerTeams.add(competingTeams.get(competingTeams.size() - 1));
-                
+
                 // Remove the old format positions
                 DBAdapter.removeFormatPositions(context, tournament_id);
 
