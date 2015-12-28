@@ -8,12 +8,12 @@ import adesc062.uottawa.ca.tournamentdesigner.database.DBAdapter;
 
 public class KnockoutFormat extends TournamentFormat {
 
-	public KnockoutFormat(Context context, int tournament_id){
+    public KnockoutFormat(Context context, int tournament_id){
 
-		super(context, tournament_id); //ignore the circuit pass, kept it for polymorphism
-	}
+        super(context, tournament_id); //ignore the circuit pass, kept it for polymorphism
+    }
 
-	public boolean isTournamentComplete(Context context){
+    public boolean isTournamentComplete(Context context){
 
         int numTeams = DBAdapter.getNumTeamsForTournament(context, tournament_id);
 
@@ -26,7 +26,7 @@ public class KnockoutFormat extends TournamentFormat {
         }
 
         return (currentRound >= wholeOfLogOfTeam) && checkIsRoundComplete(context);
-	}
+    }
 
     public void createNextRound(Context context, int tournament_id) {
 
@@ -38,70 +38,73 @@ public class KnockoutFormat extends TournamentFormat {
 
         // Get the current round number
         currentRound = DBAdapter.getCurrentRound(context, tournament_id);
-        double logOfTeams = Math.log10(size)/ Math.log10(2);
-        int wholeOfLogOfTeam = (int) logOfTeams;
-        if(logOfTeams - wholeOfLogOfTeam != 0) {
-            wholeOfLogOfTeam++;
-        }
 
-        // If we need to create the current round
-        if(currentRound > 0 ) {
+        // If this is not the current round, create new matches according
+        // to the winners from the last round
+        if (currentRound != 0){
 
-            // Calculate the number of teams to remove
-            int numberOfTeamsToRemove = 0;
-            int tempSize;
+            // Remove teams that have been eliminated
+            ArrayList<String> competingTeams = new ArrayList<>(orderedTeams);
+            for (int i = competingTeams.size() - 1; i >= 0; i--) {
 
-            for(int i = 0; i < currentRound; i++) {
+                // Get the format position for the team
+                int formatPosition = DBAdapter.getTeamFormatPosition(context, competingTeams.get(i), tournament_id);
 
-                tempSize = size/ 2;
-                size = size - tempSize;
-                numberOfTeamsToRemove += tempSize;
+                // If the format position is -1, the team has been eliminated, so remove it
+                if (formatPosition == -1)
+                    competingTeams.remove(i);
             }
 
-            ArrayList<String> teamNamesArray = DBAdapter.getTeamNames(context, tournament_id);
-
+            // Get the number of wins for each team
             ArrayList<Integer> teamWins = new ArrayList<Integer>();
-            for(int i = 0; i < teamNamesArray.size(); i++) {
+            for (int i = 0; i < competingTeams.size(); i++) {
 
-                teamWins.add(i, DBAdapter.getTeamNumWins(context, teamNamesArray.get(i), tournament_id));
+                teamWins.add(i, DBAdapter.getTeamNumWins(context, competingTeams.get(i), tournament_id));
             }
 
-            // Sort the arrays based on decreasing number of wins for each team
-            ArrayList<Integer> orderedIndexes = new ArrayList<>(); // Used to store the ordered indexes
-            for(int j = 0; j < teamNamesArray.size(); j++) {
+            // Determine the winners of the previous rounds that will advance
+            ArrayList<String> winnerTeams = new ArrayList<String>();
+            for (int v = 0; v < competingTeams.size(); v = v + 2) {
 
-                int highestValue = Collections.max(teamWins);
-
-                // Iterate through the list of the index of first team with the highest number of wins
-                int k = 0;
-                while(k < teamWins.size() - 1 && teamWins.get(k) != highestValue) {
-
-                    k++;
-                }
-
-                orderedIndexes.add(k);
-                teamWins.set(k, -1); // Change it to -1 to avoid getting the same value twice
+                // If the first team won, add it
+                if (teamWins.get(v) > teamWins.get(v + 1))
+                    winnerTeams.add(competingTeams.get(v));
+                    // Otherwise, add the second team
+                else
+                    winnerTeams.add(competingTeams.get(v + 1));
             }
 
-            // Re-order the team names and the team logos
-            ArrayList<String> sortedNamesArray = new ArrayList<>();
+            // Remove the old format positions
+            DBAdapter.removeFormatPositions(context, tournament_id);
 
-            for(int l = 0; l < teamNamesArray.size(); l++) {
+            // Set the new format positions for the winning teams
+            for(int i = 0; i < winnerTeams.size(); i++) {
 
-                String currentHighestTeamName = teamNamesArray.get(orderedIndexes.get(0));
-                orderedIndexes.remove(0);
-                sortedNamesArray.add(currentHighestTeamName);
+                DBAdapter.setTeamFormatPosition(context, tournament_id, winnerTeams.get(i), i + 1);
             }
-            orderedTeams = new ArrayList<>(sortedNamesArray);
 
-            // Remove the teams
-            for(int c = 0; c < numberOfTeamsToRemove; c++){
-
-                orderedTeams.remove(orderedTeams.size()-1);
-            }
+            // Set the ordered teams to be the determined winners
+            orderedTeams = winnerTeams;
         }
 
-        // Call the create next round method from the superclass
-        super.createNextRound(context, tournament_id);
+        // Get the format id
+        int format_id = DBAdapter.getFormatId(context, tournament_id);
+
+        // Create the round
+        DBAdapter.insertRound(context, tournament_id, size, format_id);
+
+        // Set up every match
+        for (int c = 0; c < orderedTeams.size(); c = c + 2) {
+
+            String leftTeam = orderedTeams.get(c);
+            String rightTeam = orderedTeams.get(c + 1);
+
+            new Match(context, DBAdapter.getRoundID(context, currentRound, tournament_id), tournament_id, leftTeam, rightTeam);
+        }
+
+
+        // Increment the current round
+        currentRound = currentRound + 1;
+        DBAdapter.setCurrentRound(context, format_id, currentRound);
     }
 }

@@ -35,7 +35,10 @@ public abstract class TournamentFormat {
         currentRound = DBAdapter.getCurrentRound(context, tournament_id);
     }
 
-    public boolean getJustSwitched() { return justSwitched; }
+    public boolean getJustSwitched() {
+
+        return justSwitched;
+    }
     public void setJustSwitched(boolean value) {
 
         justSwitched = value;
@@ -95,13 +98,13 @@ public abstract class TournamentFormat {
         int last = orderedTeams.size() - 1;
         for(int c = 0; c < currentRound; c++ ){
 
-            String temp= orderedTeams.remove(last);
+            String temp = orderedTeams.remove(last);
             orderedTeams.add(0,temp);
         }
 
-        // Split teams into left and right (except for last team as teams will be oddNUmber at this point)
-        int counter =(orderedTeams.size()/2);
-        for(int c = 0; c < (counter);c++){
+        // Split teams into left and right (except for last team as teams will be odd-numbered at that point)
+        int counter = (orderedTeams.size()/2);
+        for (int c = 0; c < (counter);c++) {
 
             // Remove first
             String tempRightTeam= orderedTeams.remove(0);
@@ -123,38 +126,30 @@ public abstract class TournamentFormat {
             leftTeams.add(tempLeftTeam);
         }
 
-        String tempRightTeam= orderedTeams.remove(0);
+        String tempRightTeam = orderedTeams.remove(0);
 
-        //Add the remaining to to rightTeams
-        //BYE
+        // Add the remaining teams to rightTeams
+        // In case of a bye
         if (tempRightTeam.equals("BYE")) {
 
             rightTeams.add(leftTeams.get(leftTeams.size()-1));
         }
         else {
             rightTeams.add(tempRightTeam);
-         }
+        }
 
-        // Teams are now split, now must create the match between them
-        int numOfMatches = leftTeams.size();
-
-        // Set up every round
+        // Set up every match
         for(int c = 0; c < leftTeams.size(); c++) {
 
             String leftTeam = leftTeams.get(c);
             String rightTeam = rightTeams.get(c);
 
-            Match matchTemp = new Match(context, DBAdapter.getRoundID(context, currentRound, tournament_id), tournament_id, leftTeam, rightTeam);
+           new Match(context, DBAdapter.getRoundID(context, currentRound, tournament_id), tournament_id, leftTeam, rightTeam);
         }
 
 		// Increment the current round
         currentRound = currentRound + 1;
-        DBAdapter.incrementCurrentRound(context, format_id, currentRound);
-    }
-
-    public ArrayList<String> getFormatOrderedTeams(Context context, int tournament_id) {
-
-        return DBAdapter.getFormatOrderedTeams(context, tournament_id);
+        DBAdapter.setCurrentRound(context, format_id, currentRound);
     }
 
     public boolean checkIsRoundComplete(Context context) {

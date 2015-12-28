@@ -1257,7 +1257,7 @@ public class DBAdapter {
         db.close();
     }
 
-    public static void incrementCurrentRound(Context context, int format_id, int currentRound) {
+    public static void setCurrentRound(Context context, int format_id, int currentRound) {
 
         // Open the database
         DB dbHelper = new DB(context);
@@ -1681,7 +1681,7 @@ public class DBAdapter {
 
         try {
 
-            Cursor c = db.rawQuery("SELECT * FROM teams WHERE " + "team_id = " + team_id, null);
+            Cursor c = db.rawQuery("SELECT * FROM teams WHERE team_id = " + team_id, null);
 
             c.moveToFirst();
             {
@@ -1697,5 +1697,48 @@ public class DBAdapter {
 
         // Return the score
         return score;
+    }
+
+    public static void removeFormatPositions(Context context, int tournament_id) {
+
+        // Open the database
+        DB dbHelper = new DB(context);
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+
+        // Set all the format positions to -1
+        db.execSQL("UPDATE teams SET format_position = -1 WHERE team_tournament_id = " + tournament_id);
+
+        // Close the database
+        db.close();
+    }
+
+    public static int getTeamFormatPosition(Context context, String teamName, int tournament_id) {
+
+        // Open the database
+        DB dbHelper = new DB(context);
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+
+        // Get the information
+        int formatPosition = -5;
+
+        try {
+
+            Cursor c = db.rawQuery("SELECT * FROM teams WHERE name  = '" + teamName
+                    + "' AND team_tournament_id = " + tournament_id, null);
+
+            c.moveToFirst();
+            {
+                formatPosition = c.getInt(c.getColumnIndex("format_position"));
+            }
+        } catch (Exception e ) {
+
+            throw new IllegalArgumentException();
+        }
+
+        // Close the database
+        db.close();
+
+        // Return the score
+        return formatPosition;
     }
 }

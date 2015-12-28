@@ -21,6 +21,7 @@ import android.widget.Toast;
 import java.util.ArrayList;
 
 import adesc062.uottawa.ca.tournamentdesigner.R;
+import adesc062.uottawa.ca.tournamentdesigner.adapters.CustomNumCircuitsSpinnerAdapter;
 import adesc062.uottawa.ca.tournamentdesigner.adapters.CustomTeamsListViewAdapter;
 import adesc062.uottawa.ca.tournamentdesigner.database.DBAdapter;
 
@@ -35,6 +36,7 @@ public class CreateTournamentActivity extends Activity {
     Integer[] teamLogos; // These integer correspond to the resource IDs of the drawables
     ListView teamsList;
     boolean deletingTeams = false;
+    Spinner numCircuitsSpinner;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,6 +47,12 @@ public class CreateTournamentActivity extends Activity {
 
         // Set up the list of teams
         setUpTeamsList(false);
+
+        // Set up the spinner for the number of circuits
+        numCircuitsSpinner = (Spinner) findViewById(R.id.numCircuitsSpinner);
+        Integer[] numCircuits = new Integer[]{1, 2, 3, 4, 5};
+        CustomNumCircuitsSpinnerAdapter adapter = new CustomNumCircuitsSpinnerAdapter(this, R.layout.custom_num_circuits_spinner, numCircuits);
+        numCircuitsSpinner.setAdapter(adapter);
 
         /* If the tournament was already created and is now being edited */
         if (getIntent().hasExtra("tournamentName")) { // If the intent passed a name, then the tournament is being edited
@@ -61,15 +69,13 @@ public class CreateTournamentActivity extends Activity {
                 formatTypeRadioGroup.check(R.id.roundRobinRadioButton);
             } else if (formatType == 2) {
                 formatTypeRadioGroup.check(R.id.knockoutRadioButton);
-                EditText numCircuitsEditText = (EditText) findViewById(R.id.numCircuitsEditText);
-                numCircuitsEditText.setEnabled(false);
+                numCircuitsSpinner.setEnabled(false);
             } else {
                 formatTypeRadioGroup.check(R.id.combinationRadioButton);
             }
 
             // Set the number of Round Robin circuits
-            EditText numCircuitsEditText = (EditText) findViewById(R.id.numCircuitsEditText);
-            numCircuitsEditText.setText(String.valueOf(DBAdapter.getTournamentNumCircuits(getApplicationContext(), tournament_id)));
+            numCircuitsSpinner.setSelection((DBAdapter.getTournamentNumCircuits(getApplicationContext(), tournament_id)) - 1);
         }
 
         // If there are no teams, disable the button
@@ -77,12 +83,6 @@ public class CreateTournamentActivity extends Activity {
 
             disableDeleteTeamButton();
         }
-
-        // Set up the spinner for the number of circuits
-        Spinner numCircuitsSpinner = (Spinner) findViewById(R.id.numCircuitsSpinner);
-        Integer[] numCircuits = new Integer[]{1, 2, 3, 4, 5};
-        ArrayAdapter<Integer> adapter = new ArrayAdapter<Integer>(this, android.R.layout.simple_spinner_item, numCircuits);
-        numCircuitsSpinner.setAdapter(adapter);
     }
 
     /**
@@ -207,79 +207,14 @@ public class CreateTournamentActivity extends Activity {
             formatType++; // 1: RoundRobin, 2: Knockout, 3: Combination
             DBAdapter.saveTournamentFormatType(getApplicationContext(), formatType, tournament_id);
 
-            // If the format is Round Robin or Combination
-            if (DBAdapter.getTournamentFormatType(getApplicationContext(), tournament_id) != 2) {
+            // Save the number of round robin circuits
+            int numCircuits = numCircuitsSpinner.getSelectedItemPosition() + 1;
+            DBAdapter.saveTournamentNumCircuits(getApplicationContext(), numCircuits, tournament_id);
 
-                // Try to save the number of round robin circuits
-                EditText numCircuitsEditText = (EditText) findViewById(R.id.numCircuitsEditText);
-                String numCircuitsString = numCircuitsEditText.getText().toString();
+            // Return true because the data was saved successfully
+            return true;
 
-                // If the num of circuits is empty, stop the saving process and inform the user
-                if (numCircuitsString.equals("")) {
-
-                    // Pop up a dialog
-                    final Dialog alertTournamentNameAlreadyInUse = new Dialog(CreateTournamentActivity.this);
-                    alertTournamentNameAlreadyInUse.requestWindowFeature(Window.FEATURE_NO_TITLE);
-                    alertTournamentNameAlreadyInUse.setContentView(R.layout.custom_alert_ok);
-
-                    // Set the message
-                    TextView messageTournamentNameAlreadyInUse = (TextView) alertTournamentNameAlreadyInUse.findViewById(R.id.messageOkTextView);
-                    messageTournamentNameAlreadyInUse.setText("Please enter a number of Round Robin Circuits.");
-
-                    Button okButton = (Button) alertTournamentNameAlreadyInUse.findViewById(R.id.okButton);
-
-                    okButton.setOnClickListener(new View.OnClickListener() {
-
-                        public void onClick(View v) {
-                            alertTournamentNameAlreadyInUse.dismiss();
-                        }
-                    });
-                    alertTournamentNameAlreadyInUse.show();
-
-                    // Return false because the data was not saved
-                    return false;
-                }
-                // If the num of circuits is empty, stop the saving process and inform the user
-                else if(numCircuitsString.equals("0")) {
-
-                    // Pop up a dialog
-                    final Dialog alertTournamentNameAlreadyInUse = new Dialog(CreateTournamentActivity.this);
-                    alertTournamentNameAlreadyInUse.requestWindowFeature(Window.FEATURE_NO_TITLE);
-                    alertTournamentNameAlreadyInUse.setContentView(R.layout.custom_alert_ok);
-
-                    // Set the message
-                    TextView messageTournamentNameAlreadyInUse = (TextView) alertTournamentNameAlreadyInUse.findViewById(R.id.messageOkTextView);
-                    messageTournamentNameAlreadyInUse.setText("The number of Round Robin Circuits must be above 0.");
-
-                    Button okButton = (Button) alertTournamentNameAlreadyInUse.findViewById(R.id.okButton);
-
-                    okButton.setOnClickListener(new View.OnClickListener() {
-
-                        public void onClick(View v) {
-                            alertTournamentNameAlreadyInUse.dismiss();
-                        }
-                    });
-                    alertTournamentNameAlreadyInUse.show();
-
-                    // Return false because the data was not saved
-                    return false;
-                }
-                // Otherwise, complete the saving process
-                else {
-
-                    int numCircuits = Integer.parseInt(numCircuitsString);
-                    DBAdapter.saveTournamentNumCircuits(getApplicationContext(), numCircuits, tournament_id);
-
-                    // If the data was saved successfully, return true
-                    return true;
-                }
-            }
-            // If the format is Knockout, complete the saving process without saving the number of circuits
-            else {
-
-                return true;
-            }
-                // If the tournament name is already in use
+            // If the tournament name is already in use
             }catch(IllegalArgumentException e){
 
                 // Pop up a dialog
@@ -508,8 +443,7 @@ public class CreateTournamentActivity extends Activity {
      */
     public void roundRobinOnClick(View view) {
 
-        EditText numCircuitsEditText = (EditText) findViewById(R.id.numCircuitsEditText);
-        numCircuitsEditText.setEnabled(true); // Enables the user to change the number of circuits
+        numCircuitsSpinner.setEnabled(true); // Enables the user to change the number of circuits
     }
 
     /**
@@ -520,8 +454,7 @@ public class CreateTournamentActivity extends Activity {
      */
     public void knockoutRobinOnClick(View view) {
 
-        EditText numCircuitsEditText = (EditText) findViewById(R.id.numCircuitsEditText);
-        numCircuitsEditText.setEnabled(false); // Disables the user from changing the number of circuits
+        numCircuitsSpinner.setEnabled(false); // Disables the user from changing the number of circuits
     }
 
     /**
@@ -534,8 +467,7 @@ public class CreateTournamentActivity extends Activity {
      */
     public void combinationRobinOnClick(View view) {
 
-        EditText numCircuitsEditText = (EditText) findViewById(R.id.numCircuitsEditText);
-        numCircuitsEditText.setEnabled(true); // Enables the user to change the number of circuits
+        numCircuitsSpinner.setEnabled(true); // Enables the user to change the number of circuits
     }
 
     /**
