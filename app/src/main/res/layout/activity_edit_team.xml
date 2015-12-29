@@ -14,7 +14,8 @@
         android:layout_height="match_parent"
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true">
+        android:layout_alignParentStart="true"
+        android:id="@+id/linearLayout">
 
         <TextView
             android:layout_width="fill_parent"
@@ -30,21 +31,65 @@
             android:layout_height="0dp"
             android:layout_weight="0.025" />
 
-        <ImageView
+        <LinearLayout
+            android:orientation="horizontal"
             android:layout_width="fill_parent"
             android:layout_height="0dp"
-            android:id="@+id/teamLogoImageView"
-            android:src="@drawable/tournament_designer_logo_lowres"
-            android:layout_weight="0.3"
-            android:clickable="false"
-            android:onClick="logoOnClick"
-            android:focusable="false"
-            android:tag="logoImageViewTag"/>
+            android:layout_weight="0.2">
+
+            <Space
+                android:layout_width="0dp"
+                android:layout_height="fill_parent"
+                android:layout_weight="0.15" />
+
+            <ImageView
+                android:layout_width="0dp"
+                android:layout_height="fill_parent"
+                android:id="@+id/teamLogoImageView"
+                android:src="@drawable/tournament_designer_logo_lowres"
+                android:layout_weight="1"
+                android:clickable="false"
+                android:onClick="logoOnClick"
+                android:focusable="false"
+                android:tag="logoImageViewTag"/>
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.1">
+
+                <Space
+                    android:layout_width="fill_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:onClick="logoOnClick" />
+
+                <ImageView
+                    android:layout_width="fill_parent"
+                    android:layout_height="0dp"
+                    android:id="@+id/imageView"
+                    android:layout_weight="0.5"
+                    android:src="@drawable/right_arrow"
+                    android:onClick="logoOnClick" />
+
+                <Space
+                    android:layout_width="fill_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:onClick="logoOnClick" />
+            </LinearLayout>
+
+            <Space
+                android:layout_width="0dp"
+                android:layout_height="fill_parent"
+                android:layout_weight="0.05" />
+        </LinearLayout>
 
         <Space
             android:layout_width="fill_parent"
             android:layout_height="0dp"
-            android:layout_weight="0.08" />
+            android:layout_weight="0.1" />
 
         <EditText
             android:layout_width="fill_parent"
@@ -60,7 +105,7 @@
         <Space
             android:layout_width="fill_parent"
             android:layout_height="0dp"
-            android:layout_weight="0.1" />
+            android:layout_weight="0.18" />
 
         <Button
             android:layout_width="fill_parent"
@@ -90,4 +135,5 @@
             android:onClick="deleteOnClick" />
 
     </LinearLayout>
+
 </RelativeLayout>

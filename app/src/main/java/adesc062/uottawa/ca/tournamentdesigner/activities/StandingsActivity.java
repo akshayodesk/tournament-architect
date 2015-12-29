@@ -338,10 +338,24 @@ public class StandingsActivity extends Activity {
         int actualFormatType = formatType;
         if (formatType == 3 ) {
 
-            if(!((CombinationFormat) format).getIsKnockout())
-                actualFormatType = 1;
-            else
+            // Get the current round
+            int currentRound = DBAdapter.getCurrentRound(getApplicationContext(), tournament_id);
+
+            // Determine the number of rounds
+            ArrayList<String> teams = DBAdapter.getTeamNames(getApplicationContext(), tournament_id);
+            int numTeams = teams.size();
+            // Determine the number of Round Robin rounds
+            // Find the number of rounds per circuit
+            int numRoundsPerCircuit = numTeams - 1 + numTeams%2;
+            // Get the number of circuits for the tournament
+            int numCircuits = DBAdapter.getTournamentNumCircuits(getApplicationContext(), tournament_id);
+            // Find the number of Round Robin rounds that will be played
+            int numTotalRoundRobinRounds = numRoundsPerCircuit * numCircuits;
+
+            if(currentRound >= numTotalRoundRobinRounds)
                 actualFormatType = 2;
+            else
+                actualFormatType = 1;
         }
 
         // Create the teams list adapter and set it

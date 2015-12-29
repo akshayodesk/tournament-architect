@@ -292,36 +292,36 @@ public class EditTeamActivity extends Activity {
      */
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
-        // Taken from Lab Android App Development (Advanced concepts)
-        if (resultCode == RESULT_CANCELED) return;
-
-        //Getting the Avatar Image we show to our users
+        // Get the image
         teamLogo = (ImageView) findViewById(R.id.teamLogoImageView);
 
-        //Figuring out the correct image
-        int id = data.getIntExtra("imageID", R.id.teamLogoImageView);
-        String idStr = getResources().getResourceName(id);
+        // If an image was passed, edit the current one
+        if (resultCode == RESULT_OK) {
+            // Figure out the correct image
+            int id = data.getIntExtra("imageID", R.id.teamLogoImageView);
+            String idStr = getResources().getResourceName(id);
 
-        String drawableName = idStr.substring(39);
-        drawableName = drawableName.replaceAll("ImageView", "");
-        drawableName = drawableName.replaceAll("adesc062.uottawa.ca.tournamentdesigner/", "");
-        drawableName = drawableName.replaceAll("id/", "");
-        if(drawableName.equals("tournamentdesigner"))
-            drawableName = "tournament_designer_logo_lowres";
+            String drawableName = idStr.substring(39);
+            drawableName = drawableName.replaceAll("ImageView", "");
+            drawableName = drawableName.replaceAll("adesc062.uottawa.ca.tournamentdesigner/", "");
+            drawableName = drawableName.replaceAll("id/", "");
+            if (drawableName.equals("tournamentdesigner"))
+                drawableName = "tournament_designer_logo_lowres";
 
-        int resID = getResources().getIdentifier(drawableName, "drawable", getPackageName());
-        teamLogo.setImageResource(resID);
+            int resID = getResources().getIdentifier(drawableName, "drawable", getPackageName());
+            teamLogo.setImageResource(resID);
 
-        // Get the team name
-        teamNameEditText = (EditText) findViewById(R.id.teamNameEditText);
-        String teamName = teamNameEditText.getText().toString();
+            // Get the team name
+            teamNameEditText = (EditText) findViewById(R.id.teamNameEditText);
+            String teamName = teamNameEditText.getText().toString();
 
-        // Change the logo in the database
-        DBAdapter.modifyTeamLogo(getApplicationContext(), getIntent().getStringExtra("teamName"),
-                drawableName, DBAdapter.getMostRecentTournamentId(getApplicationContext()));
+            // Change the logo in the database
+            DBAdapter.modifyTeamLogo(getApplicationContext(), getIntent().getStringExtra("teamName"),
+                    drawableName, DBAdapter.getMostRecentTournamentId(getApplicationContext()));
 
-        // Update the logo variables
-        logo = drawableName;
-        changedLogo = true;
+            // Update the logo variables
+            logo = drawableName;
+            changedLogo = true;
+        }
     }
 }

@@ -30,7 +30,7 @@
             android:layout_gravity="left|center_vertical"
             android:layout_marginTop="2sp"
             android:layout_marginBottom="2sp"
-            android:src="@drawable/afghanistan" />
+            android:src="@drawable/rectangle_green" />
 
         <TextView
             android:id="@+id/vsTextView"
@@ -55,7 +55,7 @@
             android:layout_gravity="center_vertical|right"
             android:layout_marginTop="2sp"
             android:layout_marginBottom="2sp"
-            android:src="@drawable/andorra" />
+            android:src="@drawable/rectangle_pink" />
 
         <TextView
             android:id="@+id/teamName2TextView"

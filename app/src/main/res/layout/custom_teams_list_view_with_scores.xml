@@ -30,7 +30,7 @@
             android:layout_gravity="center_vertical"
             android:layout_marginTop="2sp"
             android:layout_marginBottom="2sp"
-            android:src="@drawable/argentina" />
+            android:src="@drawable/rectangle_green" />
 
         <TextView
             android:layout_width="wrap_content"
