@@ -21,4 +21,6 @@ The user can:
 
 Google Play Store link: https://play.google.com/store/apps/details?id=adesc062.uottawa.ca.tournamentdesigner
 
+Screenshots:
+![Create Tournament paget](https://github.com/AlexisDeschamps/TournamentDesigner/blob/screenshots/createTournamentActivity.png "Create Tournament page")
 
