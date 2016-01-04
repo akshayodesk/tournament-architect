@@ -1,4 +1,4 @@
-# TournamentDesigner
+# Tournament Designer
 Source code of the Tournament Designer Android application. 
 Allows the user to play automatically generated tournaments with various customizable elements,
 such as: team roster, format, and number of games per team.
