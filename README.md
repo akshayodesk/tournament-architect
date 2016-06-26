@@ -14,7 +14,7 @@ The app will:
 - Use score for Round Robin and allow ties, which are worth one point instead of three
 
 The user can:
-- Choose between three formats: Round Robin, Single Elimination, and Round Robin then Single Elimination
+- Choose between three formats: Round Robin, Signle Elimination, and Round Robin then Single Elimination
 - Decide the number of times each team plays each other in Round Robin
 - Add, edit, and delete unlimited teams with custom names and logos
 - Score each match individually
@@ -23,13 +23,10 @@ Google Play Store link: https://play.google.com/store/apps/details?id=adesc062.u
 
 Screenshots:
 
-![Create Tournament page](https://github.com/AlexisDeschamps/TournamentDesigner/blob/screenshots/createTournamentActivity.png "Create Tournament page")
+<img src="https://github.com/AlexisDeschamps/TournamentDesigner/blob/screenshots/createTournamentActivity.png" alt="Create Tournament page" width="285" height="542">
 
-<img src="https://github.com/AlexisDeschamps/TournamentDesigner/blob/screenshots/createTournamentActivity.png" alt="Create Tournament page" width="40" height="20">
+<img src="https://github.com/AlexisDeschamps/TournamentDesigner/blob/screenshots/standingsActivity.png" alt="Standings page" width="285" height="542">
 
-![Standings page](https://github.com/AlexisDeschamps/TournamentDesigner/blob/screenshots/standingsActivity.png "Standings page")
+<img src="https://github.com/AlexisDeschamps/TournamentDesigner/blob/screenshots/matchViewActivity.png" alt="Match View page" width="285" height="542">
 
-![Match View page](https://github.com/AlexisDeschamps/TournamentDesigner/blob/screenshots/matchViewActivity.png "Match View page")
-
-![Load Tournament page](https://github.com/AlexisDeschamps/TournamentDesigner/blob/screenshots/loadTournamentActivity.png "Load Tournament page")
-
+<img src="https://github.com/AlexisDeschamps/TournamentDesigner/blob/screenshots/loadTournamentActivity.png" alt="Load Tournament page" width="285" height="542">
