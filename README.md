@@ -23,7 +23,7 @@ Google Play Store link: https://play.google.com/store/apps/details?id=adesc062.u
 
 Screenshots:
 
-![Create Tournament page](https://github.com/AlexisDeschamps/TournamentDesigner/blob/screenshots/createTournamentActivity.png =250x "Create Tournament page")
+![Create Tournament page](https://github.com/AlexisDeschamps/TournamentDesigner/blob/screenshots/createTournamentActivity.png =50x "Create Tournament page")
 
 ![Standings page](https://github.com/AlexisDeschamps/TournamentDesigner/blob/screenshots/standingsActivity.png "Standings page")
 
