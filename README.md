@@ -24,3 +24,4 @@ Screenshots:
 
 <img src="https://github.com/AlexisDeschamps/TournamentDesigner/blob/screenshots/matchViewActivity.png" alt="Match View page" width="285" height="542">
 <img src="https://github.com/AlexisDeschamps/TournamentDesigner/blob/screenshots/loadTournamentActivity.png" alt="Load Tournament page" width="285" height="542">
+
