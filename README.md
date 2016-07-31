@@ -1,9 +1,5 @@
 # Tournament Designer
-Source code of the Tournament Designer Android application. 
-Allows the user to play automatically generated tournaments with various customizable elements,
-such as: team roster, format, and number of games per team.
-
-Customize your tournament and team roster, then input the the scores of each team in the automatically generated matches.
+Tournament Designer is an Android application that allows the user to play automatically generated tournaments with various customizable elements, such as: team roster, format, and number of games per team.
 
 Features:
 
