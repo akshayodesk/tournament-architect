@@ -180,7 +180,8 @@
                         android:gravity="center_vertical|right"
                         android:clickable="false"
                         android:inputType="number"
-                        android:hint="0" />
+                        android:hint="0"
+                        style="@style/EditTextHoloColors"/>
 
                     <Space
                         android:layout_width="0dp"
@@ -230,7 +231,8 @@
                         android:clickable="false"
                         android:inputType="number"
                         android:elegantTextHeight="false"
-                        android:hint="0" />
+                        android:hint="0"
+                        style="@style/EditTextHoloColors"/>
 
                     <Space
                         android:layout_width="0dp"
@@ -250,11 +252,10 @@
             android:layout_height="0dp"
             android:text="Save "
             android:id="@+id/saveScoreButton"
-            android:background="#E48700"
             android:textColor="#ffffff"
             android:textSize="18sp"
             android:layout_weight="0.1"
-            android:onClick="saveOnClickInMatchView" />
-
+            android:onClick="saveOnClickInMatchView"
+            style="@style/ButtonHoloColors"/>
     </LinearLayout>
 </RelativeLayout>

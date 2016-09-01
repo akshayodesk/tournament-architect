@@ -24,7 +24,8 @@
             android:textSize="18sp"
             android:hint="Tournament Name"
             android:maxLength="28"
-            android:gravity="bottom|center_horizontal" />
+            android:gravity="bottom|center_horizontal"
+            style="@style/EditTextHoloColors"/>
 
         <TextView
             android:layout_width="fill_parent"
@@ -64,7 +65,7 @@
                     android:clickable="true"
                     android:contextClickable="false"
                     android:onClick="roundRobinOnClick"
-                    style="@style/RadioButtonholocolors"/>
+                    style="@style/RadioButtonHoloColors"/>
 
                 <RadioButton
                     android:layout_width="fill_parent"
@@ -76,7 +77,7 @@
                     android:buttonTint="#E48700"
                     android:layout_weight="1"
                     android:onClick="knockoutRobinOnClick"
-                    style="@style/RadioButtonholocolors" />
+                    style="@style/RadioButtonHoloColors" />
 
                 <RadioButton
                     android:layout_width="fill_parent"
@@ -88,7 +89,7 @@
                     android:buttonTint="#E48700"
                     android:layout_weight="1"
                     android:onClick="combinationRobinOnClick"
-                    style="@style/RadioButtonholocolors" />
+                    style="@style/RadioButtonHoloColors" />
             </RadioGroup>
 
             <LinearLayout
@@ -118,7 +119,7 @@
                     android:id="@+id/numCircuitsSpinner"
                     android:gravity="right"
                     android:layout_gravity="center_vertical"
-                    style="@style/Spinnerholocolors" />
+                    style="@style/SpinnerHoloColors" />
 
             </LinearLayout>
 
@@ -161,11 +162,11 @@
                     android:text="Delete"
                     android:id="@+id/deleteAndDoneTeamButton"
                     android:layout_gravity="center_vertical"
-                    android:background="#E48700"
                     android:textColor="#ffffff"
                     android:layout_weight="1"
                     android:textSize="18sp"
-                    android:onClick="deleteAndDoneTeamOnClick" />
+                    android:onClick="deleteAndDoneTeamOnClick"
+                    style="@style/ButtonHoloColors" />
 
                 <Space
                     android:layout_width="fill_parent"
@@ -190,11 +191,11 @@
                     android:text="Add"
                     android:id="@+id/addTeamButton"
                     android:layout_gravity="center_vertical"
-                    android:background="#E48700"
                     android:textColor="#ffffff"
                     android:layout_weight="1"
                     android:textSize="18sp"
-                    android:onClick="addTeamTournamentOnClick" />
+                    android:onClick="addTeamTournamentOnClick"
+                    style="@style/ButtonHoloColors"/>
 
                 <Space
                     android:layout_width="fill_parent"
@@ -217,7 +218,8 @@
             android:id="@+id/teamsListView"
             tools:listitem="@android:layout/simple_expandable_list_item_1"
             android:textSize="10dp"
-            android:layout_weight="0.35" />
+            android:layout_weight="0.35"
+            style="@style/ListViewHoloColors"/>
 
         <Space
             android:layout_width="fill_parent"
@@ -229,11 +231,11 @@
             android:layout_height="0dp"
             android:text="Start Tournament"
             android:id="@+id/startTournamentButton"
-            android:background="#E48700"
             android:textColor="#ffffff"
             android:textSize="18sp"
             android:layout_weight="0.1"
-            android:onClick="startOnClick" />
+            android:onClick="startOnClick"
+            style="@style/ButtonHoloColors"/>
 
         <Space
             android:layout_width="fill_parent"
@@ -251,11 +253,11 @@
                 android:layout_height="fill_parent"
                 android:text="Delete"
                 android:id="@+id/deleteTournamentButton"
-                android:background="#E48700"
                 android:textColor="#ffffff"
                 android:textSize="18sp"
                 android:layout_weight="1"
-                android:onClick="deleteOnClick" />
+                android:onClick="deleteOnClick"
+                style="@style/ButtonHoloColors"/>
 
             <Space
                 android:layout_width="5sp"
@@ -267,13 +269,11 @@
                 android:layout_height="fill_parent"
                 android:text="Save"
                 android:id="@+id/saveTournamentButton"
-                android:background="#E48700"
                 android:textColor="#ffffff"
                 android:textSize="18sp"
                 android:layout_weight="1"
-                android:onClick="saveOnClick" />
+                android:onClick="saveOnClick"
+                style="@style/ButtonHoloColors"/>
         </LinearLayout>
-
     </LinearLayout>
-
 </RelativeLayout>

@@ -41,7 +41,8 @@
             android:layout_gravity="center_horizontal"
             android:background="#ffffff"
             android:layout_margin="0dp"
-            android:layout_weight="0.6" />
+            android:layout_weight="0.6"
+            style="@style/ListViewHoloColors"/>
 
         <Space
             android:layout_width="fill_parent"
@@ -53,11 +54,11 @@
             android:layout_height="0dp"
             android:text="View Rounds"
             android:id="@+id/viewRoundsButtonTextView"
-            android:background="#E48700"
             android:textColor="#ffffff"
             android:textSize="18sp"
             android:layout_weight="0.08"
-            android:onClick="viewRoundsOnClick" />
+            android:onClick="viewRoundsOnClick"
+            style="@style/ButtonHoloColors"/>
 
         <Space
             android:layout_width="fill_parent"
@@ -69,11 +70,11 @@
             android:layout_height="0dp"
             android:text="Delete Tournament"
             android:id="@+id/deleteTournamentButton"
-            android:background="#E48700"
             android:textColor="#ffffff"
             android:textSize="18sp"
             android:layout_weight="0.08"
-            android:onClick="deleteTournamentOnClick" />
+            android:onClick="deleteTournamentOnClick"
+            style="@style/ButtonHoloColors"/>
 
     </LinearLayout>
 

@@ -40,7 +40,8 @@
             tools:listitem="@android:layout/simple_list_item_1"
             android:background="#ffffff"
             android:layout_margin="0dp"
-            android:layout_weight="0.9" />
+            android:layout_weight="0.9"
+            style="@style/ListViewHoloColors"/>
 
     </LinearLayout>
 

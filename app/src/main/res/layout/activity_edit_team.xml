@@ -100,7 +100,8 @@
             android:textSize="22sp"
             android:gravity="bottom|center_horizontal"
             android:maxLength="20"
-            android:hint="Team Name" />
+            android:hint="Team Name"
+            style="@style/EditTextHoloColors" />
 
         <Space
             android:layout_width="fill_parent"
@@ -112,11 +113,11 @@
             android:layout_height="0dp"
             android:text="Save Team"
             android:id="@+id/saveTeamButton"
-            android:background="#E48700"
             android:textColor="#ffffff"
             android:layout_weight="0.1"
             android:textSize="18sp"
-            android:onClick="saveOnClick" />
+            android:onClick="saveOnClick"
+            style="@style/ButtonHoloColors"/>
 
         <Space
             android:layout_width="fill_parent"
@@ -128,12 +129,10 @@
             android:layout_height="0dp"
             android:text="Delete Team"
             android:id="@+id/deleteTeamButton"
-            android:background="#E48700"
             android:textColor="#ffffff"
             android:layout_weight="0.1"
             android:textSize="18sp"
-            android:onClick="deleteOnClick" />
-
+            android:onClick="deleteOnClick"
+            style="@style/ButtonHoloColors"/>
     </LinearLayout>
-
 </RelativeLayout>

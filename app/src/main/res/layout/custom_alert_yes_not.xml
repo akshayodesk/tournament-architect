@@ -34,13 +34,13 @@
             android:text="Yes"
             android:id="@+id/yesDeleteButon"
             android:layout_gravity="center_vertical"
-            android:background="#E48700"
             android:textColor="#ffffff"
             android:layout_weight="2"
             android:textSize="18sp"
             android:onClick="addTeamTournamentOnClick"
             android:layout_marginTop="0dp"
-            android:layout_marginBottom="0dp" />
+            android:layout_marginBottom="0dp"
+            style="@style/ButtonHoloColors"/>
 
         <Space
             android:layout_width="0dp"
@@ -53,13 +53,13 @@
             android:text="No"
             android:id="@+id/noDeleteButon"
             android:layout_gravity="center_vertical"
-            android:background="#E48700"
             android:textColor="#ffffff"
             android:layout_weight="2"
             android:textSize="18sp"
             android:onClick="addTeamTournamentOnClick"
             android:layout_marginTop="0dp"
-            android:layout_marginBottom="0dp" />
+            android:layout_marginBottom="0dp"
+            style="@style/ButtonHoloColors"/>
 
         <Space
             android:layout_width="0dp"

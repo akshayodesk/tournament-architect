@@ -3,13 +3,46 @@
 <!-- Generated with http://android-holo-colors.com -->
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
 
-  <style name="holocolors" parent="@style/_holocolors"/>
+  <style name="HoloColors" parent="@style/_HoloColors"/>
 
-  <style name="_holocolors" parent="Theme.AppCompat.Light">
+  <style name="_HoloColors" parent="Theme.AppCompat.Light">
+
+    <item name="android:editTextBackground">@drawable/holocolors_edit_text_holo_light</item>
+
+    <item name="android:textColorHighlight">#99e48700</item>
+    <item name="android:textSelectHandleLeft">@drawable/holocolors_text_select_handle_left</item>
+    <item name="android:textSelectHandleRight">@drawable/holocolors_text_select_handle_right</item>
+    <item name="android:textSelectHandle">@drawable/holocolors_text_select_handle_middle</item>
+
+    <item name="android:autoCompleteTextViewStyle">@style/AutoCompleteTextViewHoloColors</item>
+
+    <item name="android:listChoiceIndicatorMultiple">@drawable/holocolors_btn_check_holo_light</item>
 
     <item name="android:listChoiceIndicatorSingle">@drawable/holocolors_btn_radio_holo_light</item>
 
-    <item name="android:dropDownSpinnerStyle">@style/Spinnerholocolors</item>
+    <item name="android:buttonStyle">@style/ButtonHoloColors</item>
+
+    <item name="android:imageButtonStyle">@style/ImageButtonHoloColors</item>
+
+    <item name="android:dropDownSpinnerStyle">@style/SpinnerHoloColors</item>
+
+    <item name="android:progressBarStyleHorizontal">@style/ProgressBarHoloColors</item>
+
+    <item name="android:seekBarStyle">@style/SeekBarHoloColors</item>
+
+    <item name="android:ratingBarStyle">@style/RatingBarHoloColors</item>
+
+    <item name="android:ratingBarStyleIndicator">@style/RatingBarBigHoloColors</item>
+
+    <item name="android:ratingBarStyleSmall">@style/RatingBarSmallHoloColors</item>
+
+    <item name="android:buttonStyleToggle">@style/ToggleHoloColors</item>
+
+    <item name="android:listChoiceBackgroundIndicator">@drawable/holocolors_list_selector_holo_light</item>
+
+    <item name="android:activatedBackgroundIndicator">@drawable/holocolors_activated_background_holo_light</item>
+
+    <item name="android:fastScrollThumbDrawable">@drawable/holocolors_fastscroll_thumb_holo</item>
 
   </style>
 

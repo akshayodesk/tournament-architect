@@ -95,6 +95,10 @@ public class LoadTournamentActivity extends Activity {
         }
     }
 
+    public void dropboxSyncOnClick(View view) {
+        Intent intent = new Intent(this, DropboxSyncActivity.class);
+        startActivityForResult(intent, 1);
+    }
     private void setUpTournamentsList() {
 
         // Get the information from the database

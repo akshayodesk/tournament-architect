@@ -37,7 +37,8 @@
             android:layout_gravity="center_horizontal"
             android:background="#ffffff"
             android:layout_margin="0dp"
-            android:layout_weight="0.8" />
+            android:layout_weight="0.7"
+            style="@style/ListViewHoloColors" />
 
         <Space
             android:layout_width="fill_parent"
@@ -48,11 +49,27 @@
             android:layout_height="0dp"
             android:text="Delete"
             android:id="@+id/deleteAndDoneTournamentButton"
-            android:background="#E48700"
             android:textColor="#ffffff"
             android:textSize="18sp"
             android:layout_weight="0.1"
-            android:onClick="deleteAndDoneTournamentOnClick" />
+            android:onClick="deleteAndDoneTournamentOnClick"
+            style="@style/ButtonHoloColors"/>
+
+        <Space
+            android:layout_width="fill_parent"
+            android:layout_height="2sp" />
+
+        <Button
+            android:layout_width="fill_parent"
+            android:layout_height="0dp"
+            android:text="Dropbox Sync"
+            android:id="@+id/button"
+            android:textColor="#ffffff"
+            android:textSize="18sp"
+            android:layout_weight="0.1"
+            android:onClick="dropboxSyncOnClick"
+            android:nestedScrollingEnabled="true"
+            style="@style/ButtonHoloColors"/>
 
     </LinearLayout>
 </RelativeLayout>
