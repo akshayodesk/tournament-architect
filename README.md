@@ -1,5 +1,5 @@
-# Tournament Architect
-Tournament Architect is an Android application that allows the user to play automatically generated tournaments with various customizable elements, such as team roster, format, and number of games per team.
+# Tournament Designer
+Tournament Designer is an Android application that allows the user to play automatically generated tournaments with various customizable elements, such as team roster, format, and number of games per team.
 
 Features:
 
@@ -19,13 +19,13 @@ What's new in update 1.1
     - Added Dropbox syncinc functionality
     - Overhauled UI
 
-Google Play Store link: https://play.google.com/store/apps/details?id=adesc062.uottawa.ca.tournamentArchitect
+Google Play Store link: https://play.google.com/store/apps/details?id=adesc062.uottawa.ca.tournamentdesigner
 
 Screenshots:
 
-<img src="https://github.com/AlexisDeschamps/TournamentArchitect/blob/screenshots/createTournamentActivity.png" alt="Create Tournament page" width="285" height="542">
-<img src="https://github.com/AlexisDeschamps/TournamentArchitect/blob/screenshots/standingsActivity.png" alt="Standings page" width="285" height="542">
+<img src="https://github.com/AlexisDeschamps/TournamentDesigner/blob/screenshots/createTournamentActivity.png" alt="Create Tournament page" width="285" height="542">
+<img src="https://github.com/AlexisDeschamps/TournamentDesigner/blob/screenshots/standingsActivity.png" alt="Standings page" width="285" height="542">
 
-<img src="https://github.com/AlexisDeschamps/TournamentArchitect/blob/screenshots/matchViewActivity.png" alt="Match View page" width="285" height="542">
-<img src="https://github.com/AlexisDeschamps/TournamentArchitect/blob/screenshots/loadTournamentActivity.png" alt="Load Tournament page" width="285" height="542">
+<img src="https://github.com/AlexisDeschamps/TournamentDesigner/blob/screenshots/matchViewActivity.png" alt="Match View page" width="285" height="542">
+<img src="https://github.com/AlexisDeschamps/TournamentDesigner/blob/screenshots/loadTournamentActivity.png" alt="Load Tournament page" width="285" height="542">
 
