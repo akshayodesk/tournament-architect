@@ -4,7 +4,6 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin"
-    tools:context=".LoadTournamentActivity"
     android:background="#ffffff">
 
     <LinearLayout
@@ -15,12 +14,12 @@
         <TextView
             android:layout_width="fill_parent"
             android:layout_height="0dp"
-            android:text="Load Tournament"
+            android:text="@string/loadTournamentText"
             android:id="@+id/loadTournamentTextView"
             android:layout_gravity="center_horizontal"
             android:autoText="true"
-            android:textSize="22sp"
-            android:layout_weight="0.07"
+            android:textSize="28sp"
+            android:layout_weight="0.1"
             android:gravity="center" />
 
         <LinearLayout
@@ -40,32 +39,24 @@
             android:layout_weight="0.7"
             style="@style/ListViewHoloColors" />
 
-        <Space
-            android:layout_width="fill_parent"
-            android:layout_height="2sp" />
-
         <Button
             android:layout_width="fill_parent"
             android:layout_height="0dp"
-            android:text="Delete"
+            android:text="@string/deleteText"
             android:id="@+id/deleteAndDoneTournamentButton"
             android:textColor="#ffffff"
-            android:textSize="18sp"
+            android:textSize="28sp"
             android:layout_weight="0.1"
             android:onClick="deleteAndDoneTournamentOnClick"
             style="@style/ButtonHoloColors"/>
 
-        <Space
-            android:layout_width="fill_parent"
-            android:layout_height="2sp" />
-
         <Button
             android:layout_width="fill_parent"
             android:layout_height="0dp"
-            android:text="Dropbox Sync"
+            android:text="@string/dropboxSyncText"
             android:id="@+id/button"
             android:textColor="#ffffff"
-            android:textSize="18sp"
+            android:textSize="28sp"
             android:layout_weight="0.1"
             android:onClick="dropboxSyncOnClick"
             android:nestedScrollingEnabled="true"

@@ -14,12 +14,10 @@ public class HomeActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-
         /* Create the database on first application use
             - Will only be created once unless the
             - user deletes it
          */
-
         DB dbHelper = new DB(this.getApplicationContext());
     }
 
@@ -31,11 +29,9 @@ public class HomeActivity extends Activity {
      * @param view the View that was clicked.
      */
     public void newTournamentOnClick(View view) {
-
         // Create a new tournament in the database.
         DBAdapter.newTournament(getApplicationContext());
         int tournament_id = DBAdapter.getMostRecentTournamentId(getApplicationContext());
-
         Intent intent = new Intent(this, CreateTournamentActivity.class);
         intent.putExtra("tournament_id", tournament_id);
         startActivityForResult(intent, 1);
@@ -49,7 +45,6 @@ public class HomeActivity extends Activity {
      * @param view the View that was clicked.
      */
     public void loadTournamentOnClick(View view) {
-
         Intent intent = new Intent(this, LoadTournamentActivity.class);
         startActivityForResult(intent, 1);
     }

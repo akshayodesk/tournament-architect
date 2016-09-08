@@ -7,7 +7,6 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.gmail.adesc062.tempname.tournamentdesigner.MatchesActivity"
     android:background="#FFFFFF">
 
     <LinearLayout
@@ -18,12 +17,12 @@
         <TextView
             android:layout_width="fill_parent"
             android:layout_height="0dp"
-            android:text="Matches"
+            android:text="@string/matchesText"
             android:id="@+id/matchesTextView"
             android:layout_gravity="center_horizontal"
             android:autoText="true"
-            android:textSize="22sp"
-            android:layout_weight="0.08"
+            android:textSize="28sp"
+            android:layout_weight="0.1"
             android:gravity="center" />
 
         <LinearLayout

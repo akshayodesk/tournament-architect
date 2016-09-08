@@ -4,7 +4,6 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin"
-    tools:context=".DropboxSyncActivity"
     android:background="#ffffff">
 
     <LinearLayout
@@ -15,11 +14,11 @@
         <TextView
             android:layout_width="fill_parent"
             android:layout_height="0dp"
-            android:text="Dropbox Sync"
-            android:id="@+id/loadTournamentTextView"
+            android:text="@string/dropboxSyncText"
+            android:id="@+id/dropoxSyncTextView"
             android:layout_gravity="center_horizontal"
             android:autoText="true"
-            android:textSize="22sp"
+            android:textSize="28sp"
             android:layout_weight="1"
             android:gravity="center" />
 
@@ -30,29 +29,35 @@
             android:background="#E48700" />
 
         <ToggleButton
-            style="@style/ToggleHoloColors"
             android:layout_width="fill_parent"
             android:layout_height="0dp"
-            android:layout_weight="2"
-            android:textSize="22sp"
-            android:textOff="Activate Sync"
-            android:textOn="Deactivate Sync"
+            android:layout_weight="1"
+            android:textSize="28sp"
+            android:textOff="@string/activateSyncingText"
+            android:textOn="@string/deactivateSyncingText"
             android:id="@+id/activationToggleButton"
-            android:onClick="activationToggleButtonOnClick" />
+            android:onClick="activationToggleButtonOnClick"
+            style="@style/ToggleHoloColors"/>
 
-        <Space
+        <TextView
             android:layout_width="fill_parent"
             android:layout_height="0dp"
-            android:layout_weight="3" />
+            android:id="@+id/loggedInAsTextView"
+            android:layout_gravity="center_horizontal"
+            android:autoText="true"
+            android:textSize="22sp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:singleLine="false" />
 
         <Button
             android:layout_width="fill_parent"
             android:layout_height="0dp"
-            android:text="Log In"
+            android:text="@string/logInText"
             android:id="@+id/logInButton"
             android:textColor="#ffffff"
-            android:textSize="18sp"
-            android:layout_weight="2"
+            android:textSize="28sp"
+            android:layout_weight="1"
             android:onClick="logInOnClick"
             android:singleLine="false"
             style="@style/ButtonHoloColors" />
@@ -61,12 +66,41 @@
             style="@style/ButtonHoloColors"
             android:layout_width="fill_parent"
             android:layout_height="0dp"
-            android:text="Log Out"
+            android:text="@string/logOutText"
             android:id="@+id/logOutButton"
             android:textColor="#ffffff"
-            android:textSize="18sp"
-            android:layout_weight="2"
+            android:textSize="28sp"
+            android:layout_weight="1"
             android:onClick="logOutOnClick"
+            android:singleLine="false" />
+
+        <Space
+            android:layout_width="fill_parent"
+            android:layout_height="0dp"
+            android:layout_weight="3" />
+
+        <Button
+            style="@style/ButtonHoloColors"
+            android:layout_width="fill_parent"
+            android:layout_height="0dp"
+            android:text="@string/uploadText"
+            android:id="@+id/uploadButton"
+            android:textColor="#ffffff"
+            android:textSize="28sp"
+            android:layout_weight="1"
+            android:onClick="uploadOnClick"
+            android:singleLine="false" />
+
+        <Button
+            style="@style/ButtonHoloColors"
+            android:layout_width="fill_parent"
+            android:layout_height="0dp"
+            android:text="@string/downloadText"
+            android:id="@+id/downloadButton"
+            android:textColor="#ffffff"
+            android:textSize="28sp"
+            android:layout_weight="1"
+            android:onClick="downloadOnClick"
             android:singleLine="false" />
 
     </LinearLayout>

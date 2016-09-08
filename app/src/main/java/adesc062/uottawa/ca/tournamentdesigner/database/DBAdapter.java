@@ -10,8 +10,6 @@ import android.database.sqlite.SQLiteStatement;
 
 import java.util.ArrayList;
 
-import adesc062.uottawa.ca.tournamentdesigner.database.DB;
-
 public class DBAdapter {
 
     /**
@@ -20,11 +18,9 @@ public class DBAdapter {
      * @param context is the current application context.
      */
     public static void newTournament(Context context){
-
         // Open the database
         DB dbHelper = new DB(context);
         SQLiteDatabase db = dbHelper.getWritableDatabase();
-
         // Insert the tournament
         db.execSQL("INSERT INTO tournaments (type, numCircuits, status) VALUES (1, 1, 1)");
         try {
@@ -32,7 +28,6 @@ public class DBAdapter {
         } catch (Exception e) {
 
         }
-
         // Close the database
         db.close();
     }
@@ -47,41 +42,30 @@ public class DBAdapter {
      * @throws NullPointerException when the name given is empty.
      */
     public static void changeTournamentName(Context context, int tournament_id, String name) throws IllegalArgumentException, NullPointerException {
-
         // Open the database
         DB dbHelper = new DB(context);
         SQLiteDatabase db = dbHelper.getWritableDatabase();
 
         // Used to generate names automatically without user input
         if(name == null){
-
             name = "New Tournament " + getMostRecentTournamentId(context);
             db.execSQL("UPDATE tournaments SET name = '" + name +"' WHERE tournament_id = " + tournament_id);
-
         // If the name is empty
         }else if(name.equals("")){
-
             throw new NullPointerException();
         }
-
         // If the name is already used
         else {
             try {
-
                 ContentValues dataToInsert = new ContentValues();
                 dataToInsert.put("name", name);
-
                 String[] whereArgs = new String[] {String.valueOf(tournament_id)};
-
                 if(db.updateWithOnConflict("tournaments", dataToInsert, "tournament_id=?", whereArgs, SQLiteDatabase.CONFLICT_IGNORE) == 0)
                     throw new IllegalArgumentException();
-
             }catch (IllegalArgumentException e) {
-
                 throw new IllegalArgumentException();
             }
         }
-
         // Close the database
         db.close();
     }
@@ -94,39 +78,28 @@ public class DBAdapter {
      * @return the id of the tournament.
      */
     public static int getTournamentId(Context context, String name) {
-
         // Open the database
         DB dbHelper = new DB(context);
         SQLiteDatabase db = dbHelper.getReadableDatabase();
-
         // Get the information
         int tournament_id = -1;
-
         // If the given name is null, then return the id of the most recent tournament created
         if(name == null){
-
             tournament_id = getMostRecentTournamentId(context);
         }else
             try {
-
                 Cursor c = db.rawQuery("SELECT * FROM tournaments WHERE name = '" + name + "'", null);
                 c.moveToFirst();
-
                 try {
-
                     tournament_id = c.getInt(c.getColumnIndex("tournament_id"));
                 } catch (Exception e) {
-
                     throw new IllegalArgumentException();
                 }
             } catch (Exception e) {
-
                 // Do nothing
             }
-
         // Close the database
         db.close();
-
         // Return the tournament id
         return tournament_id;
     }

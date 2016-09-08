@@ -16,7 +16,6 @@ import adesc062.uottawa.ca.tournamentdesigner.database.DBAdapter;
  *
  */
 public class CustomTeamsListViewNotClickableWithScoreAdapter extends ArrayAdapter<String> {
-
     private final Activity context;
     private final int formatType;
     private final int tournament_id;
@@ -26,9 +25,7 @@ public class CustomTeamsListViewNotClickableWithScoreAdapter extends ArrayAdapte
 
     public CustomTeamsListViewNotClickableWithScoreAdapter(Activity context, int formatType, String[] teamNames,
                                                            Integer[] logos, Integer[] teamWins, int tournament_id) {
-
         super(context, R.layout.custom_teams_list_view, teamNames);
-
         this.context = context;
         this.formatType = formatType;
         this.tournament_id = tournament_id;
@@ -38,42 +35,32 @@ public class CustomTeamsListViewNotClickableWithScoreAdapter extends ArrayAdapte
     }
 
     public View getView(int position, View view, ViewGroup parent) {
-
         // Set up the layout of the list
         LayoutInflater inflater = context.getLayoutInflater();
         View rowView = inflater.inflate(R.layout.custom_teams_list_view_with_scores, null, true);
-
         // Set up the names of the teams
         TextView teamNameForStandingsTextView = (TextView) rowView.findViewById(R.id.teamNameForStandingsTextView);
         teamNameForStandingsTextView.setText(teamNames[position]);
-
         // Set up the logos of the teams
         ImageView teamLogoForStandingsImageView = (ImageView) rowView.findViewById(R.id.teamLogoForStandingsImageView);
         teamLogoForStandingsImageView.setImageResource(logos[position]);
-
         // Set up the number of wins for each team
         TextView numberOfWinsTextView = (TextView) rowView.findViewById(R.id.numberOfWinsTextView);
         numberOfWinsTextView.setText(String.valueOf(teamWins[position]));
-
         // If the format is Knockout, change "Score:" to "Wins:"
         if (formatType == 2) {
-
             TextView scoreIndicatorTextView = (TextView) rowView.findViewById(R.id.scoreIndicatorTextView);
             scoreIndicatorTextView.setText("Wins:");
         }
-
         // If a team has been eliminated, reduce its opacity
         if (DBAdapter.getTeamFormatPosition(context, teamNames[position], tournament_id) == - 1) {
-
             teamNameForStandingsTextView.setAlpha(0.5f);
             teamLogoForStandingsImageView.setAlpha(0.5f);
             numberOfWinsTextView.setAlpha(0.5f);
-
             TextView scoreIndicatorTextView = (TextView) rowView.findViewById(R.id.scoreIndicatorTextView);
             scoreIndicatorTextView.setAlpha(0.5f);
 
         }
-
         // Return the view of the row
         return rowView;
     }
