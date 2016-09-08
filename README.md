@@ -1,5 +1,5 @@
-# Tournament Designer
-Tournament Designer is an Android application that allows the user to play automatically generated tournaments with various customizable elements, such as team roster, format, and number of games per team.
+# Tournament Architect
+Tournament Architect is an Android application that allows the user to play automatically generated tournaments with various customizable elements, such as team roster, format, and number of games per team.
 
 Features:
 
