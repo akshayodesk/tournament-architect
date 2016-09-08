@@ -17,7 +17,7 @@ The user can:
 
 What's new in update 1.1
 - Added Dropbox syncinc functionality
-- - Overhauled UI
+- Overhauled UI
 
 Google Play Store link: https://play.google.com/store/apps/details?id=adesc062.uottawa.ca.tournamentdesigner
 
