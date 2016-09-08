@@ -1,41 +1,41 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#ffffff"
+    android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    android:paddingBottom="@dimen/activity_vertical_margin">
+    android:paddingTop="@dimen/activity_vertical_margin">
 
     <LinearLayout
-        android:orientation="vertical"
+        android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:id="@+id/linearLayout">
+        android:orientation="vertical">
 
         <TextView
+            android:id="@+id/logoTextView"
             android:layout_width="fill_parent"
             android:layout_height="0dp"
-            android:text="@string/changeLogoText"
-            android:id="@+id/logoTextView"
-            android:textSize="28sp"
             android:layout_weight="1"
-            android:gravity="center" />
+            android:gravity="center"
+            android:text="@string/changeLogoText"
+            android:textSize="28sp" />
 
         <LinearLayout
-            android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="2sp"
-            android:background="#E48700" />
+            android:background="#E48700"
+            android:orientation="horizontal" />
 
         <LinearLayout
-            android:orientation="horizontal"
             android:layout_width="fill_parent"
             android:layout_height="0dp"
-            android:layout_weight="4">
+            android:layout_weight="4"
+            android:orientation="horizontal">
 
             <Space
                 android:layout_width="0dp"
@@ -43,21 +43,21 @@
                 android:layout_weight="0.15" />
 
             <ImageView
+                android:id="@+id/teamLogoImageView"
                 android:layout_width="0dp"
                 android:layout_height="fill_parent"
-                android:id="@+id/teamLogoImageView"
-                android:src="@drawable/tournament_designer_logo_lowres"
                 android:layout_weight="1"
                 android:clickable="false"
-                android:onClick="logoOnClick"
                 android:focusable="false"
+                android:onClick="logoOnClick"
+                android:src="@drawable/tournament_architect_logo_lowres"
                 android:tag="logoImageViewTag"/>
 
             <LinearLayout
-                android:orientation="vertical"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="0.1">
+                android:layout_weight="0.1"
+                android:orientation="vertical">
 
                 <Space
                     android:layout_width="fill_parent"
@@ -66,12 +66,12 @@
                     android:onClick="logoOnClick" />
 
                 <ImageView
+                    android:id="@+id/imageView"
                     android:layout_width="fill_parent"
                     android:layout_height="0dp"
-                    android:id="@+id/imageView"
                     android:layout_weight="0.5"
-                    android:src="@drawable/right_arrow"
-                    android:onClick="logoOnClick" />
+                    android:onClick="logoOnClick"
+                    android:src="@drawable/right_arrow" />
 
                 <Space
                     android:layout_width="fill_parent"
@@ -87,16 +87,16 @@
         </LinearLayout>
 
         <EditText
+            android:id="@+id/teamNameEditText"
+            style="@style/EditTextHoloColors"
             android:layout_width="fill_parent"
             android:layout_height="0dp"
-            android:id="@+id/teamNameEditText"
             android:layout_gravity="center_vertical"
             android:layout_weight="1"
-            android:textSize="28sp"
             android:gravity="bottom|center_horizontal"
-            android:maxLength="20"
             android:hint="@string/teamNameText"
-            style="@style/EditTextHoloColors" />
+            android:maxLength="20"
+            android:textSize="28sp" />
 
         <Space
             android:layout_width="fill_parent"
@@ -104,25 +104,25 @@
             android:layout_weight="2" />
 
         <Button
+            android:id="@+id/saveTeamButton"
+            style="@style/ButtonHoloColors"
             android:layout_width="fill_parent"
             android:layout_height="0dp"
-            android:text="@string/saveTeamText"
-            android:id="@+id/saveTeamButton"
-            android:textColor="#ffffff"
             android:layout_weight="1"
-            android:textSize="28sp"
             android:onClick="saveOnClick"
-            style="@style/ButtonHoloColors"/>
+            android:text="@string/saveTeamText"
+            android:textColor="#ffffff"
+            android:textSize="28sp" />
 
         <Button
+            android:id="@+id/deleteTeamButton"
+            style="@style/ButtonHoloColors"
             android:layout_width="fill_parent"
             android:layout_height="0dp"
-            android:text="@string/deleteTeamText"
-            android:id="@+id/deleteTeamButton"
-            android:textColor="#ffffff"
             android:layout_weight="1"
-            android:textSize="28sp"
             android:onClick="deleteOnClick"
-            style="@style/ButtonHoloColors"/>
+            android:text="@string/deleteTeamText"
+            android:textColor="#ffffff"
+            android:textSize="28sp" />
     </LinearLayout>
 </RelativeLayout>

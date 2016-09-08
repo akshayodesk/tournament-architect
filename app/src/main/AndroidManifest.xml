@@ -1,70 +1,70 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="adesc062.uottawa.ca.tournamentdesigner" >
+    package="descalexis.gmail.com.tournamentarchitect">
     <uses-permission android:name="android.permission.INTERNET"></uses-permission>
 
     <application
         android:allowBackup="true"
-        android:icon="@drawable/tournament_designer_logo_lowres"
+        android:icon="@drawable/tournament_architect_logo_lowres"
         android:label="@string/app_name"
         android:theme="@android:style/Theme.Light.NoTitleBar">
         <activity
-            android:name=".activities.HomeActivity"
+            android:name="descalexis.gmail.com.tournamentarchitect.activities.HomeActivity"
+            android:configChanges="keyboardHidden"
             android:label="@string/title_activity_home"
-            android:theme="@android:style/Theme.Light.NoTitleBar"
             android:screenOrientation="nosensor"
-            android:windowSoftInputMode="adjustNothing"
-            android:configChanges="keyboardHidden">
+            android:theme="@android:style/Theme.Light.NoTitleBar"
+            android:windowSoftInputMode="adjustNothing">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
         <activity
-            android:name=".activities.CreateTournamentActivity"
+            android:name="descalexis.gmail.com.tournamentarchitect.activities.CreateTournamentActivity"
             android:label="@string/title_activity_create_tournament"
+            android:screenOrientation="nosensor"
             android:theme="@android:style/Theme.Light.NoTitleBar"
-            android:windowSoftInputMode="adjustNothing"
-            android:screenOrientation="nosensor"/>
+            android:windowSoftInputMode="adjustNothing" />
         <activity
-            android:name=".activities.EditTeamActivity"
+            android:name="descalexis.gmail.com.tournamentarchitect.activities.EditTeamActivity"
             android:label="EditTeam"
+            android:screenOrientation="nosensor"
             android:theme="@android:style/Theme.Light.NoTitleBar"
-            android:windowSoftInputMode="adjustNothing"
-            android:screenOrientation="nosensor"/>
+            android:windowSoftInputMode="adjustNothing" />
         <activity
-            android:name=".activities.FlagSelectionActivity"
+            android:name="descalexis.gmail.com.tournamentarchitect.activities.FlagSelectionActivity"
             android:label="@string/title_activity_flag_selection"
-            android:theme="@android:style/Theme.Light.NoTitleBar"
-            android:screenOrientation="nosensor"/>
+            android:screenOrientation="nosensor"
+            android:theme="@android:style/Theme.Light.NoTitleBar" />
         <activity
-            android:name=".activities.RoundActivity"
+            android:name="descalexis.gmail.com.tournamentarchitect.activities.RoundActivity"
             android:label="@string/title_activity_round"
-            android:theme="@android:style/Theme.Light.NoTitleBar"
-            android:screenOrientation="nosensor"/>
+            android:screenOrientation="nosensor"
+            android:theme="@android:style/Theme.Light.NoTitleBar" />
         <activity
-            android:name=".activities.MatchViewActivity"
+            android:name="descalexis.gmail.com.tournamentarchitect.activities.MatchViewActivity"
             android:label="@string/title_activity_match_view"
-            android:theme="@android:style/Theme.Light.NoTitleBar"
-            android:screenOrientation="nosensor"/>
+            android:screenOrientation="nosensor"
+            android:theme="@android:style/Theme.Light.NoTitleBar" />
         <activity
-            android:name=".activities.StandingsActivity"
+            android:name="descalexis.gmail.com.tournamentarchitect.activities.StandingsActivity"
             android:label="@string/title_activity_standings"
-            android:theme="@android:style/Theme.Light.NoTitleBar"
-            android:screenOrientation="nosensor"/>
+            android:screenOrientation="nosensor"
+            android:theme="@android:style/Theme.Light.NoTitleBar" />
         <activity
-            android:name=".activities.LoadTournamentActivity"
+            android:name="descalexis.gmail.com.tournamentarchitect.activities.LoadTournamentActivity"
             android:label="@string/title_activity_load_tournament"
-            android:theme="@android:style/Theme.Light.NoTitleBar"
-            android:screenOrientation="nosensor"/>
+            android:screenOrientation="nosensor"
+            android:theme="@android:style/Theme.Light.NoTitleBar" />
         <activity
-            android:name=".activities.MatchesActivity"
-            android:theme="@android:style/Theme.Light.NoTitleBar"
-            android:screenOrientation="nosensor"/>
+            android:name="descalexis.gmail.com.tournamentarchitect.activities.MatchesActivity"
+            android:screenOrientation="nosensor"
+            android:theme="@android:style/Theme.Light.NoTitleBar" />
         <activity
-            android:name=".activities.DropboxSyncActivity"
-            android:theme="@android:style/Theme.Light.NoTitleBar"
-            android:screenOrientation="nosensor"/>
+            android:name="descalexis.gmail.com.tournamentarchitect.activities.DropboxSyncActivity"
+            android:screenOrientation="nosensor"
+            android:theme="@android:style/Theme.Light.NoTitleBar" />
         <activity
             android:name="com.dropbox.core.android.AuthActivity"
             android:configChanges="orientation|keyboard"

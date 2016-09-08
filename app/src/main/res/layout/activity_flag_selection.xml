@@ -1,452 +1,451 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#ffffff"
+    android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:background="#ffffff"
-    >
+    android:paddingTop="@dimen/activity_vertical_margin">
 
     <LinearLayout
-        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
+        android:orientation="vertical"
         android:weightSum="1">
 
         <TextView
+            android:id="@+id/chooseFlagTextView"
             android:layout_width="fill_parent"
             android:layout_height="0dp"
-            android:text="@string/chooseLogoText"
-            android:id="@+id/chooseFlagTextView"
             android:layout_gravity="center_horizontal"
-            android:autoText="false"
-            android:textSize="28sp"
             android:layout_weight="0.1"
+            android:autoText="false"
+            android:enabled="true"
             android:gravity="center"
-            android:enabled="true" />
+            android:text="@string/chooseLogoText"
+            android:textSize="28sp" />
 
         <LinearLayout
-            android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="2sp"
-            android:background="#E48700" />
+            android:background="#E48700"
+            android:orientation="horizontal" />
 
         <LinearLayout
-            android:orientation="vertical"
             android:layout_width="fill_parent"
             android:layout_height="0dp"
-            android:background="#ffffff"
+            android:layout_margin="5dp"
             android:layout_weight="0.9"
-            android:layout_margin="5dp" >
+            android:background="#ffffff"
+            android:orientation="vertical">
 
             <LinearLayout
-                android:orientation="horizontal"
                 android:layout_width="fill_parent"
                 android:layout_height="0dp"
-                android:layout_weight="1">
+                android:layout_weight="1"
+                android:orientation="horizontal">
 
                 <ImageView
-                    android:layout_width="0dp"
-                    android:layout_height="fill_parent"
                     android:id="@+id/tdLogoOrangeImageView"
-                    android:layout_columnWeight="1"
-                    android:layout_rowWeight="1"
-                    android:src="@drawable/tournament_designer_logo_lowres"
-                    android:layout_weight="1"
-                    android:onClick="onFlagClick" />
-
-                <ImageView
                     android:layout_width="0dp"
                     android:layout_height="fill_parent"
-                    android:id="@+id/tournament_designer_logo_lowres_greenImageView"
                     android:layout_columnWeight="1"
                     android:layout_rowWeight="1"
-                    android:src="@drawable/tournament_designer_logo_lowres_green"
                     android:layout_weight="1"
-                    android:onClick="onFlagClick" />
+                    android:onClick="onFlagClick"
+                    android:src="@drawable/tournament_architect_logo_lowres" />
 
                 <ImageView
+                    android:id="@+id/tournament_architect_logo_lowres_greenImageView"
                     android:layout_width="0dp"
                     android:layout_height="fill_parent"
-                    android:id="@+id/tournament_designer_logo_lowres_purpleImageView"
                     android:layout_columnWeight="1"
                     android:layout_rowWeight="1"
-                    android:src="@drawable/tournament_designer_logo_lowres_purple"
                     android:layout_weight="1"
-                    android:onClick="onFlagClick" />
+                    android:onClick="onFlagClick"
+                    android:src="@drawable/tournament_architect_logo_lowres_green" />
 
                 <ImageView
+                    android:id="@+id/tournament_architect_logo_lowres_purpleImageView"
                     android:layout_width="0dp"
                     android:layout_height="fill_parent"
-                    android:id="@+id/tournament_designer_logo_lowres_yellowImageView"
                     android:layout_columnWeight="1"
                     android:layout_rowWeight="1"
-                    android:src="@drawable/tournament_designer_logo_lowres_yellow"
                     android:layout_weight="1"
-                    android:onClick="onFlagClick" />
+                    android:onClick="onFlagClick"
+                    android:src="@drawable/tournament_architect_logo_lowres_purple" />
 
                 <ImageView
+                    android:id="@+id/tournament_architect_logo_lowres_yellowImageView"
                     android:layout_width="0dp"
                     android:layout_height="fill_parent"
-                    android:id="@+id/tournament_designer_logo_lowres_blueImageView"
                     android:layout_columnWeight="1"
                     android:layout_rowWeight="1"
-                    android:src="@drawable/tournament_designer_logo_lowres_blue"
                     android:layout_weight="1"
-                    android:onClick="onFlagClick" />
+                    android:onClick="onFlagClick"
+                    android:src="@drawable/tournament_architect_logo_lowres_yellow" />
 
                 <ImageView
+                    android:id="@+id/tournament_architect_logo_lowres_blueImageView"
                     android:layout_width="0dp"
                     android:layout_height="fill_parent"
-                    android:id="@+id/tournament_designer_logo_lowres_pinkImageView"
                     android:layout_columnWeight="1"
                     android:layout_rowWeight="1"
-                    android:src="@drawable/tournament_designer_logo_lowres_pink"
                     android:layout_weight="1"
-                    android:onClick="onFlagClick" />
+                    android:onClick="onFlagClick"
+                    android:src="@drawable/tournament_architect_logo_lowres_blue" />
+
+                <ImageView
+                    android:id="@+id/tournament_architect_logo_lowres_pinkImageView"
+                    android:layout_width="0dp"
+                    android:layout_height="fill_parent"
+                    android:layout_columnWeight="1"
+                    android:layout_rowWeight="1"
+                    android:layout_weight="1"
+                    android:onClick="onFlagClick"
+                    android:src="@drawable/tournament_architect_logo_lowres_pink" />
 
             </LinearLayout>
 
             <LinearLayout
-                android:orientation="horizontal"
                 android:layout_width="fill_parent"
                 android:layout_height="0dp"
-                android:layout_weight="1" >
+                android:layout_weight="1"
+                android:orientation="horizontal">
 
                 <ImageView
-                    android:layout_width="0dp"
-                    android:layout_height="fill_parent"
                     android:id="@+id/triangle_orangeImageView"
-                    android:layout_columnWeight="1"
-                    android:layout_rowWeight="1"
-                    android:src="@drawable/triangle_orange"
-                    android:layout_weight="1"
-                    android:onClick="onFlagClick" />
-
-                <ImageView
                     android:layout_width="0dp"
                     android:layout_height="fill_parent"
+                    android:layout_columnWeight="1"
+                    android:layout_rowWeight="1"
+                    android:layout_weight="1"
+                    android:onClick="onFlagClick"
+                    android:src="@drawable/triangle_orange" />
+
+                <ImageView
                     android:id="@+id/triangle_greenImageView"
-                    android:layout_columnWeight="1"
-                    android:layout_rowWeight="1"
-                    android:src="@drawable/triangle_green"
-                    android:layout_weight="1"
-                    android:onClick="onFlagClick" />
-
-                <ImageView
                     android:layout_width="0dp"
                     android:layout_height="fill_parent"
+                    android:layout_columnWeight="1"
+                    android:layout_rowWeight="1"
+                    android:layout_weight="1"
+                    android:onClick="onFlagClick"
+                    android:src="@drawable/triangle_green" />
+
+                <ImageView
                     android:id="@+id/triangle_purpleImageView"
+                    android:layout_width="0dp"
+                    android:layout_height="fill_parent"
                     android:layout_columnWeight="1"
                     android:layout_rowWeight="1"
-                    android:src="@drawable/triangle_purple"
                     android:layout_weight="1"
-                    android:onClick="onFlagClick" />
+                    android:onClick="onFlagClick"
+                    android:src="@drawable/triangle_purple" />
 
                 <ImageView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
                     android:id="@+id/triangle_yellowImageView"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
                     android:layout_columnWeight="1"
                     android:layout_rowWeight="1"
-                    android:src="@drawable/triangle_yellow"
                     android:layout_weight="1"
-                    android:onClick="onFlagClick" />
+                    android:onClick="onFlagClick"
+                    android:src="@drawable/triangle_yellow" />
 
                 <ImageView
-                    android:layout_width="0dp"
-                    android:layout_height="fill_parent"
                     android:id="@+id/triangle_blueImageView"
-                    android:layout_columnWeight="1"
-                    android:layout_rowWeight="1"
-                    android:src="@drawable/triangle_blue"
-                    android:layout_weight="1"
-                    android:onClick="onFlagClick" />
-
-                <ImageView
                     android:layout_width="0dp"
                     android:layout_height="fill_parent"
+                    android:layout_columnWeight="1"
+                    android:layout_rowWeight="1"
+                    android:layout_weight="1"
+                    android:onClick="onFlagClick"
+                    android:src="@drawable/triangle_blue" />
+
+                <ImageView
                     android:id="@+id/triangle_pinkImageView"
+                    android:layout_width="0dp"
+                    android:layout_height="fill_parent"
                     android:layout_columnWeight="1"
                     android:layout_rowWeight="1"
-                    android:src="@drawable/triangle_pink"
                     android:layout_weight="1"
-                    android:onClick="onFlagClick" />
+                    android:onClick="onFlagClick"
+                    android:src="@drawable/triangle_pink" />
 
             </LinearLayout>
 
             <LinearLayout
-                android:orientation="horizontal"
                 android:layout_width="fill_parent"
                 android:layout_height="0dp"
-                android:layout_weight="1">
+                android:layout_weight="1"
+                android:orientation="horizontal">
 
                 <ImageView
-                    android:layout_width="0dp"
-                    android:layout_height="fill_parent"
                     android:id="@+id/rectangle_orangeImageView"
-                    android:layout_columnWeight="1"
-                    android:layout_rowWeight="1"
-                    android:src="@drawable/rectangle_orange"
-                    android:layout_weight="1"
-                    android:onClick="onFlagClick" />
-
-                <ImageView
                     android:layout_width="0dp"
                     android:layout_height="fill_parent"
+                    android:layout_columnWeight="1"
+                    android:layout_rowWeight="1"
+                    android:layout_weight="1"
+                    android:onClick="onFlagClick"
+                    android:src="@drawable/rectangle_orange" />
+
+                <ImageView
                     android:id="@+id/rectangle_greenImageView"
-                    android:layout_columnWeight="1"
-                    android:layout_rowWeight="1"
-                    android:src="@drawable/rectangle_green"
-                    android:layout_weight="1"
-                    android:onClick="onFlagClick" />
-
-                <ImageView
                     android:layout_width="0dp"
                     android:layout_height="fill_parent"
+                    android:layout_columnWeight="1"
+                    android:layout_rowWeight="1"
+                    android:layout_weight="1"
+                    android:onClick="onFlagClick"
+                    android:src="@drawable/rectangle_green" />
+
+                <ImageView
                     android:id="@+id/rectangle_purpleImageView"
-                    android:layout_columnWeight="1"
-                    android:layout_rowWeight="1"
-                    android:src="@drawable/rectangle_purple"
-                    android:layout_weight="1"
-                    android:onClick="onFlagClick" />
-
-                <ImageView
                     android:layout_width="0dp"
                     android:layout_height="fill_parent"
+                    android:layout_columnWeight="1"
+                    android:layout_rowWeight="1"
+                    android:layout_weight="1"
+                    android:onClick="onFlagClick"
+                    android:src="@drawable/rectangle_purple" />
+
+                <ImageView
                     android:id="@+id/rectangle_yellowImageView"
-                    android:layout_columnWeight="1"
-                    android:layout_rowWeight="1"
-                    android:src="@drawable/rectangle_yellow"
-                    android:layout_weight="1"
-                    android:onClick="onFlagClick" />
-
-                <ImageView
                     android:layout_width="0dp"
                     android:layout_height="fill_parent"
+                    android:layout_columnWeight="1"
+                    android:layout_rowWeight="1"
+                    android:layout_weight="1"
+                    android:onClick="onFlagClick"
+                    android:src="@drawable/rectangle_yellow" />
+
+                <ImageView
                     android:id="@+id/rectangle_blueImageView"
-                    android:layout_columnWeight="1"
-                    android:layout_rowWeight="1"
-                    android:src="@drawable/rectangle_blue"
-                    android:layout_weight="1"
-                    android:onClick="onFlagClick" />
-
-                <ImageView
                     android:layout_width="0dp"
                     android:layout_height="fill_parent"
+                    android:layout_columnWeight="1"
+                    android:layout_rowWeight="1"
+                    android:layout_weight="1"
+                    android:onClick="onFlagClick"
+                    android:src="@drawable/rectangle_blue" />
+
+                <ImageView
                     android:id="@+id/rectangle_pinkImageView"
+                    android:layout_width="0dp"
+                    android:layout_height="fill_parent"
                     android:layout_columnWeight="1"
                     android:layout_rowWeight="1"
-                    android:src="@drawable/rectangle_pink"
                     android:layout_weight="1"
-                    android:onClick="onFlagClick" />
+                    android:onClick="onFlagClick"
+                    android:src="@drawable/rectangle_pink" />
 
             </LinearLayout>
 
             <LinearLayout
-                android:orientation="horizontal"
                 android:layout_width="fill_parent"
                 android:layout_height="0dp"
-                android:layout_weight="1" >
+                android:layout_weight="1"
+                android:orientation="horizontal">
 
                 <ImageView
-                    android:layout_width="0dp"
-                    android:layout_height="fill_parent"
                     android:id="@+id/diamond_orangeImageView"
-                    android:layout_columnWeight="1"
-                    android:layout_rowWeight="1"
-                    android:src="@drawable/diamond_orange"
-                    android:layout_weight="1"
-                    android:onClick="onFlagClick" />
-
-                <ImageView
                     android:layout_width="0dp"
                     android:layout_height="fill_parent"
+                    android:layout_columnWeight="1"
+                    android:layout_rowWeight="1"
+                    android:layout_weight="1"
+                    android:onClick="onFlagClick"
+                    android:src="@drawable/diamond_orange" />
+
+                <ImageView
                     android:id="@+id/diamond_greenImageView"
-                    android:layout_columnWeight="1"
-                    android:layout_rowWeight="1"
-                    android:src="@drawable/diamond_green"
-                    android:layout_weight="1"
-                    android:onClick="onFlagClick" />
-
-                <ImageView
                     android:layout_width="0dp"
                     android:layout_height="fill_parent"
+                    android:layout_columnWeight="1"
+                    android:layout_rowWeight="1"
+                    android:layout_weight="1"
+                    android:onClick="onFlagClick"
+                    android:src="@drawable/diamond_green" />
+
+                <ImageView
                     android:id="@+id/diamond_purpleImageView"
+                    android:layout_width="0dp"
+                    android:layout_height="fill_parent"
                     android:layout_columnWeight="1"
                     android:layout_rowWeight="1"
-                    android:src="@drawable/diamond_purple"
                     android:layout_weight="1"
-                    android:onClick="onFlagClick" />
+                    android:onClick="onFlagClick"
+                    android:src="@drawable/diamond_purple" />
 
                 <ImageView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
                     android:id="@+id/diamond_yellowImageView"
-                    android:layout_columnWeight="1"
-                    android:layout_rowWeight="1"
-                    android:src="@drawable/diamond_yellow"
-                    android:layout_weight="1"
-                    android:onClick="onFlagClick" />
-
-                <ImageView
-                    android:layout_width="0dp"
-                    android:layout_height="fill_parent"
-                    android:id="@+id/diamond_blueImageView"
-                    android:layout_columnWeight="1"
-                    android:layout_rowWeight="1"
-                    android:src="@drawable/diamond_blue"
-                    android:layout_weight="1"
-                    android:onClick="onFlagClick" />
-
-                <ImageView
-                    android:layout_width="0dp"
-                    android:layout_height="fill_parent"
-                    android:id="@+id/diamond_pinkImageView"
-                    android:layout_columnWeight="1"
-                    android:layout_rowWeight="1"
-                    android:src="@drawable/diamond_pink"
-                    android:layout_weight="1"
-                    android:onClick="onFlagClick" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:orientation="horizontal"
-                android:layout_width="fill_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1" >
-
-                <ImageView
-                    android:layout_width="0dp"
-                    android:layout_height="fill_parent"
-                    android:id="@+id/circle_orangeImageView"
-                    android:layout_columnWeight="1"
-                    android:layout_rowWeight="1"
-                    android:src="@drawable/circle_orange"
-                    android:layout_weight="1"
-                    android:onClick="onFlagClick" />
-
-                <ImageView
-                    android:layout_width="0dp"
-                    android:layout_height="fill_parent"
-                    android:id="@+id/circle_greenImageView"
-                    android:layout_columnWeight="1"
-                    android:layout_rowWeight="1"
-                    android:src="@drawable/circle_green"
-                    android:layout_weight="1"
-                    android:onClick="onFlagClick" />
-
-                <ImageView
-                    android:layout_width="0dp"
-                    android:layout_height="fill_parent"
-                    android:id="@+id/circle_purpleImageView"
-                    android:layout_columnWeight="1"
-                    android:layout_rowWeight="1"
-                    android:src="@drawable/circle_purple"
-                    android:layout_weight="1"
-                    android:onClick="onFlagClick" />
-
-                <ImageView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:id="@+id/circle_yellowImageView"
                     android:layout_columnWeight="1"
                     android:layout_rowWeight="1"
-                    android:src="@drawable/circle_yellow"
                     android:layout_weight="1"
-                    android:onClick="onFlagClick" />
+                    android:onClick="onFlagClick"
+                    android:src="@drawable/diamond_yellow" />
 
                 <ImageView
+                    android:id="@+id/diamond_blueImageView"
                     android:layout_width="0dp"
                     android:layout_height="fill_parent"
-                    android:id="@+id/circle_blueImageView"
                     android:layout_columnWeight="1"
                     android:layout_rowWeight="1"
-                    android:src="@drawable/circle_blue"
                     android:layout_weight="1"
-                    android:onClick="onFlagClick" />
+                    android:onClick="onFlagClick"
+                    android:src="@drawable/diamond_blue" />
 
                 <ImageView
+                    android:id="@+id/diamond_pinkImageView"
                     android:layout_width="0dp"
                     android:layout_height="fill_parent"
-                    android:id="@+id/circle_pinkImageView"
                     android:layout_columnWeight="1"
                     android:layout_rowWeight="1"
-                    android:src="@drawable/circle_pink"
                     android:layout_weight="1"
-                    android:onClick="onFlagClick" />
+                    android:onClick="onFlagClick"
+                    android:src="@drawable/diamond_pink" />
 
             </LinearLayout>
 
             <LinearLayout
-                android:orientation="horizontal"
                 android:layout_width="fill_parent"
                 android:layout_height="0dp"
-                android:layout_weight="1" >
+                android:layout_weight="1"
+                android:orientation="horizontal">
 
                 <ImageView
+                    android:id="@+id/circle_orangeImageView"
                     android:layout_width="0dp"
                     android:layout_height="fill_parent"
+                    android:layout_columnWeight="1"
+                    android:layout_rowWeight="1"
+                    android:layout_weight="1"
+                    android:onClick="onFlagClick"
+                    android:src="@drawable/circle_orange" />
+
+                <ImageView
+                    android:id="@+id/circle_greenImageView"
+                    android:layout_width="0dp"
+                    android:layout_height="fill_parent"
+                    android:layout_columnWeight="1"
+                    android:layout_rowWeight="1"
+                    android:layout_weight="1"
+                    android:onClick="onFlagClick"
+                    android:src="@drawable/circle_green" />
+
+                <ImageView
+                    android:id="@+id/circle_purpleImageView"
+                    android:layout_width="0dp"
+                    android:layout_height="fill_parent"
+                    android:layout_columnWeight="1"
+                    android:layout_rowWeight="1"
+                    android:layout_weight="1"
+                    android:onClick="onFlagClick"
+                    android:src="@drawable/circle_purple" />
+
+                <ImageView
+                    android:id="@+id/circle_yellowImageView"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_columnWeight="1"
+                    android:layout_rowWeight="1"
+                    android:layout_weight="1"
+                    android:onClick="onFlagClick"
+                    android:src="@drawable/circle_yellow" />
+
+                <ImageView
+                    android:id="@+id/circle_blueImageView"
+                    android:layout_width="0dp"
+                    android:layout_height="fill_parent"
+                    android:layout_columnWeight="1"
+                    android:layout_rowWeight="1"
+                    android:layout_weight="1"
+                    android:onClick="onFlagClick"
+                    android:src="@drawable/circle_blue" />
+
+                <ImageView
+                    android:id="@+id/circle_pinkImageView"
+                    android:layout_width="0dp"
+                    android:layout_height="fill_parent"
+                    android:layout_columnWeight="1"
+                    android:layout_rowWeight="1"
+                    android:layout_weight="1"
+                    android:onClick="onFlagClick"
+                    android:src="@drawable/circle_pink" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:orientation="horizontal">
+
+                <ImageView
                     android:id="@+id/star_orangeImageView"
-                    android:layout_columnWeight="1"
-                    android:layout_rowWeight="1"
-                    android:src="@drawable/star_orange"
-                    android:layout_weight="1"
-                    android:onClick="onFlagClick" />
-
-                <ImageView
                     android:layout_width="0dp"
                     android:layout_height="fill_parent"
+                    android:layout_columnWeight="1"
+                    android:layout_rowWeight="1"
+                    android:layout_weight="1"
+                    android:onClick="onFlagClick"
+                    android:src="@drawable/star_orange" />
+
+                <ImageView
                     android:id="@+id/star_greenImageView"
-                    android:layout_columnWeight="1"
-                    android:layout_rowWeight="1"
-                    android:src="@drawable/star_green"
-                    android:layout_weight="1"
-                    android:onClick="onFlagClick" />
-
-                <ImageView
                     android:layout_width="0dp"
                     android:layout_height="fill_parent"
+                    android:layout_columnWeight="1"
+                    android:layout_rowWeight="1"
+                    android:layout_weight="1"
+                    android:onClick="onFlagClick"
+                    android:src="@drawable/star_green" />
+
+                <ImageView
                     android:id="@+id/star_purpleImageView"
-                    android:layout_columnWeight="1"
-                    android:layout_rowWeight="1"
-                    android:src="@drawable/star_purple"
-                    android:layout_weight="1"
-                    android:onClick="onFlagClick" />
-
-                <ImageView
                     android:layout_width="0dp"
                     android:layout_height="fill_parent"
+                    android:layout_columnWeight="1"
+                    android:layout_rowWeight="1"
+                    android:layout_weight="1"
+                    android:onClick="onFlagClick"
+                    android:src="@drawable/star_purple" />
+
+                <ImageView
                     android:id="@+id/star_yellowImageView"
-                    android:layout_columnWeight="1"
-                    android:layout_rowWeight="1"
-                    android:src="@drawable/star_yellow"
-                    android:layout_weight="1"
-                    android:onClick="onFlagClick" />
-
-                <ImageView
                     android:layout_width="0dp"
                     android:layout_height="fill_parent"
+                    android:layout_columnWeight="1"
+                    android:layout_rowWeight="1"
+                    android:layout_weight="1"
+                    android:onClick="onFlagClick"
+                    android:src="@drawable/star_yellow" />
+
+                <ImageView
                     android:id="@+id/star_blueImageView"
-                    android:layout_columnWeight="1"
-                    android:layout_rowWeight="1"
-                    android:src="@drawable/star_blue"
-                    android:layout_weight="1"
-                    android:onClick="onFlagClick" />
-
-                <ImageView
                     android:layout_width="0dp"
                     android:layout_height="fill_parent"
-                    android:id="@+id/star_pinkImageView"
                     android:layout_columnWeight="1"
                     android:layout_rowWeight="1"
-                    android:src="@drawable/star_pink"
                     android:layout_weight="1"
-                    android:onClick="onFlagClick" />
+                    android:onClick="onFlagClick"
+                    android:src="@drawable/star_blue" />
+
+                <ImageView
+                    android:id="@+id/star_pinkImageView"
+                    android:layout_width="0dp"
+                    android:layout_height="fill_parent"
+                    android:layout_columnWeight="1"
+                    android:layout_rowWeight="1"
+                    android:layout_weight="1"
+                    android:onClick="onFlagClick"
+                    android:src="@drawable/star_pink" />
 
             </LinearLayout>
 

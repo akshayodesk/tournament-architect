@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Tournament Designer</string>
+    <string name="app_name">Tournament Architect</string>
     <string name="app_key">drnhvv07gtk5pvu</string>
     <string name="action_settings">Settings</string>
     <string name="title_activity_create_tournament">CreateTournament</string>
