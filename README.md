@@ -15,6 +15,10 @@ The user can:
 - Add, edit, and delete unlimited teams with custom names and logos
 - Score each match individually
 
+What's new in update 1.1
+    - Added Dropbox syncinc functionality
+    - Overhauled UI
+
 Google Play Store link: https://play.google.com/store/apps/details?id=adesc062.uottawa.ca.tournamentdesigner
 
 Screenshots:
