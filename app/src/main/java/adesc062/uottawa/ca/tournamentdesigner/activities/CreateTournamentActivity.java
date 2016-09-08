@@ -417,7 +417,6 @@ public class CreateTournamentActivity extends Activity {
         // Set up on the onClick for the teams list
         teamsList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> arg0, View view, int pos, long arg3) {
-
                 // Get the team name
                 TextView teamNameTextView = (TextView) view.findViewById(R.id.txt);
                 String teamName = teamNameTextView.getText().toString();
