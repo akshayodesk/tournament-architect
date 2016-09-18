@@ -23,9 +23,9 @@ Google Play Store link: https://play.google.com/store/apps/details?id=com.gmail.
 
 Screenshots:
 
-<img src="https://github.com/AlexisDeschamps/screenshots/blob/master/tournament-architect/createTournamentActivity.png" alt="Create Tournament page" width="285" height="542">
-<img src="https://github.com/AlexisDeschamps/screenshots/blob/master/tournament-architect/standingsActivity.png" alt="Standings page" width="285" height="542">
+<img src="https://github.com/AlexisDeschamps/tournament-architect/blob/screenshots/createTournamentActivity.png" alt="Create Tournament page" width="285" height="542">
+<img src="https://github.com/AlexisDeschamps/tournament-architect/blob/screenshots/standingsActivity.png" alt="Standings page" width="285" height="542">
 
-<img src="https://github.com/AlexisDeschamps/screenshots/blob/master/tournament-architect/matchViewActivity.png" alt="Match View page" width="285" height="542">
-<img src="https://github.com/AlexisDeschamps/screenshots/blob/master/tournament-architect/loadTournamentActivity.png" alt="Load Tournament page" width="285" height="542">
+<img src="https://github.com/AlexisDeschamps/tournament-architect/blob/screenshots/matchViewActivity.png" alt="Match View page" width="285" height="542">
+<img src="https://github.com/AlexisDeschamps/tournament-architect/blob/screenshots/loadTournamentActivity.png" alt="Load Tournament page" width="285" height="542">
 
