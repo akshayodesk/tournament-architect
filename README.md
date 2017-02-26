@@ -21,11 +21,15 @@ What's new in update 1.1
 
 Google Play Store link: https://play.google.com/store/apps/details?id=com.gmail.descalexis.tournamentarchitect
 
-Screenshots:
+# Screenshots
 
 <img src="http://i.imgur.com/dxagwtz.png" alt="Create Tournament page" width="285" height="542">
 <img src="http://i.imgur.com/tGH1W5E.png" alt="Standings page" width="285" height="542">
 
 <img src="http://i.imgur.com/0IPrmzK.png" alt="Match View page" width="285" height="542">
 <img src="http://i.imgur.com/QNwcXvY.png" alt="Load Tournament page" width="285" height="542">
+
+# License
+[**MIT**](https://raw.githubusercontent.com/AlexisDeschamps/tournament-architect/master/LICENSE.txt)
+
 
