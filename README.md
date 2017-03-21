@@ -19,8 +19,7 @@ What's new in update 1.1
 - Added Dropbox syncinc functionality
 - Overhauled UI
 
-Google Play Store link: https://play.google.com/store/apps/details?id=com.gmail.descalexis.tournamentarchitect
-
+Google Play Store link: [**https://play.google.com/store/apps/details?id=com.gmail.descalexis.tournamentarchitect**](https://play.google.com/store/apps/details?id=com.gmail.descalexis.tournamentarchitect)
 # Screenshots
 
 <img src="http://i.imgur.com/dxagwtz.png" alt="Create Tournament page" width="285" height="542">
